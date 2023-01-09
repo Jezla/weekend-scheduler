@@ -18,10 +18,10 @@ Document the creation process of bot and how it functions.
 - Have a variety of SREs skills based on a criteria.
 
 ## Roles for Project:
-Project Sponsor (Managers/Intern Mentor/SREs/Interns)
-Project Manager - Robert and Gabe
-Project Coordinator  - Wilson and Pattie
-Project Team Member 
+- Project Sponsor (Managers/Intern Mentor/SREs/Interns)
+- Project Manager - Robert and Gabe
+- Project Coordinator  - Wilson and Pattie
+- Project Team Member 
 
 ## Expected by end of internship
 - Working Prototype of the “Bot”.
