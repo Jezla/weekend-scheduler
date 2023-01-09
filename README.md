@@ -14,8 +14,8 @@ Output would be a csv that we could ask the SFDC Team to upload and populate our
 Document the creation process of bot and how it functions.
 
 ## Managers/SREs - requirements (Rules for sorting)
-++ Allow SREs with the minimal selected working weekend days to be placed first in their preferences.
-++ Have a variety of SREs skills based on a criteria.
+- Allow SREs with the minimal selected working weekend days to be placed first in their preferences.
+- Have a variety of SREs skills based on a criteria.
 
 ## Roles for Project:
 Project Sponsor (Managers/Intern Mentor/SREs/Interns)
@@ -24,8 +24,8 @@ Project Coordinator  - Wilson and Pattie
 Project Team Member 
 
 ## Expected by end of internship
-++ Working Prototype of the “Bot”.
-++ Presentation of how the “Bot” works.
-++ High Concept documentation of the “Bot”.
-++ Documentation of each Interns contribution to the project.
+- Working Prototype of the “Bot”.
+- Presentation of how the “Bot” works.
+- High Concept documentation of the “Bot”.
+- Documentation of each Interns contribution to the project.
 
