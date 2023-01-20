@@ -1,113 +1,55 @@
 import logo from './logo.svg';
 import './App.css';
-import Slider from '@mui/material/Slider';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/Container';
+import {DndContext, closestCenter} from "@dnd-kit/core";
+import {arrayMove, SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
+import { useState } from 'react';
+import { SortableItem } from './SortableItem';
+import Calendar from 'react-calendar';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import FormGroup from '@mui/material/FormGroup';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-
 
 function App() {
-  return (
-    <div className="App" style={{ width: '350px', marginLeft: 'auto', marginRight: 'auto', marginTop: '100px', backgroundColor: 'yellow' }}>
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-      <TextField id="outlined-basic" label="First Name" variant="outlined" />
+  const [dates, setDates] = useState(["22/01/2023", "25/02/2023", "27/03/2023"]);
+  const [value, onChange] = useState(new Date());
 
-      <header>Day</header>
-      {/* <Slider
-        style={{
-          width: '10px',
-          marginLeft: '1000px',
-          color: '#12FEBC'
-        }}
-        aria-label="Temperature"
-        defaultValue={1}
-        valueLabelDisplay="auto"
-        step={1}
-        marks
-        min={1}
-        max={30}
-      /> */}
-      <FormGroup>
-        <FormControlLabel control={<Switch defaultChecked />} label="1" />
-        <FormControlLabel control={<Switch defaultChecked />} label="10" />
-        <FormControlLabel control={<Switch defaultChecked />} label="11" />
-        <FormControlLabel control={<Switch defaultChecked />} label="12" />
-        <FormControlLabel control={<Switch defaultChecked />} label="13" />
-        <FormControlLabel control={<Switch defaultChecked />} label="14" />
-        <FormControlLabel control={<Switch defaultChecked />} label="15" />
-        <FormControlLabel control={<Switch defaultChecked />} label="16" />
-        <FormControlLabel control={<Switch defaultChecked />} label="17" />
-        <FormControlLabel control={<Switch defaultChecked />} label="18" />
-        <FormControlLabel control={<Switch defaultChecked />} label="19" />
-        <FormControlLabel control={<Switch defaultChecked />} label="2" />
-        <FormControlLabel control={<Switch defaultChecked />} label="20" />
-        <FormControlLabel control={<Switch defaultChecked />} label="21" />
-        <FormControlLabel control={<Switch defaultChecked />} label="22" />
-        <FormControlLabel control={<Switch defaultChecked />} label="23" />
-        <FormControlLabel control={<Switch defaultChecked />} label="24" />
-        <FormControlLabel control={<Switch defaultChecked />} label="25" />
-        <FormControlLabel control={<Switch defaultChecked />} label="26" />
-        <FormControlLabel control={<Switch defaultChecked />} label="27" />
-        <FormControlLabel control={<Switch defaultChecked />} label="28" />
-        <FormControlLabel control={<Switch defaultChecked />} label="29" />
-        <FormControlLabel control={<Switch defaultChecked />} label="30" />
-        <FormControlLabel control={<Switch defaultChecked />} label="3" />
-        <FormControlLabel control={<Switch defaultChecked />} label="4" />
-        <FormControlLabel control={<Switch defaultChecked />} label="5" />
-        <FormControlLabel control={<Switch defaultChecked />} label="6" />
-        <FormControlLabel control={<Switch defaultChecked />} label="7" />
-        <FormControlLabel control={<Switch defaultChecked />} label="8" />
-        <FormControlLabel control={<Switch defaultChecked />} label="9" />
-      </FormGroup>
-      <header>Month</header>
-      <Slider
-        style={{
-          width: '5px',
-          marginLeft: '-1300px',
-          color: '#39FF14'
-        }}
-        aria-label="Temperature"
-        defaultValue={1}
-        valueLabelDisplay="auto"
-        step={1}
-        marks
-        min={1}
-        max={12}
-      />
-      <header>Year</header>
-      <Slider
-        style={{
-          width: '1500px',
-          marginLeft: '-525px',
-          color: '#BC13FE'
-        }}
-        aria-label="Temperature"
-        defaultValue={2023}
-        valueLabelDisplay="auto"
-        step={1}
-        marks
-        min={2023}
-        max={2024}
-      />
-      <TextField id="outlined-basic" label="Last Name" variant="outlined" />
-      <Button variant="contained">Submit</Button>
-    </div>
+  return (
+    <>
+      <div>
+        <TextField id="outlined-basic" label="First Name" variant="outlined"/>
+        <TextField id="outlined-basic" label="Last Name" variant="outlined"/>
+      </div>
+      <div>
+      <Calendar onChange={onChange} value={value} />
+        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <Container className="p-3" style={{ "width": "50%" }} align="center">
+            <h3>Sort your preferences</h3>
+            <SortableContext items={dates} strategy={verticalListSortingStrategy}>
+              {dates.map(language => <SortableItem key={language} id={language} />)}
+            </SortableContext>
+          </Container>
+        </DndContext>
+        <Button variant="contained">Submit</Button>
+      </div>
+    </>
   );
+
+  function handleDragEnd(event) {
+    console.log("Drag end called");
+    const { active, over } = event;
+    console.log("ACTIVE: " + active.id);
+    console.log("OVER :" + over.id);
+
+    if (active.id !== over.id) {
+      setDates((items) => {
+        const activeIndex = items.indexOf(active.id);
+        const overIndex = items.indexOf(over.id);
+        console.log(arrayMove(items, activeIndex, overIndex));
+        return arrayMove(items, activeIndex, overIndex);
+      });
+    }
+  }
 }
 
 export default App;
