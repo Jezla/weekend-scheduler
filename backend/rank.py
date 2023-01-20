@@ -1,3 +1,5 @@
+from Date import *
+from SRE import *
 
 # Assigns SREs to dates
 def assign_pref(a_date):
@@ -6,6 +8,7 @@ def assign_pref(a_date):
 
 # Sort the SRE list in ascending order based on number of preferences
 def sorting_list(given_input):
+
 
 
     return "sorted list"
@@ -33,10 +36,8 @@ def get_input():
 
 
 def main():
-
     #input
     given_input = get_input()
-    
 
     sorted_list = sorting_list(given_input)
 
