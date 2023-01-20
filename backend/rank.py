@@ -3,8 +3,14 @@ from SRE import *
 import datetime
 
 # Assigns SREs to dates
-def assign_pref(a_date):
-    print("assigned", a_date)
+def assign_pref(shift, sres):
+    for sre in sres:
+        for pref in sre.get_prefs():
+            if (pref == shift.get_date()):
+                shift.assign_sre(sre)
+                sre.assign_shift(shift.get_date())
+
+    print("assigned")
 
 # Sort the SRE list in ascending order based on number of preferences
 def sorting_list(given_input):
@@ -13,10 +19,10 @@ def sorting_list(given_input):
 
 # Iterate through the list of SRE preferences, assigning if a match is found
 def iterate_pref(sorted_list):
-    #list_dates is a sorted list of dates starting at the first shift and ending at the last one
+    #list_shifts is a sorted list of shifts starting at the first shift and ending at the last one
     list_dates = []
-    for date in list_dates:
-        assign_pref(date)
+    for shift in list_dates:
+        assign_pref(shift, sorted_list)
 
     return "sorted"
 
