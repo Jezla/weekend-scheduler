@@ -1,8 +1,9 @@
-#HOW TO LAUNCH APPLICATION
-Frontend
-- After installing nodeJs, go to frontend folder and type npm start
-Backend 
-- Install flask and run the app.py file
+## HOW TO LAUNCH APPLICATION
+
+### Frontend
+- After installing nodeJs with npm, go to frontend folder and type npm start
+### Backend 
+- Install flask with npm and run the app.py file
 
 
 # weekend-scheduler
