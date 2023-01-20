@@ -1,3 +1,10 @@
+#HOW TO LAUNCH APPLICATION
+Frontend
+- After installing nodeJs, go to frontend folder and type npm start
+Backend 
+- Install flask and run the app.py file
+
+
 # weekend-scheduler
 
 ## Goal
