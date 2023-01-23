@@ -36,23 +36,42 @@ def iterate_pref(sorted_list):
 
 def csv_convert(sorted_content):
 
-    # Create a list of dictionaries, where each dictionary represents a row of data
-    # ENTER THE DATE DATA IN HERE ONCE IT HAS BEEN WRITTEN
-    data = [{ 'Shift': datetime(2023,1,3), 'People Assigned': [] }]
+    filename = "SRE_Registtartion__c_-_APAC.csv"
 
-    with open('Weekend_Shift_Schedule.csv', 'w', newline='') as csvfile:
-        # Create a csv.DictWriter object, specifying the fieldnames (column names)
-        TitleBlock = ['Shift', 'People Assigned']
-        writer = csv.DictWriter(csvfile, fieldnames=TitleBlock)
+    with open(filename, 'r') as csvfile:
+        # Create a csv.reader object
+        reader = csv.reader(csvfile)
 
-        # Write the column names as the first row of the CSV file
-        writer.writeheader()
+        # Read the header row
+        header = next(reader)
 
-        # Write the data rows to the CSV file
-        for row in data:
-            # convert the date to string format
-            row["Shift"] = row["Shift"].strftime("%Y-%m-%d")
-            writer.writerow(row)
+        # Check if "I" column already exists in the header
+        if "I" in header:
+            I_index = header.index("I")
+        else:
+            I_index = len(header)
+            header.append("I")
+        # Append the new column 'I' to the header 
+
+        # Create a new list to store the modified data "Registered_SRE__c"
+        registered_SREs = [header]
+
+        # Iterate over the rows in the CSV file
+        for row in reader:
+            # Append the new value to the row
+            if len(row) > I_index:
+                row[I_index] = "New Value"
+            else:
+                row.append("New Value")
+            registered_SREs.append(row)
+
+
+    with open(filename, 'w', newline='') as csvfile:
+        # Create a csv.writer object
+        writer = csv.writer(csvfile)
+        
+        # Write the modified data to the CSV file
+        writer.writerows(registered_SREs)
 
     print("done")
 
