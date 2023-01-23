@@ -3,12 +3,14 @@ from SRE import *
 import datetime
 import heapq
 
+list_dates = []
+
 # Assigns SREs to dates
 def assign_pref(shift, sre):
     for pref in sre.get_prefs():
         if (pref == shift.get_date() and shift.get_slots() != 0):
             shift.assign_sre(sre)
-            shift.reduce_slots(1)
+            shift.decrease_slots(1)
             sre.assign_shift(shift.get_date())
         elif (shift.get_slots() == 0):
             sre.set_prio(999)
@@ -39,9 +41,7 @@ def csv_convert(sorted_content):
 
 
 def get_input():
-
     return "random"
-
 
 def main():
     #input

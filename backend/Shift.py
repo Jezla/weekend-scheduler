@@ -26,5 +26,8 @@ class Shift():
     def get_slots(self):
         return self.slots
     
-    def reduce_slots(self, val):
+    def decrease_slots(self, val):
         self.slots -= val
+    
+    def increase_slots(self, val):
+        self.slots += val
