@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import {DndContext, closestCenter} from "@dnd-kit/core";
 import {arrayMove, SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SortableItem } from './SortableItem';
 import Calendar from 'react-calendar';
 import TextField from '@mui/material/TextField';
@@ -14,6 +14,11 @@ function App() {
   const [name, setName] = useState("");
   const [dates, setListDates] = useState([]);
   const [value, setCalendarDate] = useState(new Date());
+
+  useEffect(() => {
+    // Get backend input for all valid weekends and public holidays
+    // Add the dates to list format
+  }, [])
 
   const setDates = (date) => {
     setCalendarDate(date)
