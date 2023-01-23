@@ -45,13 +45,9 @@ def csv_convert(sorted_content):
         # Read the header row
         header = next(reader)
 
-        # Check if "I" column already exists in the header
-        if "I" in header:
-            I_index = header.index("I")
-        else:
-            I_index = len(header)
-            header.append("I")
-        # Append the new column 'I' to the header 
+        # Registered SREs are in the 9th column
+        I_index = 8
+
 
         # Create a new list to store the modified data "Registered_SRE__c"
         registered_SREs = [header]
@@ -59,10 +55,7 @@ def csv_convert(sorted_content):
         # Iterate over the rows in the CSV file
         for row in reader:
             # Append the new value to the row
-            if len(row) > I_index:
-                row[I_index] = "New Value"
-            else:
-                row.append("New Value")
+            row[I_index] = "New Value"
             registered_SREs.append(row)
 
 
