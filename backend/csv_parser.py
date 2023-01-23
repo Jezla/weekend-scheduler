@@ -33,7 +33,10 @@ def csv_parser(file):
         return (list_shifts, list_dates)
     
 if __name__ == "__main__":
-    csv_parser("test.txt")
-
-
-
+    shifts, dates = csv_parser("test.txt")
+    
+    print(dates)
+    for shift in shifts:
+        print(shift.get_slots())
+        print(shift.get_date())
+    
