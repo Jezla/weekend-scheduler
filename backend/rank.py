@@ -38,13 +38,11 @@ def csv_convert(sorted_content):
 
     # Create a list of dictionaries, where each dictionary represents a row of data
     # ENTER THE DATE DATA IN HERE ONCE IT HAS BEEN WRITTEN
-    data = [{'Full Name': 'Michael Islamov', 'Shift': datetime(2023,1,1) },
-            {'Full Name': 'Wilson Che', 'Shift': datetime(2022,2,12) },
-            {'Full Name': 'Adrian Lin', 'Shift': datetime(2022,2,23) }]
+    data = [{ 'Shift': datetime(2023,1,3), 'People Assigned': [] }]
 
     with open('Weekend_Shift_Schedule.csv', 'w', newline='') as csvfile:
         # Create a csv.DictWriter object, specifying the fieldnames (column names)
-        TitleBlock = ['Full Name', 'Shift']
+        TitleBlock = ['Shift', 'People Assigned']
         writer = csv.DictWriter(csvfile, fieldnames=TitleBlock)
 
         # Write the column names as the first row of the CSV file
@@ -52,8 +50,8 @@ def csv_convert(sorted_content):
 
         # Write the data rows to the CSV file
         for row in data:
-             # convert the date to string format
-            row["Date"] = row["Date"].strftime("%Y-%m-%d")
+            # convert the date to string format
+            row["Shift"] = row["Shift"].strftime("%Y-%m-%d")
             writer.writerow(row)
 
     print("done")
