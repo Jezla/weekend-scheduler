@@ -8,11 +8,14 @@ def csv_parser(file):
     Reads the csv file containing shift information and creates a list of Shift objects
     """
     list_shifts = []
+    headers = []
     with open(file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         prev_date = ""
         for row in csv_reader:
+            if line_count == 0:
+                headers.append(row)
             if line_count >= 1:
                 date = row[1]
                 if(date != prev_date):
