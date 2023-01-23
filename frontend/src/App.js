@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
-import {DndContext, closestCenter} from "@dnd-kit/core";
+import {DndContext, closestCenter, useSensor, useSensors, PointerSensor} from "@dnd-kit/core";
 import {arrayMove, SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import { useState, useEffect } from 'react';
 import { SortableItem } from './SortableItem';
@@ -14,10 +14,17 @@ function App() {
   const [name, setName] = useState("");
   const [dates, setListDates] = useState([]);
   const [value, setCalendarDate] = useState(new Date());
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      }
+    })
+  )
 
   useEffect(() => {
     // Get backend input for all valid weekends and public holidays
-    // Add the dates to list format
+    // Add the dates to list/calendar format
   }, [])
 
   const setDates = (date) => {
@@ -60,16 +67,16 @@ function App() {
           tileDisabled={({date}) => setDisabled(date)}
           showNeighboringMonth={false}
         />
-        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-          <Container className="p-3" style={{ "width": "50%" }} align="center">
-            <h3>Sort your preferences</h3>
+        <Container className="p-3" style={{ "width": "50%" }} align="center">
+          <h3>Sort your preferences</h3>
+          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <SortableContext items={dates} strategy={verticalListSortingStrategy}>
               {dates.map(date =>
-                <SortableItem key={date} id={date} dateList={dates} setDates={setListDates}/>
+                <SortableItem key={date} id={date} items={dates} setItems={setListDates}/>
               )}
             </SortableContext>
-          </Container>
-        </DndContext>
+          </DndContext>
+        </Container>
         <Button
           variant="contained"
           onClick={() => {

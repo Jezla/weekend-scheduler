@@ -18,17 +18,19 @@ export function SortableItem(props) {
 
     return (
       <>
-        <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-          <Card body className="m-3">
+        <div >
+          <Card body className="m-3" ref={setNodeRef} style={style} {...attributes} {...listeners}>
             {props.id}
+            <CloseButton onClick={(e) => {
+              console.log(props.id)
+              const index = props.items.indexOf(props.id)
+              const newDates = [...props.items]
+              newDates.splice(index, 1);
+              props.setItems(newDates)
+              e.stopPropagation()
+            }}/>
           </Card>
         </div>
-        <CloseButton onClick={() => {
-          const index = props.dateList.indexOf(props.id)
-          const newDates = [...props.dateList]
-          newDates.splice(index, 1);
-          props.setDates(newDates)
-        }}/>
       </>
     )
 }
