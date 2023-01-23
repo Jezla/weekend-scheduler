@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
-import Card from 'react-bootstrap/Card';
+import { CloseButton, Card } from "react-bootstrap";
 
 export function SortableItem(props) {
     const {
@@ -17,8 +17,18 @@ export function SortableItem(props) {
     }
 
     return (
+      <>
         <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-            <Card body className="m-3">{props.id}</Card>
+          <Card body className="m-3">
+            {props.id}
+          </Card>
         </div>
+        <CloseButton onClick={() => {
+          const index = props.dateList.indexOf(props.id)
+          const newDates = [...props.dateList]
+          newDates.splice(index, 1);
+          props.setDates(newDates)
+        }}/>
+      </>
     )
 }

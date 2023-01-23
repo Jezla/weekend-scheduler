@@ -11,38 +11,76 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 function App() {
-  const [dates, setDates] = useState(["22/01/2023", "25/02/2023", "27/03/2023"]);
-  const [value, onChange] = useState(new Date());
+  const [name, setName] = useState("");
+  const [dates, setListDates] = useState([]);
+  const [value, setCalendarDate] = useState(new Date());
+
+  const setDates = (date) => {
+    setCalendarDate(date)
+    if (dates.length !== 6) {
+      setListDates([...dates, date.toLocaleDateString()])
+      // Put some sort of max alert popup thingo
+    }
+  }
+
+  const setDisabled = (date) => {
+    if ((date.getDay() !== 0 &&
+        date.getDay() !== 6) ||
+        dates.includes(date.toLocaleDateString())
+    ) {
+      return true
+    }
+    return false
+  }
 
   return (
     <>
       <div>
-        <TextField id="outlined-basic" label="First Name" variant="outlined"/>
-        <TextField id="outlined-basic" label="Last Name" variant="outlined"/>
+        <TextField
+          label="Name"
+          variant="outlined"
+          value={name}
+          onChange={(e) => {setName(e.target.value)}}
+        />
       </div>
       <div>
-      <Calendar onChange={onChange} value={value} />
+        <Calendar
+          onChange={date => setDates(date)}
+          value={value}
+          minDate={new Date(2023, 1)}
+          maxDate={new Date(2023, 4, 0)}
+          minDetail="month"
+          next2Label={null}
+          prev2Label={null}
+          tileDisabled={({date}) => setDisabled(date)}
+          showNeighboringMonth={false}
+        />
         <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <Container className="p-3" style={{ "width": "50%" }} align="center">
             <h3>Sort your preferences</h3>
             <SortableContext items={dates} strategy={verticalListSortingStrategy}>
-              {dates.map(language => <SortableItem key={language} id={language} />)}
+              {dates.map(date =>
+                <SortableItem key={date} id={date} dateList={dates} setDates={setListDates}/>
+              )}
             </SortableContext>
           </Container>
         </DndContext>
-        <Button variant="contained">Submit</Button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            console.log(name, dates)
+          }}
+        >
+          Submit
+        </Button>
       </div>
     </>
   );
 
   function handleDragEnd(event) {
-    console.log("Drag end called");
     const { active, over } = event;
-    console.log("ACTIVE: " + active.id);
-    console.log("OVER :" + over.id);
-
     if (active.id !== over.id) {
-      setDates((items) => {
+      setListDates((items) => {
         const activeIndex = items.indexOf(active.id);
         const overIndex = items.indexOf(over.id);
         console.log(arrayMove(items, activeIndex, overIndex));
