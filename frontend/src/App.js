@@ -7,13 +7,17 @@ import {arrayMove, SortableContext, verticalListSortingStrategy} from "@dnd-kit/
 import { useState, useEffect } from 'react';
 import { SortableItem } from './SortableItem';
 import Calendar from 'react-calendar';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import {
+  TextField, Button, InputLabel, MenuItem, FormControl, Select
+} from '@mui/material';
 
 function App() {
   const [name, setName] = useState("");
-  const [dates, setListDates] = useState([]);
-  const [value, setCalendarDate] = useState(new Date());
+  const [selectedDates, setSelectedDates] = useState([]);
+  const [calendarDate, setCalendarDate] = useState(new Date());
+  const [listDates, setListDates] = useState([]);
+  const [nameList, setNameList] = useState(['asldkjaslkd asdkja', 'austin lai', 'thidaskld askdid']);
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -22,43 +26,74 @@ function App() {
     })
   )
 
+  const handleDragEnd = (event) => {
+    const {active, over} = event;
+    if (active.id !== over.id) {
+      setSelectedDates((items) => {
+        const activeIndex = items.indexOf(active.id);
+        const overIndex = items.indexOf(over.id);
+        console.log(arrayMove(items, activeIndex, overIndex));
+        return arrayMove(items, activeIndex, overIndex);
+      });
+    }
+  }
+
   useEffect(() => {
     // Get backend input for all valid weekends and public holidays
-    // Add the dates to list/calendar format
+    // Fill listDates array
+    // Get all employee names and fill nameList
   }, [])
 
   const setDates = (date) => {
     setCalendarDate(date)
-    if (dates.length !== 6) {
-      setListDates([...dates, date.toLocaleDateString()])
+    if (selectedDates.length !== 6) {
+      setSelectedDates([...selectedDates, date.toLocaleDateString()])
       // Put some sort of max alert popup thingo
     }
   }
 
   const setDisabled = (date) => {
+    // TODO: add check for valid dates and public holidays (take from list date input)
     if ((date.getDay() !== 0 &&
         date.getDay() !== 6) ||
-        dates.includes(date.toLocaleDateString())
+        selectedDates.includes(date.toLocaleDateString())
     ) {
       return true
     }
     return false
   }
 
+  const handleSubmit = () => {
+    console.log(name, selectedDates)
+    // TODO: probs add a confirmation popup
+  }
+
   return (
     <>
       <div>
-        <TextField
-          label="Name"
-          variant="outlined"
-          value={name}
-          onChange={(e) => {setName(e.target.value)}}
-        />
+        {/*
+          <TextField
+            label="Name"
+            variant="outlined"
+            value={name}
+            onChange={(e) => {setName(e.target.value)}}
+          />
+        */}
+        <FormControl sx={{ m: 1, minWidth: 360 }} size="small">
+          <InputLabel>Select Name</InputLabel>
+          <Select
+            value={name}
+            label="Select Name"
+            onChange={(e) => setName(e.target.value)}
+          >
+            {nameList.map((name, index) => <MenuItem key={index} value={name}>{name}</MenuItem>)}
+          </Select>
+        </FormControl>
       </div>
       <div>
         <Calendar
           onChange={date => setDates(date)}
-          value={value}
+          value={calendarDate}
           minDate={new Date(2023, 1)}
           maxDate={new Date(2023, 4, 0)}
           minDetail="month"
@@ -70,18 +105,16 @@ function App() {
         <Container className="p-3" style={{ "width": "50%" }} align="center">
           <h3>Sort your preferences</h3>
           <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-            <SortableContext items={dates} strategy={verticalListSortingStrategy}>
-              {dates.map(date =>
-                <SortableItem key={date} id={date} items={dates} setItems={setListDates}/>
+            <SortableContext items={selectedDates} strategy={verticalListSortingStrategy}>
+              {selectedDates.map(date =>
+                <SortableItem key={date} id={date} items={selectedDates} setItems={setSelectedDates}/>
               )}
             </SortableContext>
           </DndContext>
         </Container>
         <Button
           variant="contained"
-          onClick={() => {
-            console.log(name, dates)
-          }}
+          onClick={handleSubmit}
         >
           Submit
         </Button>
@@ -89,17 +122,6 @@ function App() {
     </>
   );
 
-  function handleDragEnd(event) {
-    const { active, over } = event;
-    if (active.id !== over.id) {
-      setListDates((items) => {
-        const activeIndex = items.indexOf(active.id);
-        const overIndex = items.indexOf(over.id);
-        console.log(arrayMove(items, activeIndex, overIndex));
-        return arrayMove(items, activeIndex, overIndex);
-      });
-    }
-  }
 }
 
 export default App;
