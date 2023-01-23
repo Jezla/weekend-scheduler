@@ -29,5 +29,9 @@ def csv_parser(file):
             line_count += 1
         
         return list_shifts
+    
+if __name__ == "__main__":
+    csv_parser("test.txt")
+
 
 
