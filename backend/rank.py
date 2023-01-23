@@ -1,14 +1,18 @@
 from Shift import *
 from SRE import *
 import datetime
+import heapq
 
 # Assigns SREs to dates
-def assign_pref(shift, sres):
-    for sre in sres:
-        for pref in sre.get_prefs():
-            if (pref == shift.get_date()):
-                shift.assign_sre(sre)
-                sre.assign_shift(shift.get_date())
+def assign_pref(shift, sre):
+    for pref in sre.get_prefs():
+        if (pref == shift.get_date() and shift.get_slots() != 0):
+            shift.assign_sre(sre)
+            shift.reduce_slots(1)
+            sre.assign_shift(shift.get_date())
+        elif (shift.get_slots() == 0):
+            sre.set_prio(999)
+            #sre.get_list_shifts().remove() Need to verify this line
 
     print("assigned")
 
@@ -21,8 +25,10 @@ def sorting_list(given_input):
 def iterate_pref(sorted_list):
     #list_shifts is a sorted list of shifts starting at the first shift and ending at the last one
     list_dates = []
+    sre_pq = heapq.heapify(sorted_list)
     for shift in list_dates:
-        assign_pref(shift, sorted_list)
+        for sre in sre_pq:
+            assign_pref(shift, sre)
 
     return "sorted"
 
