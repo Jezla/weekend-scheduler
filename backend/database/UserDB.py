@@ -5,7 +5,7 @@ from db import *
 def insert_user(conn, first_name, last_name):
     sql = " INSERT INTO user(first_name,last_name) VALUES(?,?)"
     cur = conn.cursor()
-    cur.execute(sql, project)
+    cur.execute(sql)
     conn.commit()
     return None
 
@@ -15,7 +15,7 @@ def insert_user(conn, first_name, last_name):
 def delete_user(conn, identifier, identifier_target):
     sql = "DELETE FROM user WHERE " + identifier + " = ?" 
     cur = conn.cursor()
-    cur.execute(sql, project)
+    cur.execute(sql)
     conn.commit()
     return None
 
@@ -27,7 +27,7 @@ def delete_user(conn, identifier, identifier_target):
 def update_user(conn, set, set_target, identifier, identifier_target):
     sql = "UPDATE user SET " + set + " = ? WHERE " + identifier + " = ?"
     cur = conn.cursor()
-    cur.execute(sql, project)
+    cur.execute(sql)
     conn.commit()
     return None
 
@@ -39,12 +39,12 @@ def main():
                                     id integer PRIMARY KEY AUTOINCREMENT,
                                     first_name text NOT NULL,
                                     last_name text NOT NULL,
-                                    preferences_id integer AUTOINCREMENT,
+                                    preferences_id integer,
                                     allocated_shifts Text ,
                                     FOREIGN KEY (preferences_id) REFERENCES preferences (id)
                                 );"""
     
-    sql_create_preferences_table = """ CREATE TABLE IF NOT EXISTS preference (
+    sql_create_preference_table = """ CREATE TABLE IF NOT EXISTS preference (
                                     id integer PRIMARY KEY,
                                     dates Text,
                                     rank integer NOT NULL
@@ -56,7 +56,7 @@ def main():
     # create tables
     if conn is not None:
         # create preferences table
-        create_table(conn, sql_create_preferences_table)
+        create_table(conn, sql_create_preference_table)
 
         # create user table
         create_table(conn, sql_create_user_table)
