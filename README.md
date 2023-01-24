@@ -1,8 +1,9 @@
-#HOW TO LAUNCH APPLICATION
-Frontend
-- After installing nodeJs, go to frontend folder and type npm start
-Backend 
-- Install flask and run the app.py file
+## HOW TO LAUNCH APPLICATION
+
+### Frontend
+- After installing nodeJs with npm, go to frontend folder and type npm start
+### Backend 
+- Install flask with npm and run the app.py file
 
 
 # weekend-scheduler
@@ -28,7 +29,7 @@ Document the creation process of bot and how it functions.
 - Project Sponsor (Managers/Intern Mentor/SREs/Interns)
 - Project Manager - Robert and Gabe
 - Project Coordinator  - Wilson and Pattie
-- Project Team Member - Zoheb 
+- Project Team Member - Zoheb, Austin, Adrian, Alex, Chris, Will
 
 ## Expected by end of internship
 - Working Prototype of the “Bot”.
