@@ -5,14 +5,19 @@ import heapq
 
 # Assigns SREs to dates
 def assign_pref(shift, sre):
-    for pref in sre.get_prefs():
+    pref_count = 6
+    prefs = sre.get_prefs()
+    for pref in prefs:
         if (pref == shift.get_date() and shift.get_slots() != 0):
             shift.assign_sre(sre)
             shift.reduce_slots(1)
             sre.assign_shift(shift.get_date())
         elif (shift.get_slots() == 0):
-            sre.set_prio(999)
-            #sre.get_list_shifts().remove() Need to verify this line
+            sre.set_prio(6 + pref_count)
+            prefs.remove(shift) # Need to check this line
+        
+        pref_count -= 1
+            
 
     print("assigned")
 
