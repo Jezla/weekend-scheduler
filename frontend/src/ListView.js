@@ -23,6 +23,53 @@ const ListView = (props) => {
     borderColor: 'divider',
   }
 
+  const displayDate = (date, index) => {
+    if (index === 0 && date.getDay() === 'Sunday') {
+      return (
+        <>
+          <Grid
+            sx={defaultBorder}
+            key={index}
+            minHeight={25}
+            maxWidth={100}
+            xs={6}
+            md={6}
+            lg={6}
+            xl={6}
+          >
+            ''
+          </Grid>
+          <Grid
+            sx={defaultBorder}
+            key={index}
+            minHeight={25}
+            maxWidth={100}
+            xs={6}
+            md={6}
+            lg={6}
+            xl={6}
+          >
+            {date.toLocaleDateString()}
+          </Grid>
+        </>
+      )
+    }
+    return (
+      <Grid
+        sx={defaultBorder}
+        key={index}
+        minHeight={25}
+        maxWidth={100}
+        xs={6}
+        md={6}
+        lg={6}
+        xl={6}
+      >
+        {date.toLocaleDateString()}
+      </Grid>
+    )
+  }
+
   return (
     <Container>
       <Grid
@@ -33,50 +80,32 @@ const ListView = (props) => {
         <Grid
           container
           spacing={2}
+          xs={4}
+          columns={{ xs: 12, sm: 12, md: 12 }}
         >
-          {monthList1 && monthList1.map((date, index) => (
-            <Grid
-              sx={defaultBorder}
-              key={index}
-              {...{ xs: 6 }}
-              minHeight={25}
-              maxWidth={100}
-            >
-              {date.toLocaleDateString()}
-            </Grid>
-          ))}
+          {monthList1 && monthList1.map((date, index) => {
+            return displayDate(date, index)
+          })}
         </Grid>
         <Grid
           container
           spacing={2}
+          xs={4}
+          columns={{ xs: 12, sm: 12, md: 12 }}
         >
-          {monthList2 && monthList2.map((date, index) => (
-            <Grid
-              sx={defaultBorder}
-              key={index}
-              {...{ xs: 6 }}
-              minHeight={25}
-              maxWidth={100}
-            >
-              {date.toLocaleDateString()}
-            </Grid>
-          ))}
+          {monthList2 && monthList2.map((date, index) => {
+            return displayDate(date, index)
+          })}
         </Grid>
         <Grid
           container
           spacing={2}
+          xs={4}
+          columns={{ xs: 12, sm: 12, md: 12 }}
         >
-          {monthList3 && monthList3.map((date, index) => (
-            <Grid
-              sx={defaultBorder}
-              key={index}
-              {...{ xs: 6 }}
-              minHeight={25}
-              maxWidth={100}
-            >
-              {date.toLocaleDateString()}
-            </Grid>
-          ))}
+          {monthList3 && monthList3.map((date, index) => {
+            return displayDate(date, index)
+          })}
         </Grid>
       </Grid>
     </Container>
