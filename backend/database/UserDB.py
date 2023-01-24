@@ -5,7 +5,7 @@ from db import *
 def insert_user(conn, first_name, last_name):
     sql = " INSERT INTO user(first_name,last_name) VALUES(?,?)"
     cur = conn.cursor()
-    cur.execute(sql)
+    cur.execute(sql, (first_name, last_name))
     conn.commit()
     return None
 
@@ -15,7 +15,7 @@ def insert_user(conn, first_name, last_name):
 def delete_user(conn, identifier, identifier_target):
     sql = "DELETE FROM user WHERE " + identifier + " = ?" 
     cur = conn.cursor()
-    cur.execute(sql)
+    cur.execute(sql, identifier_target)
     conn.commit()
     return None
 
@@ -49,17 +49,22 @@ def main():
                                     dates Text,
                                     rank integer NOT NULL
                                 );"""
+    
 
     # create a database connection
     conn = create_connection(database)
 
     # create tables
     if conn is not None:
+        
         # create preferences table
         create_table(conn, sql_create_preference_table)
+        conn.commit()
 
         # create user table
         create_table(conn, sql_create_user_table)
+        conn.commit()
+       
 
 
     else:
@@ -67,3 +72,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    

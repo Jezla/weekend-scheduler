@@ -22,6 +22,8 @@ def create_table(conn, create_table_sql):
     try:
         c = conn.cursor()
         c.execute(create_table_sql)
+        #c.execute("SELECT name from sqlite_master WHERE type='table';")
+        #print(c.fetchall())
     except Error as e:
         print(e)
     
