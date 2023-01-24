@@ -8,6 +8,7 @@ class Shift():
         - date: the datetime representation of the calendar date
         - workers: list of SREs that have been assigned to the shift
         - slots: How many slots a given shift has
+        - manager: The Manager for the shift. Stored as an instance of the Manager class
     """
     def __init__(self, date, slots):
         self.date = date
