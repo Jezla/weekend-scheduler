@@ -33,7 +33,7 @@ def update_user(conn, set, set_target, identifier, identifier_target):
 
 
 def main():
-    database = r"C:\sqlite\db\pythonsqlite.db"
+    database = "pythonsqlite.db"
 
     sql_create_user_table = """ CREATE TABLE IF NOT EXISTS user (
                                     id integer PRIMARY KEY AUTOINCREMENT,
@@ -59,14 +59,10 @@ def main():
         
         # create preferences table
         create_table(conn, sql_create_preference_table)
-        conn.commit()
 
         # create user table
         create_table(conn, sql_create_user_table)
-        conn.commit()
        
-
-
     else:
         print("Error! cannot create the database connection.")
 
