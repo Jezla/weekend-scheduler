@@ -24,7 +24,7 @@ class SRE():
         Code from this link:
         https://stackoverflow.com/questions/8875706/heapq-with-custom-compare-predicate
         """
-        return (self.get_num_prefs() - self.prio) < (other.get_num_prefs() - other.get_prio())
+        return (self.get_num_prefs() - self.prio) <= (other.get_num_prefs() - other.get_prio())
     
     def get_num_prefs(self):
         return self.pref_num
@@ -52,4 +52,7 @@ class SRE():
     
     def set_prio(self, val):
         self.prio = val
+    
+    def remove_pref(self, val):
+        self.prefs.remove(val)
 
