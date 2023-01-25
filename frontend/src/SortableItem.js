@@ -2,7 +2,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
 import { CloseButton, Card } from "react-bootstrap";
 
-export function SortableItem(props) {
+const SortableItem = (props) => {
   const {
     attributes,
     listeners,
@@ -18,12 +18,10 @@ export function SortableItem(props) {
   }
 
   return (
-    <>
-      <div >
+      <div>
         <Card body className="m-3" ref={setNodeRef} style={style} {...attributes} {...listeners}>
           {props.id}
           <CloseButton onClick={(e) => {
-            console.log(props.id)
             const index = props.items.indexOf(props.id)
             const newDates = [...props.items]
             newDates.splice(index, 1);
@@ -32,6 +30,7 @@ export function SortableItem(props) {
           }}/>
         </Card>
       </div>
-    </>
   )
 }
+
+export default SortableItem

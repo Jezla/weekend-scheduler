@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { textAlign } from "@mui/system";
 
@@ -39,24 +39,35 @@ const ListView = (props) => {
     borderBottom: '1px solid',
     borderRight: '1px solid',
     borderColor: 'divider',
+    textAlign: 'center'
+  }
+
+  const noBottomRight = {
+    borderTop: '1px solid',
+    borderLeft: '1px solid',
+    borderBottom: '1px solid',
+    borderRight: '1px solid',
+    borderColor: 'divider',
+    borderRightColor: 'white',
+    borderBottomColor: 'white',
   }
 
   const displayDate = (pair, index) => {
     return (
       <Grid
         container
-        key={index}
+        key={'p' + index}
         justifyContent="center"
         alignItems="center"
       >
-        {pair.map((date, index) => {
+        {pair.map((date, pairIndex) => {
           if (date === null)  {
             return (
               <Grid
-                key={index}
+                key={'p' + index + 'i' + pairIndex}
                 minHeight={25}
                 minWidth={100}
-                sx={{...defaultBorder, textAlign: 'center' }}
+                sx={index === 0 ? defaultBorder : noBottomRight}
                 xs={6}
               >
                 &nbsp;
@@ -65,11 +76,26 @@ const ListView = (props) => {
           }
           return (
             <Grid
-              key={index}
+              key={'p' + index + 'i' + pairIndex}
               minHeight={25}
               minWidth={100}
-              sx={{...defaultBorder, textAlign: 'center' }}
+              sx={props.selectedDates.includes(date.toLocaleDateString())
+                ? {...defaultBorder, cursor: 'pointer', backgroundColor: '#ccc'}
+                : {...defaultBorder, cursor: 'pointer'}
+              }
               xs={6}
+              onClick={() => {
+                if (props.selectedDates.includes(date.toLocaleDateString())) {
+                  const index = props.selectedDates.indexOf(props.id)
+                  const newDates = [...props.selectedDates]
+                  newDates.splice(index, 1);
+                  props.setSelectedDates(newDates)
+                } else if (props.selectedDates.length === 6) {
+                  // TODO: Put some sort of max alert popup thingo
+                } else {
+                  props.setSelectedDates([...props.selectedDates, date.toLocaleDateString()])
+                }
+              }}
             >
               {date.toLocaleDateString()}
             </Grid>
@@ -94,6 +120,37 @@ const ListView = (props) => {
           sx={{ pl: 2, pr: 2 }}
           direction='column'
         >
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Typography sx={{ fontWeight: 'bold' }}>
+              {monthList1[0] && monthList1[0][1].toLocaleString('default', { month: 'long' })}
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid
+              minHeight={25}
+              minWidth={100}
+              sx={defaultBorder}
+              xs={6}
+            >
+              <Typography sx={{ fontWeight: 'bold' }}>Sat</Typography>
+            </Grid>
+            <Grid
+              minHeight={25}
+              minWidth={100}
+              sx={defaultBorder}
+              xs={6}
+            >
+              <Typography sx={{ fontWeight: 'bold' }}>Sun</Typography>
+            </Grid>
+          </Grid>
           {monthList1 && monthList1.map((pair, index) => {
             return displayDate(pair, index)
           })}
@@ -104,6 +161,37 @@ const ListView = (props) => {
           sx={{ pl: 2, pr: 2 }}
           direction='column'
         >
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Typography sx={{ fontWeight: 'bold' }}>
+              {monthList2[0] && monthList2[0][1].toLocaleString('default', { month: 'long' })}
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid
+              minHeight={25}
+              minWidth={100}
+              sx={defaultBorder}
+              xs={6}
+            >
+              <Typography sx={{ fontWeight: 'bold' }}>Sat</Typography>
+            </Grid>
+            <Grid
+              minHeight={25}
+              minWidth={100}
+              sx={defaultBorder}
+              xs={6}
+            >
+              <Typography sx={{ fontWeight: 'bold' }}>Sun</Typography>
+            </Grid>
+          </Grid>
           {monthList2 && monthList2.map((date, index) => {
             return displayDate(date, index)
           })}
@@ -114,6 +202,37 @@ const ListView = (props) => {
           sx={{ pl: 2, pr: 2 }}
           direction='column'
         >
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Typography sx={{ fontWeight: 'bold' }}>
+              {monthList3[0] && monthList3[0][1].toLocaleString('default', { month: 'long' })}
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid
+              minHeight={25}
+              minWidth={100}
+              sx={{...defaultBorder, textAlign: 'center' }}
+              xs={6}
+            >
+              <Typography sx={{ fontWeight: 'bold' }}>Sat</Typography>
+            </Grid>
+            <Grid
+              minHeight={25}
+              minWidth={100}
+              sx={{...defaultBorder, textAlign: 'center' }}
+              xs={6}
+            >
+              <Typography sx={{ fontWeight: 'bold' }}>Sun</Typography>
+            </Grid>
+          </Grid>
           {monthList3 && monthList3.map((date, index) => {
             return displayDate(date, index)
           })}

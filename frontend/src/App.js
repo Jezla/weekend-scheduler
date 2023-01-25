@@ -10,7 +10,7 @@ import {
   Button, InputLabel, MenuItem, FormControl, Select, Stack, Typography, Switch
 } from '@mui/material';
 
-import { SortableItem } from './SortableItem';
+import SortableItem from './SortableItem';
 import ListView from './ListView';
 
 function App() {
@@ -77,7 +77,7 @@ function App() {
     setCalendarDate(date)
     if (selectedDates.length !== 6) {
       setSelectedDates([...selectedDates, date.toLocaleDateString()])
-      // Put some sort of max alert popup thingo
+      // TODO: Put some sort of max alert popup thingo
     }
   }
 
@@ -151,8 +151,9 @@ function App() {
           <h3>Sort your preferences</h3>
           <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <SortableContext items={selectedDates} strategy={verticalListSortingStrategy}>
-              {selectedDates.map(date =>
-                <SortableItem key={date} id={date} items={selectedDates} setItems={setSelectedDates}/>
+              {selectedDates.map(date => {
+                return <SortableItem key={date} id={date} items={selectedDates} setItems={setSelectedDates}/>
+              }
               )}
             </SortableContext>
           </DndContext>
