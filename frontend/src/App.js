@@ -12,6 +12,7 @@ import {
 
 import SortableItem from './SortableItem';
 import ListView from './ListView';
+import NavBar from './Navbar';
 
 function App() {
   const [name, setName] = useState("");
@@ -100,6 +101,7 @@ function App() {
 
   return (
     <>
+      <NavBar></NavBar>
       <div>
         {/*
           <TextField
