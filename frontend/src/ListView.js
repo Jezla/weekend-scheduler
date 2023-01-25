@@ -7,30 +7,32 @@ const ListView = (props) => {
   const [monthList2, setMonthList2] = React.useState([]);
   const [monthList3, setMonthList3] = React.useState([]);
 
-  const formatMonthList = (q, i) => {
-    const quarters = [[1,2,3],[4,5,6],[7,8,9],[10,11,0]];
-    const filteredMonth = props.listDates.filter(date => date.getMonth() === quarters[q][i]);
-    if (filteredMonth[0].getDay() === 'Sunday') {
-      filteredMonth.unshift(null)
-    }
-
-    if (filteredMonth.length % 2 !== 0) {
-      filteredMonth.push(null)
-    }
-
-    const splitDays = filteredMonth.reduce((days, date, index) => {
-      return (index % 2 === 0 ? days.push([date]) : days[days.length-1].push(date)) && days;
-    }, []);
-
-    return splitDays;
-  }
 
   React.useEffect(() => {
     const q = 0 // TODO: Un-hardcode this (get current quarter)
+
+    const formatMonthList = (q, i) => {
+      const quarters = [[1,2,3],[4,5,6],[7,8,9],[10,11,0]];
+      const filteredMonth = props.listDates.filter(date => date.getMonth() === quarters[q][i]);
+      if (filteredMonth[0].getDay() === 'Sunday') {
+        filteredMonth.unshift(null)
+      }
+
+      if (filteredMonth.length % 2 !== 0) {
+        filteredMonth.push(null)
+      }
+
+      const splitDays = filteredMonth.reduce((days, date, index) => {
+        return (index % 2 === 0 ? days.push([date]) : days[days.length-1].push(date)) && days;
+      }, []);
+
+      return splitDays;
+    }
+
     setMonthList1(formatMonthList(q, 0))
     setMonthList2(formatMonthList(q, 1))
     setMonthList3(formatMonthList(q, 2))
-  }, [props.listDates, formatMonthList])
+  }, [props.listDates])
 
   const defaultBorder = {
     borderTop: '1px solid',
@@ -85,7 +87,7 @@ const ListView = (props) => {
               xs={6}
               onClick={() => {
                 if (props.selectedDates.includes(date.toLocaleDateString())) {
-                  const index = props.selectedDates.indexOf(props.id)
+                  const index = props.selectedDates.indexOf(date.toLocaleDateString())
                   const newDates = [...props.selectedDates]
                   newDates.splice(index, 1);
                   props.setSelectedDates(newDates)
