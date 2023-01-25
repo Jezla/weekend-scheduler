@@ -1,17 +1,17 @@
 import React from "react";
 import { Box, Button, Typography, Modal } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
+import { useNavigate } from 'react-router-dom';
 import Logo from './logo.png';
 
 const Navbar = (props) => {
-    const handleSubmit = () => {
-        console.log("This is a button")
-        // TODO: check for existing name
-        // TODO: probs add a confirmation popup
-    }
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    // const navigate = useNavigate();
+    // const navigateAdmin = () => {
+    //     navigate('./Admin');
+    // };
     const style = {
         position: 'absolute',
         top: '50%',
@@ -22,7 +22,7 @@ const Navbar = (props) => {
         border: '2px solid #000',
         boxShadow: 24,
         p: 4,
-      };
+    };
 
     return (
         <Box sx={{ backgroundColor: '#1f2937', }}>
@@ -60,7 +60,7 @@ const Navbar = (props) => {
                         </Modal>
                     </Grid>
                     <Grid sx={{ pl: 1 }}>
-                        <Button variant="contained" onClick={handleSubmit}> Admin </Button>
+                        {/* <Button variant="contained" onClick={navigateAdmin}> Admin </Button> */}
                     </Grid>
                 </Grid>
             </Grid>
