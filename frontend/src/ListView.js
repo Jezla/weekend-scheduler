@@ -1,7 +1,6 @@
 import React from "react";
 import { Container, Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import { textAlign } from "@mui/system";
 
 const ListView = (props) => {
   const [monthList1, setMonthList1] = React.useState([]);
@@ -20,7 +19,7 @@ const ListView = (props) => {
     }
 
     const splitDays = filteredMonth.reduce((days, date, index) => {
-      return (index % 2 == 0 ? days.push([date]) : days[days.length-1].push(date)) && days;
+      return (index % 2 === 0 ? days.push([date]) : days[days.length-1].push(date)) && days;
     }, []);
 
     return splitDays;
@@ -31,7 +30,7 @@ const ListView = (props) => {
     setMonthList1(formatMonthList(q, 0))
     setMonthList2(formatMonthList(q, 1))
     setMonthList3(formatMonthList(q, 2))
-  }, [props.listDates])
+  }, [props.listDates, formatMonthList])
 
   const defaultBorder = {
     borderTop: '1px solid',
