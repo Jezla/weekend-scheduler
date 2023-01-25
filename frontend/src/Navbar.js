@@ -1,12 +1,9 @@
 import React from "react";
-import Box from '@mui/material/Box';
-import { Button, Stack, Typography, Switch, FormControl } from '@mui/material';
-import { useState } from 'react';
+import { Box, Button } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import Logo from './logo.png';
 
 const Navbar = (props) => {
-    const [view, toggleView] = useState(false) // Toggle between list and calendar view
-
     const handleSubmit = () => {
         console.log("This is a button")
         // TODO: check for existing name
@@ -14,19 +11,30 @@ const Navbar = (props) => {
     }
 
     return (
-        <Box sx={{ height: 60, backgroundColor: '#1f2937', }}>
-            <img src={Logo} alt="Logo" style={{ height: 40, paddingTop: 20, paddingLeft: 20 }} />
-            <div style={{right:'0', alignItems:'flex-end', display: 'flex', justifyContent: 'space-between', maxWidth: '400px', margin: 'auto'}}>
-                <FormControl>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                        <Typography>List</Typography>
-                        <Switch size="medium" checked={view} onChange={(e) => toggleView(e.target.checked)} />
-                        <Typography>Calendar</Typography>
-                    </Stack>
-                </FormControl>
+        <Box sx={{ backgroundColor: '#1f2937', }}>
+          <Grid
+            sx={{ p: 1 }}
+            container
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Grid
+              container
+              justifyContent="center"
+              sx={{ pl: 1 }}
+            >
+
+              <img src={Logo} alt="Logo" style={{ maxWidth: 180 }} />
+            </Grid>
+            <Grid container>
+              <Grid sx={{ pl: 1 }}>
                 <Button variant="contained" onClick={handleSubmit}> Help </Button>
+              </Grid>
+              <Grid sx={{ pl: 1 }}>
                 <Button variant="contained" onClick={handleSubmit}> Admin </Button>
-            </div>
+              </Grid>
+            </Grid>
+          </Grid>
         </Box>
     )
 };
