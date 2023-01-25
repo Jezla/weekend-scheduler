@@ -1,7 +1,10 @@
 from db import *
 
-#Inserts a user into the database
-#parameters are first and last name of the user
+# Inserts a new user into the database
+# Parameters: 
+#   - conn: database connection object
+#   - first_name: first name of the user
+#   - last_name: last name of the user
 def insert_user(conn, first_name, last_name):
     sql = " INSERT INTO user(first_name,last_name) VALUES(?,?)"
     cur = conn.cursor()
@@ -9,9 +12,11 @@ def insert_user(conn, first_name, last_name):
     conn.commit()
     return None
 
-#Deletes a user from the database
-#identifier is how user is being identified, e.g by id
-#identifier_target is the target of the identifier, ie. what it is trying to match against
+# Deletes a user from the database
+# Parameters:
+#   - conn: database connection object
+#   - identifier: column name used to identify the user, e.g. "id"
+#   - identifier_value: value of the identifier to match against, e.g. "5"
 def delete_user(conn, identifier, identifier_target):
     sql = "DELETE FROM user WHERE " + identifier + " = ?" 
     cur = conn.cursor()
@@ -19,17 +24,48 @@ def delete_user(conn, identifier, identifier_target):
     conn.commit()
     return None
 
-#Updates user data
-#set is the value to be changed, e.g the user's preference
-#setTarget is the value which set is to be changed to
-#identifier is how user is being identified, e.g by id
-#identifier_target is the target of the identifier, ie. what it is trying to match against
-def update_user(conn, set, set_target, identifier, identifier_target):
+# Updates user data
+# Parameters:
+#   - conn: database connection object
+#   - column: column name to update, e.g. "preferences_id"
+#   - new_value: new value to set the column to
+#   - identifier: column name used to identify the user, e.g. "id"
+#   - identifier_value: value of the identifier to match against, e.g. "5"
+def update_user(conn, column, new_value, identifier, identifier_value):
     sql = "UPDATE user SET " + set + " = ? WHERE " + identifier + " = ?"
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()
     return None
+
+# Retrieves a user from the database based on their id
+# Parameters:
+#   - conn: database connection object
+#   - id: id of the user to retrieve
+# Returns:
+#   - rows: the retrieved user's information
+def get_user(conn,id):
+    sql = "SELECT * FROM user WHERE id = ?"
+    cur = conn.cursor()
+    cur.execute(sql)
+    conn.commit()
+    rows = cur.fetchall()
+    return rows
+
+# Retrieves all users from the database
+# Parameters:
+#   - conn: database connection object
+# Returns:
+#   - rows: a list of all users' information
+def get_all_users(conn):
+    sql = "SELECT * FROM user"
+    cur = conn.cursor()
+    cur.execute(sql)
+    conn.commit()
+    rows = cur.fetchall()
+    return rows
+
+
 
 
 def main():
