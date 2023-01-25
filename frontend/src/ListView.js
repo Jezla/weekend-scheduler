@@ -118,7 +118,7 @@ const ListView = (props) => {
         <Grid
           container
           xs={4}
-          sx={{ pl: 2, pr: 2 }}
+          sx={{ pl: 4, pr: 4 }}
           direction='column'
         >
           <Grid
@@ -159,7 +159,7 @@ const ListView = (props) => {
         <Grid
           container
           xs={4}
-          sx={{ pl: 2, pr: 2 }}
+          sx={{ pl: 4, pr: 4 }}
           direction='column'
         >
           <Grid
@@ -200,7 +200,7 @@ const ListView = (props) => {
         <Grid
           container
           xs={4}
-          sx={{ pl: 2, pr: 2 }}
+          sx={{ pl: 4, pr: 4 }}
           direction='column'
         >
           <Grid
