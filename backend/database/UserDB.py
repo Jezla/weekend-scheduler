@@ -32,7 +32,7 @@ def delete_user(conn, identifier, identifier_target):
 #   - identifier: column name used to identify the user, e.g. "id"
 #   - identifier_value: value of the identifier to match against, e.g. "5"
 def update_user(conn, column, new_value, identifier, identifier_value):
-    sql = "UPDATE user SET " + set + " = ? WHERE " + identifier + " = ?"
+    sql = "UPDATE user SET " + column + " = ? WHERE " + identifier + " = ?"
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()
