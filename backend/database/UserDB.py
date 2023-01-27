@@ -17,10 +17,10 @@ def insert_user(conn, first_name, last_name):
 #   - conn: database connection object
 #   - identifier: column name used to identify the user, e.g. "id"
 #   - identifier_value: value of the identifier to match against, e.g. "5"
-def delete_user(conn, identifier, identifier_target):
+def delete_user(conn, identifier, identifier_value):
     sql = "DELETE FROM user WHERE " + identifier + " = ?" 
     cur = conn.cursor()
-    cur.execute(sql, identifier_target)
+    cur.execute(sql, (identifier_value,) )
     conn.commit()
     return None
 
@@ -34,7 +34,7 @@ def delete_user(conn, identifier, identifier_target):
 def update_user(conn, column, new_value, identifier, identifier_value):
     sql = "UPDATE user SET " + column + " = ? WHERE " + identifier + " = ?"
     cur = conn.cursor()
-    cur.execute(sql)
+    cur.execute(sql, (new_value, identifier_value))
     conn.commit()
     return None
 
@@ -47,7 +47,7 @@ def update_user(conn, column, new_value, identifier, identifier_value):
 def get_user(conn,id):
     sql = "SELECT * FROM user WHERE id = ?"
     cur = conn.cursor()
-    cur.execute(sql)
+    cur.execute(sql, (id,))
     conn.commit()
     rows = cur.fetchall()
     return rows
@@ -65,8 +65,18 @@ def get_all_users(conn):
     rows = cur.fetchall()
     return rows
 
-
-
+# Inserts a new user into the database
+# Parameters: 
+#   - conn: database connection object
+#   - id: id of the user
+#   - preferences: string value of date preferences separated by commas, 
+#     order indicates rank (left to right is 1-x)
+def insert_user_preferences(conn, id, preferences):
+    sql = "INSERT INTO preference(id, preferences) VALUES(?,?)"
+    cur = conn.cursor()
+    cur.execute(sql, (id,preferences))
+    conn.commit()
+    return None
 
 def main():
     database = "pythonsqlite.db"
@@ -76,14 +86,13 @@ def main():
                                     first_name text NOT NULL,
                                     last_name text NOT NULL,
                                     preferences_id integer,
-                                    allocated_shifts Text ,
-                                    FOREIGN KEY (preferences_id) REFERENCES preferences (id)
+                                    allocated_shifts Text,
+                                    FOREIGN KEY (preferences_id) REFERENCES preference (id)
                                 );"""
     
     sql_create_preference_table = """ CREATE TABLE IF NOT EXISTS preference (
                                     id integer PRIMARY KEY,
-                                    dates Text,
-                                    rank integer NOT NULL
+                                    preferences Text
                                 );"""
     
 
@@ -98,6 +107,9 @@ def main():
 
         # create user table
         create_table(conn, sql_create_user_table)
+
+        insert_user(conn, "Robert", "Bannayan")
+        insert_user_preferences(conn, 1, "01-01-2023,02-01-2023,03-01-2023")
        
     else:
         print("Error! cannot create the database connection.")
