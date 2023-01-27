@@ -9,9 +9,9 @@ import {
   Button, InputLabel, MenuItem, FormControl, Select, Stack, Typography, Switch, Alert, Snackbar
 } from '@mui/material';
 
-import SortableItem from './SortableItem';
-import ListView from './ListView';
-import NavBar from './Navbar';
+import SortableItem from './components/SortableItem';
+import ListView from './components/ListView';
+import NavBar from './components/Navbar';
 
 function App() {
   const [name, setName] = useState("");
@@ -45,7 +45,7 @@ function App() {
     new Date(2023, 3, 29),
     new Date(2023, 3, 30),
   ]);
-  const [nameList, setNameList] = useState(['asldkjaslkd asdkja', 'austin lai', 'thidaskld askdid']); 
+  const [nameList, setNameList] = useState(['asldkjaslkd asdkja', 'austin lai', 'thidaskld askdid']);
   const [openAlert, setOpenAlert] = useState(false);
 
 

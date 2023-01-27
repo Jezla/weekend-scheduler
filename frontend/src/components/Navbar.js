@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Button, Typography, Modal } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { useNavigate } from 'react-router-dom';
-import Logo from './logo.png';
+import Logo from '../resources/logo.png';
 
 const Navbar = (props) => {
     const [open, setOpen] = React.useState(false);
@@ -54,7 +54,7 @@ const Navbar = (props) => {
                                     How to use this bot
                                 </Typography>
                                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                    You don't. 
+                                    You don't.
                                 </Typography>
                             </Box>
                         </Modal>
