@@ -115,7 +115,6 @@ def main():
         insert_user_preferences(conn, user_id, "01-01-2023",1)
         insert_user_preferences(conn, user_id, "02-01-2023",2)
         insert_user_preferences(conn, user_id_2, "04-01-2023",1)
-        print(get_all_users(conn))
 
        
     else:
