@@ -10,7 +10,7 @@ def insert_user(conn, first_name, last_name):
     cur = conn.cursor()
     cur.execute(sql, (first_name, last_name))
     conn.commit()
-    return None
+    return cur.lastrowid
 
 # Deletes a user from the database
 # Parameters:
@@ -68,13 +68,13 @@ def get_all_users(conn):
 # Inserts a new user into the database
 # Parameters: 
 #   - conn: database connection object
-#   - id: id of the user
-#   - preferences: string value of date preferences separated by commas, 
-#     order indicates rank (left to right is 1-x)
-def insert_user_preferences(conn, id, preferences):
-    sql = "INSERT INTO preference(id, preferences) VALUES(?,?)"
+#   - user_id: id of the user
+#   - date: date of the preference in text format
+#   - rank: rank of the date preference
+def insert_user_preferences(conn, user_id, date, rank):
+    sql = "INSERT INTO preference(user_id, date, rank) VALUES(?,?,?)"
     cur = conn.cursor()
-    cur.execute(sql, (id,preferences))
+    cur.execute(sql, (user_id, date, rank))
     conn.commit()
     return None
 
@@ -85,14 +85,15 @@ def main():
                                     id integer PRIMARY KEY AUTOINCREMENT,
                                     first_name text NOT NULL,
                                     last_name text NOT NULL,
-                                    preferences_id integer,
-                                    allocated_shifts Text,
-                                    FOREIGN KEY (preferences_id) REFERENCES preference (id)
+                                    allocated_shifts text
                                 );"""
     
     sql_create_preference_table = """ CREATE TABLE IF NOT EXISTS preference (
-                                    id integer PRIMARY KEY,
-                                    preferences Text
+                                    id integer PRIMARY KEY AUTOINCREMENT,
+                                    user_id integer NOT NULL,
+                                    date text,
+                                    rank integer,
+                                    FOREIGN KEY (user_id) REFERENCES user (id)
                                 );"""
     
 
@@ -101,15 +102,21 @@ def main():
 
     # create tables
     if conn is not None:
+
+        # create user table
+        create_table(conn, sql_create_user_table)
         
         # create preferences table
         create_table(conn, sql_create_preference_table)
 
-        # create user table
-        create_table(conn, sql_create_user_table)
+    
+        user_id = insert_user(conn, "Robert", "Bannayan")
+        user_id_2 = insert_user(conn, "Alyssa", "Bannayan")
+        insert_user_preferences(conn, user_id, "01-01-2023",1)
+        insert_user_preferences(conn, user_id, "02-01-2023",2)
+        insert_user_preferences(conn, user_id_2, "04-01-2023",1)
+        print(get_all_users(conn))
 
-        insert_user(conn, "Robert", "Bannayan")
-        insert_user_preferences(conn, 1, "01-01-2023,02-01-2023,03-01-2023")
        
     else:
         print("Error! cannot create the database connection.")
