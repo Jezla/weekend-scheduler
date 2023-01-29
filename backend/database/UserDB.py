@@ -105,23 +105,23 @@ def main():
     # create tables
     if conn is not None:
 
-        # create user table
+        #create user table
         create_table(conn, sql_create_user_table)
         
-        # create preferences table
+        #create preferences table
         create_table(conn, sql_create_preference_table)
 
         #basic testing
-        user_id = insert_user(conn, "Robert", "Bannayan")
-        user_id_2 = insert_user(conn, "John", "Smith")
-        insert_user_preferences(conn, user_id, "01-01-2023",1)
-        insert_user_preferences(conn, user_id, "02-01-2023",2)
-        insert_user_preferences(conn, user_id_2, "04-01-2023",1)
-        print(get_all_users(conn))
-        delete_user(conn, "first_name","Robert")
-        print(get_all_users(conn))
-        update_user(conn, "first_name", "William", "first_name","John")
-        print(get_all_users(conn))
+        #user_id = insert_user(conn, "Robert", "Bannayan")
+        #user_id_2 = insert_user(conn, "John", "Smith")
+        #insert_user_preferences(conn, user_id, "01-01-2023",1)
+        #insert_user_preferences(conn, user_id, "02-01-2023",2)
+        #insert_user_preferences(conn, user_id_2, "04-01-2023",1)
+        #print(get_all_users(conn))
+        #delete_user(conn, "first_name","Robert")
+        #print(get_all_users(conn))
+        #update_user(conn, "first_name", "William", "first_name","John")
+        #print(get_all_users(conn))
 
        
     else:
