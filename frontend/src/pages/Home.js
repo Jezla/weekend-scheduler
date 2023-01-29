@@ -43,7 +43,7 @@ function Home() {
     new Date(2023, 3, 29),
     new Date(2023, 3, 30),
   ]);
-  const [nameList, setNameList] = useState(['asldkjaslkd asdkja', 'austin lai', 'thidaskld askdid']);
+  const [nameList, setNameList] = useState(['Austin Lai', 'Alex Law', 'Adrian Lin']);
   const [openAlert, setOpenAlert] = useState(false);
 
 
@@ -162,8 +162,6 @@ function Home() {
           </Button>
         </Box>
       </div>
-
-
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={() => setOpenAlert(false)}>
         <Alert onClose={() => setOpenAlert(false)} severity="error" sx={{ width: '100%' }}>
           This is a alex message!
