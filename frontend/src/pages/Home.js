@@ -157,7 +157,7 @@ function Home() {
         <Box textAlign='center'>
           <Button variant="contained"
             onClick={handleSubmit}
-            alignItems="center">
+          >
             Submit
           </Button>
         </Box>
