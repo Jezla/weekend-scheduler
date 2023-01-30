@@ -8,14 +8,12 @@ app = Flask(__name__)
 @app.route("/members")
 def members():
   return {"members": ["Member1", "Member2", "Member3", "Member4"]}
-  
 
 # Endpoint to return a list of users and shifts
 @app.route("/list", methods=["GET"])
 def get_list():
     users = "list of all shifts and SREs"
     return jsonify(users)
-
 
 # Endpoint to add a new user
 #@app.route("/users", methods=["POST"])
@@ -33,7 +31,6 @@ def add_sre():
     # SRE creation from a csv file
     return jsonify({"message": "SRE created successfully."}), 201
 
-
 # Endpoint to creating shifts
 def add_shift():
     data = request.get_json()
@@ -46,13 +43,12 @@ def update_shift():
     #update the SRE shift preference
     return jsonify({"message": "shift updated successfully."}), 201
 
+
 # Endpoint for getting final SRE shift csv
 def get_final():
     data = request.get_json()
     csv = "generated final csv"
     return jsonify(csv)
-
-
 
 
 # @app.route("/users/<int:id>", methods=["PUT"])
