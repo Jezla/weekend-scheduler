@@ -38,33 +38,50 @@ def csv_convert(sorted_content):
 
     filename = "SRE_Registtartion__c_-_APAC.csv"
 
-    with open(filename, 'r') as csvfile:
-        # Create a csv.reader object
-        reader = csv.reader(csvfile)
+    # PLACEHOLDER DATA PLS REPLACE WITH THE ACTUAL DATA
+    # Date data array 
+    new_data_B = [datetime(2023,1,1), datetime(2023,1,14), datetime(2023,1,15),datetime(2023,2,1),datetime(2023,2,5)]
 
-        # Read the header row
-        header = next(reader)
+    # Managers data array
+    new_data_H = [datetime(2023,1,1)]
 
-        # Registered SREs are in the 9th column
-        I_index = 8
+    # SRE's data array
+    new_data_I = [datetime(2023,1,1), datetime(2023,1,14), datetime(2023,1,15),datetime(2023,2,1),datetime(2023,2,5)]
 
+    # Open the CSV file for reading
+    with open(filename, 'r') as f:
+        # Create a CSV reader object
+        reader = csv.reader(f)
 
-        # Create a new list to store the modified data "Registered_SRE__c"
-        registered_SREs = [header]
+        # Create a list to store the modified rows
+        mod_rows = []
 
-        # Iterate over the rows in the CSV file
-        for row in reader:
-            # Append the new value to the row
-            row[I_index] = "New Value"
-            registered_SREs.append(row)
+        # Iterate through the rows in the CSV file
+        for i, row in enumerate(reader):
+            # If this is the first row (the header), add it to the list without modification
+            if i == 0:  
+                mod_rows.append(row)
+            else:
 
+                # ONCE YOU GET THE DATA INTRODUCE ITERATING THROUGH EACH DATE AND ADDING EACH CORRESPONDING SRE
 
-    with open(filename, 'w', newline='') as csvfile:
-        # Create a csv.writer object
-        writer = csv.writer(csvfile)
-        
-        # Write the modified data to the CSV file
-        writer.writerows(registered_SREs)
+                # Replace the data in column B with the managers data
+                row[2] = new_data_B[i-1]
+                # Replace the data in column H with the managers data
+                row[8] = new_data_H[i-1]
+                # Replace the data in column I with the SRE's data
+                row[9] = new_data_I[i-1]
+                # Add the modified row to the list
+                mod_rows.append(row)
+
+    # Open the CSV file for writing
+    with open(filename, 'w') as f:
+        # Create a CSV writer object
+        writer = csv.writer(f)
+
+        # Write the modified rows to the CSV file
+        for row in mod_rows:
+            writer.writerow(row)
 
     print("done")
 
