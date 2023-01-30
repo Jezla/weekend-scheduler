@@ -95,7 +95,7 @@ function Home() {
   }
 
   const handleSubmit = () => {
-    if (selectedDates.length !== 0) {
+    if (selectedDates.length !== 0 && name !== "") {
       console.log(name, selectedDates)
       return
     }
