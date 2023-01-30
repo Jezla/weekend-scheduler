@@ -13,12 +13,11 @@ def assign_pref(shift, sre):
     for pref in prefs:
         if (pref == shift.get_date() and shift.get_slots() != 0):
             shift.assign_sre(sre)
-            shift.reduce_slots(1)
             sre.assign_shift(shift.get_date())
             sre.remove_pref(shift.get_date())
         elif (shift.get_slots() == 0):
             sre.set_prio(6 + pref_count)    
-            prefs.remove(shift)
+            sre.remove_pref(shift.get_date())
         
         pref_count -= 1
             
@@ -33,6 +32,7 @@ def sorting_list(given_input):
 def iterate_pref(sorted_list):
     sre_pq = heapq.heapify(sorted_list)
     done = []
+    # First pass tries to match every SRE to their preferences
     for shift in list_shifts:
         while len(sre_pq) != 0:
             sre = heapq.heappop(sre_pq)
@@ -41,8 +41,19 @@ def iterate_pref(sorted_list):
         
         sre_pq = done
         done = []
+    
+    # Second pass is to ensure that all slots are filled
+    for shift in list_shifts:
+        while len(sre_pq) != 0:
+            sre = heapq.heappop(sre_pq)
+            if shift.get_slots() != 0:
+                shift.assign_sre(sre)
+            heapq.heappush(done, sre)
+        
+        sre_pq = done
+        done = []
+    
     return "sorted"
-
 
 def csv_convert(sorted_content):
 

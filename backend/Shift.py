@@ -20,6 +20,7 @@ class Shift():
     
     def assign_sre(self, sre):
         self.workers.append(sre)
+        self.slots -= 1
     
     def get_date(self):
         return self.date
