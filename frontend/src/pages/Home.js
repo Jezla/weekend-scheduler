@@ -164,7 +164,7 @@ function Home() {
       </div>
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={() => setOpenAlert(false)}>
         <Alert onClose={() => setOpenAlert(false)} severity="error" sx={{ width: '100%' }}>
-          This is a alex message!
+          Maximum shifts selected!
         </Alert>
       </Snackbar>
     </>

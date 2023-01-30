@@ -52,7 +52,7 @@ const Navbar = (props) => {
                   How to use this bot
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                  You don't.
+                  Simple instructions to be added
                 </Typography>
               </Box>
             </Modal>
