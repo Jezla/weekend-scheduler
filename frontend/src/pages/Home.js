@@ -97,6 +97,7 @@ function Home() {
   const handleSubmit = () => {
     if (selectedDates.length !== 0) {
       console.log(name, selectedDates)
+      return
     }
     setOpenSubmitAlert(true)
     // TODO: check for existing name
