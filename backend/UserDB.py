@@ -1,4 +1,5 @@
 from db import *
+from SRE import *
 
 # Inserts a new user into the database
 # Parameters: 
@@ -46,11 +47,22 @@ def update_user(conn, column, new_value, identifier, identifier_value):
 #   - rows: the retrieved user's information
 def get_user(conn,id):
     sql = "SELECT * FROM user WHERE id = ?"
+    users = []
     cur = conn.cursor()
     cur.execute(sql, (id,))
     conn.commit()
     rows = cur.fetchall()
-    return rows
+    for row in rows:
+        id = row[0]
+        first_name = row[1]
+        last_name = row[2]
+        pref = []
+        priority = 0
+        allocated_shifts = row[3]
+        is_admin = row[4]
+        sre = SRE(id,pref, first_name, last_name,priority)
+        users.append(sre)
+    return users
 
 # Retrieves all users from the database
 # Parameters:
@@ -167,12 +179,13 @@ def main():
         #basic testing below
 
         #insert users and preferences
-        #user_id = insert_user(conn, "Robert", "Bannayan")
-        #user_id_2 = insert_user(conn, "John", "Smith")
-        #insert_user_preferences(conn, user_id, "01-01-2023",1)
-        #insert_user_preferences(conn, user_id, "02-01-2023",2)
-        #insert_user_preferences(conn, user_id_2, "04-01-2023",1)
-    
+        user_id = insert_user(conn, "Robert", "Bannayan")
+        user_id_2 = insert_user(conn, "John", "Smith")
+        insert_user_preferences(conn, user_id, "01-01-2023",1)
+        insert_user_preferences(conn, user_id, "02-01-2023",2)
+        insert_user_preferences(conn, user_id_2, "04-01-2023",1)
+
+        print(get_user(conn, 1))
         #print("users in database initally")
         #print(get_all_users(conn))
 

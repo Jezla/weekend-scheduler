@@ -3,6 +3,8 @@ import UserDB
 
 class dbManager():
 
+    currentSRE = SRE
+
     def __init__(self,conn, id=1):
         self.currentSRE = UserDB.get_user(conn, id)
         self.conn = conn
