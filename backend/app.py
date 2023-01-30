@@ -9,7 +9,6 @@ app = Flask(__name__)
 def members():
   return {"members": ["Member1", "Member2", "Member3", "Member4"]}
 
-<<<<<<< HEAD
 # Endpoint to return a list of users and shifts
 @app.route("/list", methods=["GET"])
 def get_list():
@@ -67,8 +66,6 @@ def get_final():
 
 
 
-=======
->>>>>>> csv_parser
 
 if __name__ == "__main__":
   app.run(debug=True)
