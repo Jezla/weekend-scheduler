@@ -45,6 +45,7 @@ function Home() {
   ]);
   const [nameList, setNameList] = useState(['Austin Lai', 'Alex Law', 'Adrian Lin']);
   const [openAlert, setOpenAlert] = useState(false);
+  const [openSubmitAlert, setOpenSubmitAlert] = useState(false);
 
 
   const sensors = useSensors(
@@ -94,7 +95,10 @@ function Home() {
   }
 
   const handleSubmit = () => {
-    console.log(name, selectedDates)
+    if (selectedDates.length !== 0) {
+      console.log(name, selectedDates)
+    }
+    setOpenSubmitAlert(true)
     // TODO: check for existing name
     // TODO: probs add a confirmation popup
   }
@@ -165,6 +169,11 @@ function Home() {
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={() => setOpenAlert(false)}>
         <Alert onClose={() => setOpenAlert(false)} severity="error" sx={{ width: '100%' }}>
           Maximum shifts selected!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openSubmitAlert} autoHideDuration={6000} onClose={() => setOpenSubmitAlert(false)}>
+        <Alert onClose={() => setOpenSubmitAlert(false)} severity="error" sx={{ width: '100%' }}>
+          Check if name and at least one shift has been selected
         </Alert>
       </Snackbar>
     </>
