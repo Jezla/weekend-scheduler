@@ -3,7 +3,6 @@ from SRE import *
 import datetime
 import heapq
 
-#List of available shifts
 list_shifts = []
 
 # Assigns SREs to dates
@@ -56,14 +55,11 @@ def iterate_pref(sorted_list):
     return "sorted"
 
 def csv_convert(sorted_content):
-
     print("done")
 
 
 def get_input():
-
     return "random"
-
 
 def main():
     #input
