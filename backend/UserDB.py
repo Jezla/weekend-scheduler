@@ -1,14 +1,17 @@
 from db import *
+from SRE import *
+from datetime import datetime
+from dbManager import *
 
 # Inserts a new user into the database
 # Parameters: 
 #   - conn: database connection object
 #   - first_name: first name of the user
 #   - last_name: last name of the user
-def insert_user(conn, first_name, last_name):
-    sql = " INSERT INTO user(first_name,last_name) VALUES(?,?)"
+def insert_user(conn, id, first_name, last_name):
+    sql = " INSERT INTO user(id,first_name,last_name) VALUES(?,?,?)"
     cur = conn.cursor()
-    cur.execute(sql, (first_name, last_name))
+    cur.execute(sql, (id, first_name, last_name))
     conn.commit()
     return cur.lastrowid
 
@@ -44,13 +47,50 @@ def update_user(conn, column, new_value, identifier, identifier_value):
 #   - id: id of the user to retrieve
 # Returns:
 #   - rows: the retrieved user's information
-def get_user(conn,id):
+def get_user_byid(conn,id):
     sql = "SELECT * FROM user WHERE id = ?"
+    users = []
     cur = conn.cursor()
     cur.execute(sql, (id,))
     conn.commit()
     rows = cur.fetchall()
-    return rows
+    for row in rows:
+        id = row[0]
+        first_name = row[1]
+        last_name = row[2]
+        pref = []
+        allocated_shifts = row[3]
+        is_admin = row[4]
+        priority = row[5]
+        sre = SRE(id,pref, first_name, last_name,priority)
+        users.append(sre)
+    return users
+
+# Retrieves a user from the database based on their first and last name
+# Parameters:
+#   - conn: database connection object
+#   - first_name: users first name
+#   - last_name: users last name
+# Returns:
+#   - rows: the retrieved user's information
+def get_user_byname(conn,first_name, last_name):
+    sql = "SELECT * FROM user WHERE first_name = ? AND last_name = ?"
+    users = []
+    cur = conn.cursor()
+    cur.execute(sql, (first_name,last_name))
+    conn.commit()
+    rows = cur.fetchall()
+    for row in rows:
+        id = row[0]
+        first_name = row[1]
+        last_name = row[2]
+        pref = []
+        allocated_shifts = row[3]
+        is_admin = row[4]
+        priority = row[5]
+        sre = SRE(id,pref, first_name, last_name,priority)
+        users.append(sre)
+    return users
 
 # Retrieves all users from the database
 # Parameters:
@@ -59,11 +99,23 @@ def get_user(conn,id):
 #   - rows: a list of all users' information
 def get_all_users(conn):
     sql = "SELECT * FROM user"
+    users = []
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()
     rows = cur.fetchall()
-    return rows
+    for row in rows:
+        id = row[0]
+        first_name = row[1]
+        last_name = row[2]
+        pref = []
+        allocated_shifts = row[3]
+        is_admin = row[4]
+        priority = row[5]
+        sre = SRE(id,pref, first_name, last_name,priority)
+        users.append(sre)
+    return users
+    
 
 # Inserts a new user preference into the database
 # Parameters: 
@@ -135,17 +187,18 @@ def main():
     database = "pythonsqlite.db"
 
     sql_create_user_table = """ CREATE TABLE IF NOT EXISTS user (
-                                    id integer PRIMARY KEY AUTOINCREMENT,
+                                    id text PRIMARY KEY ,
                                     first_name text NOT NULL,
                                     last_name text NOT NULL,
                                     allocated_shifts text,
                                     is_admin BOOLEAN DEFAULT false,
+                                    priority integer,
                                     UNIQUE(first_Name, last_name)
                                 );"""
     
     sql_create_preference_table = """ CREATE TABLE IF NOT EXISTS preference (
                                     id integer PRIMARY KEY AUTOINCREMENT,
-                                    user_id integer NOT NULL,
+                                    user_id text NOT NULL,
                                     date text CHECK (date like '__-__-____'),
                                     rank integer,
                                     FOREIGN KEY (user_id) REFERENCES user (id)
@@ -169,30 +222,45 @@ def main():
         #insert users and preferences
         #user_id = insert_user(conn, "Robert", "Bannayan")
         #user_id_2 = insert_user(conn, "John", "Smith")
-        #insert_user_preferences(conn, user_id, "01-01-2023",1)
-        #insert_user_preferences(conn, user_id, "02-01-2023",2)
+        #insert_user_preferences(conn, user_id, "01-03-2023",2)
+        #insert_user_preferences(conn, user_id, "02-01-2023",1)
         #insert_user_preferences(conn, user_id_2, "04-01-2023",1)
-    
-        #print("users in database initally")
-        #print(get_all_users(conn))
 
-        #delete and update user info
-        #delete_user(conn, "first_name","Robert")
-        #print(get_all_users(conn))
-        #update_user(conn, "first_name", "William", "first_name","John")
-        #print("users in database after modifications")
-        #print(get_all_users(conn))
 
-        #retrieve user preferences
-        #print("user preferences")
-        #print(get_all_user_preferences(conn))
-        #print(get_user_preferences(conn,1))
+        #dbmanager = dbManager(conn)
+       #prefs1 = [datetime(2023, 1, 1),datetime(2023, 2, 1),
+                #datetime(2023, 3, 1), datetime(2023, 4, 1),
+                #datetime(2023, 5, 1),]
+        #sre1 = SRE("1hd3",prefs1, "michael", "jackson", 0)
 
-        #update or delete user preferences
-        #update_preference(conn, "rank", 5, "user_id",1)
-        #print(get_user_preferences(conn,1))
-        #delete_user_preferences(conn, "user_id", 1)
-        #print(get_user_preferences(conn,1))
+        #prefs2 = [datetime(2024, 1, 1),datetime(2024, 2, 1),
+                #datetime(2024, 3, 1), datetime(2024, 4, 1),
+                #datetime(2024, 5, 1),]
+        #sre2 = SRE("2lp4",prefs2, "elvis", "presley", 1)
+
+        #dbmanager.add_user(sre1)
+        #dbmanager.add_user(sre2)
+        #dbmanager.insert_preferences(sre1, prefs1)
+        #dbmanager.insert_preferences(sre2, prefs2)
+
+        #user1 = dbmanager.get_user_byname("michael", "jackson")
+        #print(user1.get_id())
+        #print(user1.get_prefs())
+        #dbmanager.delete_user_preferences(user1)
+        #print("after deleting pref")
+        #print(dbmanager.get_user_preferences(user1))
+
+        #new_pref = [datetime(2025, 4, 1),
+                #datetime(2025, 5, 1),]
+        #dbmanager.update_user_prefererence(user1, new_pref)
+        #print("after updating")
+        #print(dbmanager.get_user_preferences(user1))
+        
+        #print(dbmanager.get_all_users())
+        #dbmanager.remove_user(sre2)
+        #dbmanager.remove_user(sre1)
+        #print("after removing")
+        #print(dbmanager.get_all_users())
 
     else:
         print("Error! cannot create the database connection.")
