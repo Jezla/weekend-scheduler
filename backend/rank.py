@@ -64,6 +64,10 @@ def csv_convert(sorted_content):
             else:
 
                 # ONCE YOU GET THE DATA INTRODUCE ITERATING THROUGH EACH DATE AND ADDING EACH CORRESPONDING SRE
+                """
+                for date in dates
+                    for SRE in SREs
+                """   
 
                 # Replace the data in column B with the managers data
                 row[2] = new_data_B[i-1]
