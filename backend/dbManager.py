@@ -1,12 +1,10 @@
-import SRE
+from SRE import *
 import UserDB
+from datetime import datetime
 
 class dbManager():
 
-    currentSRE = SRE
-
-    def __init__(self,conn, id=1):
-        self.currentSRE = UserDB.get_user(conn, id)
+    def __init__(self,conn):
         self.conn = conn
     
     def add_user(self, SRE):
@@ -15,29 +13,53 @@ class dbManager():
     def remove_user(self, SRE):
         UserDB.delete_user(self.conn, "user_id", SRE.get_id())
 
-    def insert_preferences(self, SRE):
-        preferences = SRE.get_prefs()
+    def insert_preferences(self, SRE, prefs):
+        SRE.set_prefs(prefs)
         rank = 1
-        for pref in preferences:
+        for pref in prefs:
             pref = pref.strftime('%d-%m-%Y')
+            print(pref)
             UserDB.insert_user_preferences(self.conn, SRE.get_id(), pref,rank)
             rank = rank + 1
 
     def get_user(self, id):
-        return UserDB.get_user(self.conn, id)
+        SRE = UserDB.get_user(self.conn, id)[0]
+        preferences = self.get_user_preferences(SRE)
+        SRE.set_prefs(preferences)
+        return SRE
+
+    def get_user(self, first_name, last_name):
+        return None
 
     def get_all_users(self):
-        return UserDB.get_all_users(self.conn)
+        users = UserDB.get_all_users(self.conn)
+        for sre in users:
+            preferences = self.get_user_preferences(sre)
+            sre.set_prefs(preferences)
+        return users
+            
     
     def get_user_preferences(self, SRE):
-        return UserDB.get_user_preferences(self.conn, SRE.get_id())
+        pref = UserDB.get_user_preferences(self.conn, SRE.get_id())
+        formatted_dates = [datetime.strptime(item[2], '%d-%m-%Y') for item in pref]
+        sorted_dates = [x for _, x in sorted(zip(pref, formatted_dates), key=lambda pair: pair[0][3])]
+        return sorted_dates
 
     def get_all_user_preferences(self):
-        return UserDB.get_all_user_preferences(self.conn)
+        users = self.get_all_users()
+        sre = users[0]
+        preferences = []
+        for sre in users:
+            preferences.append((sre.get_id(),sre.get_first_name(), sre.get_last_name(),
+             self.get_user_preferences(sre)))
+        #return UserDB.get_all_user_preferences(self.conn)
+        return preferences
 
 
     def delete_user_preferences(self, SRE):
         UserDB.delete_user_preferences(self.conn, "user_id", SRE.get_id())
 
-    def update_user_prefererence(self):
+    def update_user_prefererence(self, SRE, prefs):
+        self.delete_user_preferences(SRE)
+        self.insert_preferences(SRE, prefs)
         return None

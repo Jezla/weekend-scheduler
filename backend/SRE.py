@@ -60,6 +60,9 @@ class SRE():
     def set_prio(self, val):
         self.prio = val
     
+    def set_prefs(self, pref):
+        self.prefs = pref
+    
     def remove_pref(self, val):
         self.prefs.remove(val)
 

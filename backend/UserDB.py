@@ -1,5 +1,7 @@
 from db import *
 from SRE import *
+from datetime import datetime
+from dbManager import *
 
 # Inserts a new user into the database
 # Parameters: 
@@ -57,9 +59,9 @@ def get_user(conn,id):
         first_name = row[1]
         last_name = row[2]
         pref = []
-        priority = 0
         allocated_shifts = row[3]
         is_admin = row[4]
+        priority = row[5]
         sre = SRE(id,pref, first_name, last_name,priority)
         users.append(sre)
     return users
@@ -71,11 +73,23 @@ def get_user(conn,id):
 #   - rows: a list of all users' information
 def get_all_users(conn):
     sql = "SELECT * FROM user"
+    users = []
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()
     rows = cur.fetchall()
-    return rows
+    for row in rows:
+        id = row[0]
+        first_name = row[1]
+        last_name = row[2]
+        pref = []
+        allocated_shifts = row[3]
+        is_admin = row[4]
+        priority = row[5]
+        sre = SRE(id,pref, first_name, last_name,priority)
+        users.append(sre)
+    return users
+    
 
 # Inserts a new user preference into the database
 # Parameters: 
@@ -152,6 +166,7 @@ def main():
                                     last_name text NOT NULL,
                                     allocated_shifts text,
                                     is_admin BOOLEAN DEFAULT false,
+                                    priority integer,
                                     UNIQUE(first_Name, last_name)
                                 );"""
     
@@ -179,13 +194,28 @@ def main():
         #basic testing below
 
         #insert users and preferences
-        user_id = insert_user(conn, "Robert", "Bannayan")
-        user_id_2 = insert_user(conn, "John", "Smith")
-        insert_user_preferences(conn, user_id, "01-01-2023",1)
-        insert_user_preferences(conn, user_id, "02-01-2023",2)
-        insert_user_preferences(conn, user_id_2, "04-01-2023",1)
+        #user_id = insert_user(conn, "Robert", "Bannayan")
+        #user_id_2 = insert_user(conn, "John", "Smith")
+        #insert_user_preferences(conn, user_id, "01-03-2023",2)
+        #insert_user_preferences(conn, user_id, "02-01-2023",1)
+        #insert_user_preferences(conn, user_id_2, "04-01-2023",1)
 
-        print(get_user(conn, 1))
+
+        dbmanager = dbManager(conn)
+        prefs = [datetime(2023, 1, 1),datetime(2023, 2, 1),
+                datetime(2023, 3, 1), datetime(2023, 4, 1),
+                datetime(2023, 5, 1),]
+        sre = SRE(1,prefs, "michael", "jackson", 5)
+        dbmanager.add_user(sre)
+        dbmanager.insert_preferences(sre, prefs)
+        #sre = dbmanager.get_all_users()[0]
+        #print(sre.get_id())
+        #preferences = get_user_preferences(conn,3)
+        print(dbmanager.get_all_user_preferences())
+        #sre = dbmanager.get_user(1)
+        #print(sre.get_prefs())
+        
+
         #print("users in database initally")
         #print(get_all_users(conn))
 
