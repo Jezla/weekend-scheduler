@@ -35,7 +35,6 @@ def get_list():
 #    users.append(user)
 #    return jsonify({"message": "User added successfully."}), 201
 
-
 # Endpoint to creating SREs
 @app.route("/sre", methods=["POST"])
 def add_sre():
