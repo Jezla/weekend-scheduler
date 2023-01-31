@@ -156,7 +156,6 @@ function Home() {
       </Grid>
       <div>
         {view ?
-        <div class='calendar'>
           <Calendar
             onChange={date => setDates(date)}
             value={calendarDate}
@@ -168,7 +167,6 @@ function Home() {
             tileDisabled={({ date }) => setDisabled(date)}
             showNeighboringMonth={false}
           />
-        </div>
           :
         <div class='list'>
           <ListView 
