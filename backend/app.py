@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, redirect
+from flask import Flask, jsonify, request, redirect, make_response
 from csv_parser import *
 from database.dbManager import *
 from SRE import *
@@ -92,9 +92,15 @@ def update_shift():
 def get_final():
     data = request.get_json()
     sres = get_all_users()
-
     csv = rank(shifts, sres)
-    return jsonify(csv)
+    
+    #This should make the user receive a download for the final csv file
+    response = make_response(csv)
+    cd = 'attachment; filename=mycsv.csv'
+    response.headers['Content-Disposition'] = cd 
+    response.mimetype='text/csv'
+    
+    return response
 
 
 # @app.route("/users/<int:id>", methods=["PUT"])
@@ -106,11 +112,6 @@ def get_final():
 #         return jsonify({"message": "User updated successfully."})
 #     else:
 #         return jsonify({"message": "User not found."}), 404
-
-
-
-
-
 
 
 if __name__ == "__main__":
