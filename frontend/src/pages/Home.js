@@ -105,12 +105,10 @@ function Home() {
   }
 
   const handleSubmit = async () => {
-    if (selectedDates.length === 0) {
+    if (selectedDates.length === 0 || name === "") {
       setOpenSubmitAlert(true)
       return
     }
-    // TODO: check for existing name
-    // TODO: probs add a confirmation popup
     const nameSplit = name.split(' ')
     const firstname = nameSplit.shift()
     const lastname = nameSplit.join(" ");
