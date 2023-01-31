@@ -91,8 +91,9 @@ def update_shift():
 # Endpoint for getting final SRE shift csv
 def get_final():
     data = request.get_json()
-    something = "sorted"
-    csv = csv_convert(something)
+    sres = get_all_users()
+
+    csv = rank(shifts, sres)
     return jsonify(csv)
 
 
