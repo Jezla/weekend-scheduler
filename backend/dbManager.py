@@ -8,10 +8,10 @@ class dbManager():
         self.conn = conn
     
     def add_user(self, SRE):
-        return UserDB.insert_user(self.conn, SRE.get_first_name(), SRE.get_last_name())
+        return UserDB.insert_user(self.conn, SRE.get_id(),SRE.get_first_name(), SRE.get_last_name())
     
     def remove_user(self, SRE):
-        UserDB.delete_user(self.conn, "user_id", SRE.get_id())
+        UserDB.delete_user(self.conn, "id", SRE.get_id())
 
     def insert_preferences(self, SRE, prefs):
         SRE.set_prefs(prefs)
@@ -22,14 +22,17 @@ class dbManager():
             UserDB.insert_user_preferences(self.conn, SRE.get_id(), pref,rank)
             rank = rank + 1
 
-    def get_user(self, id):
-        SRE = UserDB.get_user(self.conn, id)[0]
+    def get_user_byid(self, id):
+        SRE = UserDB.get_user_byid(self.conn, id)[0]
         preferences = self.get_user_preferences(SRE)
         SRE.set_prefs(preferences)
         return SRE
 
-    def get_user(self, first_name, last_name):
-        return None
+    def get_user_byname(self, first_name, last_name):
+        SRE = UserDB.get_user_byname(self.conn, first_name, last_name)[0]
+        preferences = self.get_user_preferences(SRE)
+        SRE.set_prefs(preferences)
+        return SRE
 
     def get_all_users(self):
         users = UserDB.get_all_users(self.conn)
@@ -54,7 +57,6 @@ class dbManager():
              self.get_user_preferences(sre)))
         #return UserDB.get_all_user_preferences(self.conn)
         return preferences
-
 
     def delete_user_preferences(self, SRE):
         UserDB.delete_user_preferences(self.conn, "user_id", SRE.get_id())
