@@ -1,0 +1,4 @@
+- For the API endpoints:
+
+--> We assume that /addshift will only be run once
+--> We assume that /addshift is the first endpoint to be called

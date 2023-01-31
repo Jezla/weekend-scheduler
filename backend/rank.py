@@ -66,20 +66,12 @@ def csv_convert(sorted_content):
 
     return f
 
-
-def get_input():
-    return "random"
-
-def main():
-    #input
-    given_input = get_input()
-
-    sorted_list = sorting_list(given_input)
-
-    sorted_content = iterate_pref(sorted_list)
-
-    csv_convert(sorted_content)
+def rank(shifts, sres):
+    #Iterate through list of shifts and through each sres preferences and assign shifts based on criteria
+    iterate_pref(sres)
+    #After this function is done we can iterate through the list of shifts and see which sre was assignd to it
+    csv_convert(shifts)
 
 
 if __name__ == "__main__":
-  main()
+  rank()
