@@ -74,7 +74,7 @@ function Home() {
     // Fill listDates array
     // Get all employee names and fill nameList
     const getList = async () => {
-      const resp = await fetch('https://localhost:5000/GETSHIFTS', {
+      const resp = await fetch('https://localhost:5000/list', {
         method: 'GET',
         headers: {
           'Content-type': 'application/json'
@@ -115,7 +115,7 @@ function Home() {
     const firstname = nameSplit.shift()
     const lastname = nameSplit.join(" ");
     const dates = selectedDates.map(date => date.toLocaleDateString())
-    const resp = await fetch('https://localhost:5000/UPDATEPREFERENCES', {
+    const resp = await fetch('https://localhost:5000/updateshift', {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json'
@@ -169,7 +169,7 @@ function Home() {
           />
           :
         <div class='list'>
-          <ListView 
+          <ListView
             selectedDates={selectedDates}
             setSelectedDates={setSelectedDates}
             listDates={listDates}
