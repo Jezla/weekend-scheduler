@@ -1,24 +1,21 @@
 from flask import Flask, jsonify, request, redirect, make_response
 from csv_parser import *
-from database.dbManager import *
+from dbManager import *
 from SRE import *
 from rank import *
+from db import *
 
 shifts = []
 dates =[]
 
+db = dbManager()
+
 app = Flask(__name__)
-
-# Members API Route
-
-@app.route("/members")
-def members():
-  return {"members": ["Member1", "Member2", "Member3", "Member4"]}
 
 # Endpoint to return a list of users and shifts
 @app.route("/list", methods=["GET"])
 def get_list():
-    sres = get_all_users()
+    sres = db.get_all_users()
     user_list = []
     if not shifts or not dates:
         print("empty list")
@@ -42,14 +39,13 @@ def get_list():
 # Endpoint to creating SREs
 @app.route("/sre", methods=["POST"])
 def add_sre():
-
     data = request.get_json()
     # unique SRE creation from a csv file (or admin panel??)
     if request.method == 'POST':
         last_name = data["last_name"]
         first_name = data["first_name"]
         person = SRE([], first_name,last_name, 0)
-        add_user(person)
+        db.add_user(person)
 
     return jsonify({"message": "SRE created successfully."}), 201
 
@@ -79,10 +75,10 @@ def update_shift():
     if request.method == 'PUT':
 
         # finding user in database
-        person = get_user("first", "last")
+        person = db.get_user("first", "last")
 
         # changing their shift preferences
-        update_user_preferences(person, "new preference")
+        db.update_user_preferences(person, "new preference")
 
     return jsonify({"message": "shift updated successfully."}), 201
 
@@ -91,7 +87,7 @@ def update_shift():
 # Endpoint for getting final SRE shift csv
 def get_final():
     data = request.get_json()
-    sres = get_all_users()
+    sres = db.get_all_users()
     csv = rank(shifts, sres)
     
     #This should make the user receive a download for the final csv file

@@ -1,11 +1,12 @@
 from SRE import *
 import UserDB
 from datetime import datetime
+from db import *
 
 class dbManager():
 
-    def __init__(self,conn):
-        self.conn = conn
+    def __init__(self):
+        self.conn = create_connection("pythonsqlite.db")
     
     def add_user(self, SRE):
         return UserDB.insert_user(self.conn, SRE.get_id(),SRE.get_first_name(), SRE.get_last_name())

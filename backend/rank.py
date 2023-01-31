@@ -72,6 +72,5 @@ def rank(shifts, sres):
     #After this function is done we can iterate through the list of shifts and see which sre was assignd to it
     csv_convert(shifts)
 
-
 if __name__ == "__main__":
   rank()
