@@ -43,10 +43,9 @@ function Home() {
     new Date(2023, 3, 29),
     new Date(2023, 3, 30),
   ]);
-  const [nameList, setNameList] = useState(['Austin Lai', 'Alex Law', 'Adrian Lin']);
+  const [nameList, setNameList] = useState(['Austin Lai', 'Alex jim Law', 'Adrian Lin']);
   const [openAlert, setOpenAlert] = useState(false);
   const [openSubmitAlert, setOpenSubmitAlert] = useState(false);
-
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -72,6 +71,20 @@ function Home() {
     // Get backend input for all valid weekends and public holidays
     // Fill listDates array
     // Get all employee names and fill nameList
+    const getList = async () => {
+      const resp = await fetch('https://localhost:5000/GETSHIFTS', {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json'
+        },
+      });
+      const data = await resp.json()
+      console.log(data)
+      setListDates() // TODO: EXTRACT DATA FROM RESPONSE AND FILL LIST AND NAMES
+      setNameList()
+    }
+
+    getList()
   }, [])
 
   const setDates = (date) => {
@@ -84,24 +97,37 @@ function Home() {
   }
 
   const setDisabled = (date) => {
-    // TODO: add check for valid dates and public holidays (take from list date input)
-    if ((date.getDay() !== 0 &&
-      date.getDay() !== 6) ||
-      selectedDates.includes(date.toLocaleDateString())
-    ) {
-      return true
+    if (listDates.find(item => { return item.toLocaleDateString() === date.toLocaleDateString()})
+        && !selectedDates.includes(date.toLocaleDateString())) {
+      return false
     }
-    return false
+    return true
   }
 
-  const handleSubmit = () => {
-    if (selectedDates.length !== 0) {
-      console.log(name, selectedDates)
+  const handleSubmit = async () => {
+    if (selectedDates.length === 0) {
+      setOpenSubmitAlert(true)
       return
     }
-    setOpenSubmitAlert(true)
     // TODO: check for existing name
     // TODO: probs add a confirmation popup
+    const nameSplit = name.split(' ')
+    const firstname = nameSplit.shift()
+    const lastname = nameSplit.join(" ");
+    const dates = selectedDates.map(date => date.toLocaleDateString())
+    const resp = await fetch('https://localhost:5000/UPDATEPREFERENCES', {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: {
+        firstname,
+        lastname,
+        dates
+      }
+    });
+    const data = await resp.json()
+    console.log(data)
   }
 
   return (
