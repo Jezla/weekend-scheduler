@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-
+from csv_parser import csv_parser
 
 app = Flask(__name__)
 
@@ -9,7 +9,6 @@ app = Flask(__name__)
 def members():
   return {"members": ["Member1", "Member2", "Member3", "Member4"]}
 
-<<<<<<< HEAD
 # Endpoint to return a list of users and shifts
 @app.route("/list", methods=["GET"])
 def get_list():
@@ -24,7 +23,6 @@ def get_list():
 #    users.append(user)
 #    return jsonify({"message": "User added successfully."}), 201
 
-
 # Endpoint to creating SREs
 @app.route("/sre", methods=["POST"])
 def add_sre():
@@ -35,6 +33,7 @@ def add_sre():
 # Endpoint to creating shifts
 def add_shift():
     data = request.get_json()
+    request.get_data()
     # shift creation from a csv file
     return jsonify({"message": "shift created successfully."}), 201
 
@@ -61,14 +60,6 @@ def get_final():
 #         return jsonify({"message": "User updated successfully."})
 #     else:
 #         return jsonify({"message": "User not found."}), 404
-
-
-
-
-
-
-=======
->>>>>>> csv_parser
 
 if __name__ == "__main__":
   app.run(debug=True)

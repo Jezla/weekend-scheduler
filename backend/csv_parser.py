@@ -2,7 +2,6 @@ import csv
 from Shift import *
 from datetime import datetime
 
-
 def csv_parser(file):
     """
     Reads the csv file containing shift information and creates a list of Shift objects
@@ -30,7 +29,7 @@ def csv_parser(file):
             
             line_count += 1
         
-        return (list_shifts, list_dates)
+    return (list_shifts, list_dates)
     
 if __name__ == "__main__":
     shifts, dates = csv_parser("test.txt")
