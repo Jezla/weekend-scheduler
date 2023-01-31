@@ -1,39 +1,23 @@
-import React, {useState, useEffect } from 'react'  
+import './App.css';
+import NavBar from './components/Navbar';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home'
+import Admin from './pages/Admin'
 
 function App() {
 
-  
-  const [data, setData] = useState([{}])
-
-  useEffect(()=> {
-    fetch("/members").then(
-      res => res.json()
-    ).then(
-      (data) => {
-        setData(data)
-        console.log(data)
-      }
-    )
-  }, [])
-
-
-
-  
-  return (
-  
-      <div>
-        {(typeof data.members === 'undefined') ? (
-          <p>Loading...</p>
-        ) : (
-          data.members.map((member,i) => (
-            <p key={i}>{member}</p>
-          ))
-        )}
-
-
-      </div>
-  )
-
+return (
+  <>
+    <BrowserRouter>
+      <NavBar/>
+      <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/admin" element={<Admin/>}/>
+      </Routes>
+    </BrowserRouter>
+  </>
+);
 }
 
-export default App
+export default App;
