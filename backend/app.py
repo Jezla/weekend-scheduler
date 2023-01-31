@@ -19,7 +19,7 @@ def members():
 def get_list():
     users = get_all_users()
     if not shifts:
-        print("empty list")
+        print("empty shift list")
     else:
         big_list = {'users': users,'shifts': shifts}
 
