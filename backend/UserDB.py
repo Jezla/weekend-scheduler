@@ -227,7 +227,7 @@ def main():
         #insert_user_preferences(conn, user_id_2, "04-01-2023",1)
 
 
-        #dbmanager = dbManager(conn)
+        #dbmanager = dbManager()
        #prefs1 = [datetime(2023, 1, 1),datetime(2023, 2, 1),
                 #datetime(2023, 3, 1), datetime(2023, 4, 1),
                 #datetime(2023, 5, 1),]
