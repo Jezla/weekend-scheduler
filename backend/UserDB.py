@@ -59,10 +59,13 @@ def get_user_byid(conn,id):
         first_name = row[1]
         last_name = row[2]
         pref = []
-        allocated_shifts = row[3]
+        allocated_shifts = row[3].split(',')
         is_admin = row[4]
         priority = row[5]
         sre = SRE(id,pref, first_name, last_name,priority)
+        for shift in allocated_shifts:
+            shift = datetime.strptime(shift, '%d-%m-%Y')
+            sre.assign_shift(shift)
         users.append(sre)
     return users
 
@@ -85,10 +88,13 @@ def get_user_byname(conn,first_name, last_name):
         first_name = row[1]
         last_name = row[2]
         pref = []
-        allocated_shifts = row[3]
+        allocated_shifts = row[3].split(',')
         is_admin = row[4]
         priority = row[5]
         sre = SRE(id,pref, first_name, last_name,priority)
+        for shift in allocated_shifts:
+            shift = datetime.strptime(shift, '%d-%m-%Y')
+            sre.assign_shift(shift)
         users.append(sre)
     return users
 
@@ -109,10 +115,13 @@ def get_all_users(conn):
         first_name = row[1]
         last_name = row[2]
         pref = []
-        allocated_shifts = row[3]
+        allocated_shifts = row[3].split(',')
         is_admin = row[4]
         priority = row[5]
         sre = SRE(id,pref, first_name, last_name,priority)
+        for shift in allocated_shifts:
+            shift = datetime.strptime(shift, '%d-%m-%Y')
+            sre.assign_shift(shift)
         users.append(sre)
     return users
     
@@ -228,7 +237,7 @@ def main():
 
 
         #dbmanager = dbManager()
-       #prefs1 = [datetime(2023, 1, 1),datetime(2023, 2, 1),
+        #prefs1 = [datetime(2023, 1, 1),datetime(2023, 2, 1),
                 #datetime(2023, 3, 1), datetime(2023, 4, 1),
                 #datetime(2023, 5, 1),]
         #sre1 = SRE("1hd3",prefs1, "michael", "jackson", 0)
@@ -242,8 +251,10 @@ def main():
         #dbmanager.add_user(sre2)
         #dbmanager.insert_preferences(sre1, prefs1)
         #dbmanager.insert_preferences(sre2, prefs2)
+        #dbmanager.allocate_shifts(sre1, prefs1)
 
         #user1 = dbmanager.get_user_byname("michael", "jackson")
+        #print(user1.get_list_shifts())
         #print(user1.get_id())
         #print(user1.get_prefs())
         #dbmanager.delete_user_preferences(user1)
