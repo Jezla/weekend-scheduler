@@ -1,0 +1,21 @@
+.calendar {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
+
+.react-calendar__month-view__days__day--weekend {
+    color: blue;
+}
+
+.react-calendar__month-view__days__day--weekend:disabled {
+    color: grey;
+}
+
+.list {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}

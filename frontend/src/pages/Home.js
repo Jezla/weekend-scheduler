@@ -4,6 +4,8 @@ import { DndContext, closestCenter, useSensor, useSensors, PointerSensor } from 
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import './Calendar.css';
 import {
   Button, InputLabel, MenuItem, FormControl, Select, Stack, Typography, Switch, Alert, Snackbar, Grid, Box
 } from '@mui/material';
@@ -125,6 +127,7 @@ function Home() {
       </Grid>
       <div>
         {view ?
+        <div class='calendar'>
           <Calendar
             onChange={date => setDates(date)}
             value={calendarDate}
@@ -136,12 +139,15 @@ function Home() {
             tileDisabled={({ date }) => setDisabled(date)}
             showNeighboringMonth={false}
           />
+        </div>
           :
-          <ListView
+        <div class='list'>
+          <ListView 
             selectedDates={selectedDates}
             setSelectedDates={setSelectedDates}
             listDates={listDates}
           />
+        </div>
         }
         <Container className="p-3" style={{ "width": "50%" }} align="center">
           <h3>Sort your preferences</h3>
