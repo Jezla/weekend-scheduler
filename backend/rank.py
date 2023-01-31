@@ -2,6 +2,7 @@ from Shift import *
 from SRE import *
 import datetime
 import heapq
+import csv
 
 list_shifts = []
 
@@ -56,6 +57,14 @@ def iterate_pref(sorted_list):
 
 def csv_convert(sorted_content):
     print("done")
+    f = open('random.csv', 'w')
+    writer = csv.writer(f)
+
+    #iterate to write rows
+    writer.writerow(sorted_content)
+    f.close()
+
+    return f
 
 
 def get_input():
