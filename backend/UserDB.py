@@ -236,25 +236,25 @@ def main():
         #insert_user_preferences(conn, user_id_2, "04-01-2023",1)
 
 
-        dbmanager = dbManager()
-        prefs1 = [datetime(2023, 1, 1),datetime(2023, 2, 1),
-                datetime(2023, 3, 1), datetime(2023, 4, 1),
-                datetime(2023, 5, 1),]
-        sre1 = SRE("1hd3",prefs1, "michael", "jackson", 0)
+        #dbmanager = dbManager()
+        #prefs1 = [datetime(2023, 1, 1),datetime(2023, 2, 1),
+                #datetime(2023, 3, 1), datetime(2023, 4, 1),
+                #datetime(2023, 5, 1),]
+        #sre1 = SRE("1hd3",prefs1, "michael", "jackson", 0)
 
-        prefs2 = [datetime(2024, 1, 1),datetime(2024, 2, 1),
-                datetime(2024, 3, 1), datetime(2024, 4, 1),
-                datetime(2024, 5, 1),]
-        sre2 = SRE("2lp4",prefs2, "elvis", "presley", 1)
+        #prefs2 = [datetime(2024, 1, 1),datetime(2024, 2, 1),
+                #datetime(2024, 3, 1), datetime(2024, 4, 1),
+                #datetime(2024, 5, 1),]
+        #sre2 = SRE("2lp4",prefs2, "elvis", "presley", 1)
 
-        dbmanager.add_user(sre1)
-        dbmanager.add_user(sre2)
-        dbmanager.insert_preferences(sre1, prefs1)
-        dbmanager.insert_preferences(sre2, prefs2)
-        dbmanager.allocate_shifts(sre1, prefs1)
+        #dbmanager.add_user(sre1)
+        #dbmanager.add_user(sre2)
+        #dbmanager.insert_preferences(sre1, prefs1)
+        #dbmanager.insert_preferences(sre2, prefs2)
+        #dbmanager.allocate_shifts(sre1, prefs1)
 
-        user1 = dbmanager.get_user_byname("michael", "jackson")
-        print(user1.get_list_shifts())
+        #user1 = dbmanager.get_user_byname("michael", "jackson")
+        #print(user1.get_list_shifts())
         #print(user1.get_id())
         #print(user1.get_prefs())
         #dbmanager.delete_user_preferences(user1)
