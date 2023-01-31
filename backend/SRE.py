@@ -10,11 +10,12 @@ class SRE():
         - list_shifts: List of datetime objects representing the shifts they have been assigned
         - prio: The priority the SRE has for next pick. Increases once we fail to assign a preference to him
     """
-    def __init__(self, first_name, last_name):
-        self.name = first_name
-        self.lastname = last_name
-        self.prefs = []
-        self.pref_num = len(self.prefs)
+    def __init__(self,id, prefs, first_name,last_name, prio):
+        self.id = id
+        self.first_name = first_name
+        self.last_name = last_name
+        self.prefs = prefs
+        self.pref_num = len(prefs)
         self.list_shifts = []
         self.prio = 0
     
@@ -29,8 +30,11 @@ class SRE():
     def get_num_prefs(self):
         return self.pref_num
     
-    def get_name(self):
-        return self.name
+    def get_first_name(self):
+        return self.first_name
+
+    def get_last_name(self):
+        return self.last_name
     
     def get_prefs(self):
         return self.prefs
@@ -44,14 +48,20 @@ class SRE():
     def get_prio(self):
         return self.prio
     
-    def get_last_name(self):
-        return self.lastname
+    def get_id(self):
+        return self.id
+    
+    def set_id(self, id):
+        self.id = id
 
     def assign_shift(self, date):   
         self.list_shifts.append(date)
     
     def set_prio(self, val):
         self.prio = val
+    
+    def set_prefs(self, pref):
+        self.prefs = pref
     
     def remove_pref(self, val):
         self.prefs.remove(val)
