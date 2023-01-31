@@ -74,8 +74,11 @@ def update_shift():
     #update the SRE shift preference
     if request.method == 'PUT':
 
-        # updating
-        
+        # finding user in database
+        person = get_user("first", "last")
+
+        # changing their shift preferences
+        update_user_preferences(person, "new preference")
 
     return jsonify({"message": "shift updated successfully."}), 201
 
