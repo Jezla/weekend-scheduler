@@ -5,7 +5,7 @@ from db import *
 class dbManager():
 
 
-    def __init__(self,conn):
+    def __init__(self):
         self.conn = create_connection("pythonsqlite.db")
     
     """
@@ -144,9 +144,10 @@ class dbManager():
     - shifts: a list of datetime objects representing teh shifts
     """
     def allocate_shifts(self, SRE, shifts):
-        shifts = []
+        assigned_shifts = []
         for shift in shifts:
             SRE.assign_shift(shift)
             shift = shift.strftime('%d-%m-%Y')
-            shifts.append(shift)
-        UserDB.update_user(self.conn, "allocated_shifts", shifts, "id", SRE.get_id())
+            assigned_shifts.append(shift)
+        assigned_shifts = ','.join(assigned_shifts)
+        UserDB.update_user(self.conn, "allocated_shifts", assigned_shifts, "id", SRE.get_id())
