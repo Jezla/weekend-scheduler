@@ -176,7 +176,7 @@ function Home() {
           />
         </div>
         }
-        <Container className="p-3" style={{ "width": "50%", border: "1px solid #ccc", marginTop: '30px', marginBottom: '30px' }} align="center">
+        <Container className="p-3" style={{ "width": "50%", border: "1px solid #ccc", marginTop: '30px', marginBottom: '20px' }} align="center">
           <h3>Sort your preferences</h3>
           <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <SortableContext items={selectedDates} strategy={verticalListSortingStrategy}>
@@ -187,7 +187,7 @@ function Home() {
             </SortableContext>
           </DndContext>
         </Container>
-        <Box textAlign='center'>
+        <Box textAlign='center' sx={{ pb: 4 }}>
           <Button variant="contained"
             onClick={handleSubmit}
           >
