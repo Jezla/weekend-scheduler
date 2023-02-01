@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Typography, Snackbar, Alert} from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
+import PubHolsList from "./PubHolsList";
 
 const ListView = (props) => {
   const [monthList1, setMonthList1] = React.useState([]);
@@ -8,13 +9,12 @@ const ListView = (props) => {
   const [monthList3, setMonthList3] = React.useState([]);
   const [openAlert, setOpenAlert] = React.useState(false);
 
-
   React.useEffect(() => {
     const q = 0 // TODO: Un-hardcode this (get current quarter)
 
     const formatMonthList = (q, i) => {
       const quarters = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 0]];
-      const filteredMonth = [...props.listDates].filter(date => date.getMonth() === quarters[q][i]);
+      const filteredMonth = [...props.listDates].filter(date => (date.getMonth() === quarters[q][i] && date.getDay() === 0) || (date.getMonth() === quarters[q][i] && date.getDay() === 6));
       if (filteredMonth[0].getDay() === 'Sunday') {
         filteredMonth.unshift(null)
       }
@@ -33,6 +33,7 @@ const ListView = (props) => {
     setMonthList1(formatMonthList(q, 0))
     setMonthList2(formatMonthList(q, 1))
     setMonthList3(formatMonthList(q, 2))
+
   }, [props.listDates])
 
   const defaultBorder = {
@@ -121,7 +122,7 @@ const ListView = (props) => {
             container
             xs={4}
             sx={{ pl: 4, pr: 4 }}
-            direction='column'
+            direction= 'column'
           >
             <Grid
               container
@@ -241,6 +242,9 @@ const ListView = (props) => {
             })}
           </Grid>
         </Grid>
+
+        <PubHolsList {...props}/>
+        
       </Container><Snackbar open={openAlert} autoHideDuration={6000} onClose={() => setOpenAlert(false)}>
         <Alert onClose={() => setOpenAlert(false)} severity="error" sx={{ width: '100%' }}>
           Maximum shifts selected!
