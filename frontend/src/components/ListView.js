@@ -93,7 +93,7 @@ const ListView = (props) => {
                   const newDates = [...props.selectedDates]
                   newDates.splice(index, 1);
                   props.setSelectedDates(newDates)
-                } else if (props.selectedDates.length === 6) {
+                } else if (props.selectedDates.length === 12) {
                   setOpenAlert(true)
                 } else {
                   props.setSelectedDates([...props.selectedDates, date.toLocaleDateString()])

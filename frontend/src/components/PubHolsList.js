@@ -4,6 +4,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 const PubHolsList = (props) => {
     const [pubHolList, setPubHolList] = React.useState([]);
+    const [openAlert, setOpenAlert] = React.useState(false);
 
     React.useEffect(() => {
         const q = 0 // TODO
@@ -57,7 +58,9 @@ const PubHolsList = (props) => {
                             const newDates = [...props.selectedDates]
                             newDates.splice(index, 1);
                             props.setSelectedDates(newDates)
-                        } else {
+                        } else if (props.selectedDates.length === 12) {
+                            setOpenAlert(true)
+                        }  else {
                             props.setSelectedDates([...props.selectedDates, date.toLocaleDateString()])
                         }
                     }}
@@ -93,6 +96,11 @@ const PubHolsList = (props) => {
                 </Grid >
             </Container>
             <br></br>
+            <Snackbar open={openAlert} autoHideDuration={6000} onClose={() => setOpenAlert(false)}>
+                <Alert onClose={() => setOpenAlert(false)} severity="error" sx={{ width: '100%' }}>
+                    Maximum shifts selected!
+                </Alert>
+            </Snackbar>
         </>
     )
 };
