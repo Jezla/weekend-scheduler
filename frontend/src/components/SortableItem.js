@@ -37,7 +37,7 @@ const SortableItem = (props) => {
             {...listeners}
           >
             <Grid>
-              {props.items.indexOf(props.id) + 1}:
+              {props.items.indexOf(props.id) + 1}
             </Grid>
             <Grid>
               {props.id}

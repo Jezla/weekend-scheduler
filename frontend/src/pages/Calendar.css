@@ -1,5 +1,5 @@
 .react-calendar__month-view__days__day--weekend {
-    color: #0F5EBB;
+    color: black;
 }
 
 .react-calendar__month-view__days__day--weekend:disabled {
