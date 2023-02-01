@@ -15,6 +15,8 @@ def assign_pref(shift, sre):
             shift.assign_sre(sre)
             sre.assign_shift(shift.get_date())
             sre.remove_pref(shift.get_date())
+            if (sre.get_prio != 0): 
+                sre.set_prio(0)
         elif (pref == shift.get_date() and shift.get_slots() == 0):
             sre.set_prio(6 + pref_count)    
             sre.remove_pref(shift.get_date())
@@ -41,6 +43,8 @@ def iterate_pref(sorted_list):
         
         sre_pq = done
         done = []
+    
+
     
     # Second pass is to ensure that all slots are filled
     for shift in list_shifts:

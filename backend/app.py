@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, redirect, make_response
+from flask_cors import CORS
 from csv_parser import *
 from dbManager import *
 from SRE import *
@@ -11,6 +12,7 @@ dates =[]
 db = dbManager()
 
 app = Flask(__name__)
+CORS(app)
 
 # Endpoint to return a list of users and shifts
 @app.route("/list", methods=["GET"])
@@ -44,7 +46,8 @@ def add_sre():
     if request.method == 'POST':
         last_name = data["last_name"]
         first_name = data["first_name"]
-        person = SRE([], first_name,last_name, 0)
+        id = first_name + " " + last_name
+        person = SRE(id,[],first_name,last_name, 0)
         db.add_user(person)
 
     return jsonify({"message": "SRE created successfully."}), 201
