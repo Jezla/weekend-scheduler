@@ -51,7 +51,7 @@ const Navbar = (props) => {
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                   How to use this bot
                 </Typography>
-                {/* I know this is scuffed, ill figure it out later */}
+                {/* I know this is scuffed, ill figure it out later - FROM ALEX */}
                 <p id="modal-modal-description" sx={{ mt: 2 }}>
                 <br></br>
                   1. Select your name from the dropdown menu <br></br><br></br>
