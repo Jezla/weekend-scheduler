@@ -1,0 +1,14 @@
+.react-calendar__month-view__days__day--weekend {
+    color: #0F5EBB;
+}
+
+.react-calendar__month-view__days__day--weekend:disabled {
+    color: grey;
+}
+
+.react-calendar {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}

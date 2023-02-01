@@ -4,8 +4,10 @@ import { DndContext, closestCenter, useSensor, useSensors, PointerSensor } from 
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import './Calendar.css';
 import {
-  Button, InputLabel, MenuItem, FormControl, Select, Stack, Typography, Switch, Alert, Snackbar, Grid, Box
+  Button, InputLabel, MenuItem, FormControl, Select, Stack, Typography, Switch, Alert, Snackbar, Grid, Box, Autocomplete, TextField
 } from '@mui/material';
 
 import SortableItem from '../components/SortableItem';
@@ -45,15 +47,11 @@ function Home() {
     new Date(2023, 3, 15),
     new Date(2023, 3, 16),
     new Date(2023, 3, 22),
-    new Date(2023, 3, 23),
-    new Date(2023, 3, 24),
-    new Date(2023, 3, 25),
-    new Date(2023, 3, 29),
     new Date(2023, 3, 30),
   ]);
-  const [nameList, setNameList] = useState(['Austin Lai', 'Alex Law', 'Adrian Lin']);
+  const [nameList, setNameList] = useState(['Austin Lai', 'Alex jim Law', 'Adrian Lin']);
   const [openAlert, setOpenAlert] = useState(false);
-
+  const [openSubmitAlert, setOpenSubmitAlert] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -79,6 +77,20 @@ function Home() {
     // Get backend input for all valid weekends and public holidays
     // Fill listDates array
     // Get all employee names and fill nameList
+    const getList = async () => {
+      const resp = await fetch('https://localhost:5000/list', {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json'
+        },
+      });
+      const data = await resp.json()
+      console.log(data)
+      setListDates() // TODO: EXTRACT DATA FROM RESPONSE AND FILL LIST AND NAMES
+      setNameList()
+    }
+
+    getList()
   }, [])
 
   const setDates = (date) => {
@@ -91,20 +103,35 @@ function Home() {
   }
 
   const setDisabled = (date) => {
-    // TODO: add check for valid dates and public holidays (take from list date input)
-    if ((date.getDay() !== 0 &&
-      date.getDay() !== 6) ||
-      selectedDates.includes(date.toLocaleDateString())
-    ) {
-      return true
+    if (listDates.find(item => { return item.toLocaleDateString() === date.toLocaleDateString()})
+        && !selectedDates.includes(date.toLocaleDateString())) {
+      return false
     }
-    return false
+    return true
   }
 
-  const handleSubmit = () => {
-    console.log(name, selectedDates)
-    // TODO: check for existing name
-    // TODO: probs add a confirmation popup
+  const handleSubmit = async () => {
+    if (selectedDates.length === 0 || name === "") {
+      setOpenSubmitAlert(true)
+      return
+    }
+    const nameSplit = name.split(' ')
+    const firstname = nameSplit.shift()
+    const lastname = nameSplit.join(" ");
+    console.log(firstname, lastname, selectedDates)
+    const resp = await fetch('https://localhost:5000/updateshift', {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: {
+        firstname,
+        lastname,
+        'dates': selectedDates
+      }
+    });
+    const data = await resp.json()
+    console.log(data)
   }
 
   return (
@@ -113,7 +140,7 @@ function Home() {
         direction="row"
         justifyContent="center"
         alignItems="center">
-        <FormControl sx={{ m: 1, minWidth: 360 }}>
+        {/*<FormControl sx={{ m: 1, minWidth: 360 }}>
           <InputLabel>Select Name</InputLabel>
           <Select
             value={name}
@@ -122,7 +149,14 @@ function Home() {
           >
             {nameList.map((name, index) => <MenuItem key={index} value={name}>{name}</MenuItem>)}
           </Select>
-        </FormControl>
+        </FormControl>*/}
+        <Autocomplete
+          disablePortal
+          options={nameList}
+          sx={{ m: 1, minWidth: 360 }}
+          onChange={e => setName(e.target.textContent)}
+          renderInput={params => <TextField {...params} label="Select Name"/>}
+        />
         <FormControl>
           <Stack direction="row" spacing={1} alignItems="center">
             <Typography>List</Typography>
@@ -152,7 +186,7 @@ function Home() {
           />
           
         }
-        <Container className="p-3" style={{ "width": "50%" }} align="center">
+        <Container className="p-3" style={{ "width": "50%", border: "1px solid #ccc", marginTop: '30px', marginBottom: '20px' }} align="center">
           <h3>Sort your preferences</h3>
           <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <SortableContext items={selectedDates} strategy={verticalListSortingStrategy}>
@@ -163,7 +197,7 @@ function Home() {
             </SortableContext>
           </DndContext>
         </Container>
-        <Box textAlign='center'>
+        <Box textAlign='center' sx={{ pb: 4 }}>
           <Button variant="contained"
             onClick={handleSubmit}
           >
@@ -174,6 +208,11 @@ function Home() {
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={() => setOpenAlert(false)}>
         <Alert onClose={() => setOpenAlert(false)} severity="error" sx={{ width: '100%' }}>
           Maximum shifts selected!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openSubmitAlert} autoHideDuration={6000} onClose={() => setOpenSubmitAlert(false)}>
+        <Alert onClose={() => setOpenSubmitAlert(false)} severity="error" sx={{ width: '100%' }}>
+          Check if name and at least one shift has been selected
         </Alert>
       </Snackbar>
     </>

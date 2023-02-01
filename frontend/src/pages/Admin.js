@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Button, FormControl, InputLabel, Select, MenuItem, Typography, Modal, Box
+  Button, Typography
 } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 
@@ -16,39 +16,42 @@ function App() {
   const [shiftFile, setShiftFile] = React.useState("");
   const [sreFile, setSreFile] = React.useState("");
 
-  //const [name, setName] = useState("");
-  //const [nameList, setNameList] = useState(['Austin Lai', 'Alex Law', 'Adrian Lin']);
-  //const [open, setOpen] = React.useState(false);
-  //const [removeOpen, setRemoveOpen] = React.useState(false);
-  //const handleOpen = () => setOpen(true);
-  //const handleClose = () => setOpen(false);
-
-  //const style = {
-  //  position: 'absolute',
-  //  top: '50%',
-  //  left: '50%',
-  //  transform: 'translate(-50%, -50%)',
-  //  width: 400,
-  //  bgcolor: 'background.paper',
-  //  border: '2px solid #000',
-  //  boxShadow: 24,
-  //  p: 4,
-  //};
-
-  const uploadShifts = (file) => {
-    console.log(file)
-    //const resp = await fetch('API_URL')
-    //const data = await resp.json()
+  const uploadShifts = async (file) => {
+    // TODO: Change api link
+    const resp = await fetch('https://localhost:5000/addshift', {
+      method: 'POST',
+      //headers: {
+      //  'Content-type': 'application/json'
+      //},
+      body: file
+    });
+    const data = await resp.json()
+    console.log(data)
   }
 
-  const uploadSREs = (file) => {
-    console.log(file)
-    //const resp = await fetch('API_URL')
-    //const data = await resp.json()
+  const uploadSREs = async (file) => {
+    // TODO: Change api link
+    const resp = await fetch('https://localhost:5000/sre', {
+      method: 'POST',
+      //headers: {
+      //  'Content-type': 'application/json'
+      //},
+      body: file
+    });
+    const data = await resp.json()
+    console.log(data)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // TODO: Pass all preferences to backend to generate CSV
+    const resp = await fetch('https://localhost:5000/final', {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json'
+      },
+    });
+    const data = await resp.json() // NOTE: data should be our file
+    console.log(data)
   }
 
   return (
@@ -91,59 +94,6 @@ function App() {
             Generate CSV
           </Button>
         </Grid>
-        {/* <Grid>
-          <h5>Manage SREs</h5>
-          <Button variant="contained" onClick={() => setRemoveOpen(true)}>Remove SRE</Button>
-          <Modal
-            open={removeOpen}
-            onClose={() => setRemoveOpen(false)}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Remove SRE
-              </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                <FormControl sx={{ m: 1, minWidth: 360 }} size="small">
-                  <InputLabel>Select Name</InputLabel>
-                  <Select
-                    value={name}
-                    label="Select Name"
-                    onChange={(e) => setName(e.target.value)}
-                  >
-                    {nameList.map((name, index) => <MenuItem key={index} value={name}>{name}</MenuItem>)}
-                  </Select>
-                </FormControl>
-                <Button variant="contained" onClick={handleSubmit}>
-                  Remove SRE
-                </Button>
-              </Typography>
-            </Box>
-          </Modal>
-          <Button variant="contained" onClick={handleOpen}>Add SRE</Button>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Add SRE
-              </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                <label>SRE Name</label>
-                <input type="text" id="newSREName" />
-                <label>SRE ID</label>
-                <input type="text" id="newSREID" />
-                <Button variant="contained" onClick={handleSubmit}>
-                  Add SRE
-                </Button>
-              </Typography>
-            </Box>
-          </Modal>
-        </Grid> */}
       </Grid>
     </>
   );

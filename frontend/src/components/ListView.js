@@ -14,7 +14,7 @@ const ListView = (props) => {
 
     const formatMonthList = (q, i) => {
       const quarters = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 0]];
-      const filteredMonth = [...props.listDates].filter(date => (date.getMonth() === quarters[q][i] && date.getDay() === 0) || (date.getMonth() === quarters[q][i] && date.getDay() === 6));
+      const filteredMonth = [...props.listDates].filter(date => date.getMonth() === quarters[q][i]); // BUG: FILTER OUT PUBLIC HOLIDAYS!!!!!!!!!!!!!!!
       if (filteredMonth[0].getDay() === 'Sunday') {
         filteredMonth.unshift(null)
       }
@@ -116,13 +116,14 @@ const ListView = (props) => {
         <Grid
           container
           spacing={2}
+          columnGap={4}
+          rowGap={4}
+          columns={{ xs: 12, sm: 6, md: 4, lg: 4 }}
           justifyContent='center'
         >
           <Grid
             container
-            xs={4}
-            sx={{ pl: 4, pr: 4 }}
-            direction= 'column'
+            direction='column'
           >
             <Grid
               container
@@ -140,7 +141,7 @@ const ListView = (props) => {
             >
               <Grid
                 minHeight={25}
-                minWidth={100}
+                minWidth={150}
                 sx={defaultBorder}
                 xs={6}
               >
@@ -148,7 +149,7 @@ const ListView = (props) => {
               </Grid>
               <Grid
                 minHeight={25}
-                minWidth={100}
+                minWidth={150}
                 sx={defaultBorder}
                 xs={6}
               >
@@ -161,8 +162,6 @@ const ListView = (props) => {
           </Grid>
           <Grid
             container
-            xs={4}
-            sx={{ pl: 4, pr: 4 }}
             direction='column'
           >
             <Grid
@@ -181,7 +180,7 @@ const ListView = (props) => {
             >
               <Grid
                 minHeight={25}
-                minWidth={100}
+                minWidth={150}
                 sx={defaultBorder}
                 xs={6}
               >
@@ -189,7 +188,7 @@ const ListView = (props) => {
               </Grid>
               <Grid
                 minHeight={25}
-                minWidth={100}
+                minWidth={150}
                 sx={defaultBorder}
                 xs={6}
               >
@@ -202,8 +201,6 @@ const ListView = (props) => {
           </Grid>
           <Grid
             container
-            xs={4}
-            sx={{ pl: 4, pr: 4 }}
             direction='column'
           >
             <Grid
@@ -222,7 +219,7 @@ const ListView = (props) => {
             >
               <Grid
                 minHeight={25}
-                minWidth={100}
+                minWidth={150}
                 sx={{ ...defaultBorder, textAlign: 'center' }}
                 xs={6}
               >
@@ -230,7 +227,7 @@ const ListView = (props) => {
               </Grid>
               <Grid
                 minHeight={25}
-                minWidth={100}
+                minWidth={150}
                 sx={{ ...defaultBorder, textAlign: 'center' }}
                 xs={6}
               >
@@ -242,9 +239,7 @@ const ListView = (props) => {
             })}
           </Grid>
         </Grid>
-
         <PubHolsList {...props}/>
-        
       </Container><Snackbar open={openAlert} autoHideDuration={6000} onClose={() => setOpenAlert(false)}>
         <Alert onClose={() => setOpenAlert(false)} severity="error" sx={{ width: '100%' }}>
           Maximum shifts selected!
