@@ -12,6 +12,7 @@ import {
 
 import SortableItem from '../components/SortableItem';
 import ListView from '../components/ListView';
+import PubHolsList from '../components/PubHolsList';
 
 function Home() {
   const [name, setName] = useState("");
@@ -27,6 +28,8 @@ function Home() {
     new Date(2023, 1, 19),
     new Date(2023, 1, 25),
     new Date(2023, 1, 26),
+    new Date(2023, 1, 27),
+    new Date(2023, 1, 28),
     new Date(2023, 2, 4),
     new Date(2023, 2, 5),
     new Date(2023, 2, 11),
@@ -35,6 +38,8 @@ function Home() {
     new Date(2023, 2, 19),
     new Date(2023, 2, 25),
     new Date(2023, 2, 26),
+    new Date(2023, 2, 27),
+    new Date(2023, 2, 28),
     new Date(2023, 3, 1),
     new Date(2023, 3, 2),
     new Date(2023, 3, 8),
@@ -42,7 +47,6 @@ function Home() {
     new Date(2023, 3, 15),
     new Date(2023, 3, 16),
     new Date(2023, 3, 22),
-
     new Date(2023, 3, 30),
   ]);
   const [nameList, setNameList] = useState(['Austin Lai', 'Alex jim Law', 'Adrian Lin']);
@@ -180,6 +184,7 @@ function Home() {
             setSelectedDates={setSelectedDates}
             listDates={listDates}
           />
+          
         }
         <Container className="p-3" style={{ "width": "50%", border: "1px solid #ccc", marginTop: '30px', marginBottom: '20px' }} align="center">
           <h3>Sort your preferences</h3>
