@@ -206,7 +206,7 @@ def main():
                                     allocated_shifts text,
                                     is_admin BOOLEAN DEFAULT false,
                                     priority integer,
-                                    UNIQUE(first_Name, last_name)
+                                    UNIQUE(first_name, last_name)
                                 );"""
     
     sql_create_preference_table = """ CREATE TABLE IF NOT EXISTS preference (
