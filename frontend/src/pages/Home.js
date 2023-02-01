@@ -42,7 +42,7 @@ function Home() {
     new Date(2023, 3, 15),
     new Date(2023, 3, 16),
     new Date(2023, 3, 22),
-    new Date(2023, 3, 29),
+
     new Date(2023, 3, 30),
   ]);
   const [nameList, setNameList] = useState(['Austin Lai', 'Alex jim Law', 'Adrian Lin']);
@@ -176,7 +176,7 @@ function Home() {
           />
         </div>
         }
-        <Container className="p-3" style={{ "width": "50%" }} align="center">
+        <Container className="p-3" style={{ "width": "50%", border: "1px solid #ccc", marginTop: '30px', marginBottom: '30px' }} align="center">
           <h3>Sort your preferences</h3>
           <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <SortableContext items={selectedDates} strategy={verticalListSortingStrategy}>
