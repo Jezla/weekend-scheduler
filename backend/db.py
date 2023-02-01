@@ -6,11 +6,11 @@ def create_connection(db_file):
     """ create a database connection to a SQLite database """
     conn = None
     try:
-        conn = sqlite3.connect(db_file)
+        conn = sqlite3.connect(db_file, check_same_thread=False)
         print(sqlite3.version)
     except Error as e:
         print(e)
-    
+
     return conn
 
 def create_table(conn, create_table_sql):
@@ -26,6 +26,6 @@ def create_table(conn, create_table_sql):
         #print(c.fetchall())
     except Error as e:
         print(e)
-    
+
 if __name__ == '__main__':
     create_connection(r"C:\sqlite\db\pythonsqlite.db")
