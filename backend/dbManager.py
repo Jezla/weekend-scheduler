@@ -7,6 +7,7 @@ class dbManager():
 
     def __init__(self):
         self.conn = create_connection("pythonsqlite.db")
+        UserDB.init_db(self.conn)
 
     """
     Adds a user to the database
