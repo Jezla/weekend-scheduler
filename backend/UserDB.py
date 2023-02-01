@@ -8,10 +8,10 @@ from dbManager import *
 #   - conn: database connection object
 #   - first_name: first name of the user
 #   - last_name: last name of the user
-def insert_user(conn, id, first_name, last_name):
-    sql = " INSERT INTO user(id,first_name,last_name) VALUES(?,?,?)"
+def insert_user(conn, id, username, first_name, last_name):
+    sql = " INSERT INTO user(id,username, first_name,last_name) VALUES(?,?,?,?)"
     cur = conn.cursor()
-    cur.execute(sql, (id, first_name, last_name))
+    cur.execute(sql, (id, username, first_name, last_name))
     conn.commit()
     return cur.lastrowid
 
@@ -56,13 +56,14 @@ def get_user_byid(conn,id):
     rows = cur.fetchall()
     for row in rows:
         id = row[0]
-        first_name = row[1]
-        last_name = row[2]
+        username = row[1]
+        first_name = row[2]
+        last_name = row[3]
         pref = []
-        allocated_shifts = row[3].split(',')
-        is_admin = row[4]
-        priority = row[5]
-        sre = SRE(id,pref, first_name, last_name,priority)
+        allocated_shifts = row[4].split(',')
+        is_admin = row[5]
+        priority = row[6]
+        sre = SRE(id,username,pref, first_name, last_name,priority)
         for shift in allocated_shifts:
             shift = datetime.strptime(shift, '%d-%m-%Y')
             sre.assign_shift(shift)
@@ -85,13 +86,14 @@ def get_user_byname(conn,first_name, last_name):
     rows = cur.fetchall()
     for row in rows:
         id = row[0]
-        first_name = row[1]
-        last_name = row[2]
+        username = row[1]
+        first_name = row[2]
+        last_name = row[3]
         pref = []
-        allocated_shifts = row[3].split(',')
-        is_admin = row[4]
-        priority = row[5]
-        sre = SRE(id,pref, first_name, last_name,priority)
+        allocated_shifts = row[4].split(',')
+        is_admin = row[5]
+        priority = row[6]
+        sre = SRE(id,username,pref, first_name, last_name,priority)
         for shift in allocated_shifts:
             shift = datetime.strptime(shift, '%d-%m-%Y')
             sre.assign_shift(shift)
@@ -112,13 +114,14 @@ def get_all_users(conn):
     rows = cur.fetchall()
     for row in rows:
         id = row[0]
-        first_name = row[1]
-        last_name = row[2]
+        username = row[1]
+        first_name = row[2]
+        last_name = row[3]
         pref = []
-        allocated_shifts = row[3].split(',')
-        is_admin = row[4]
-        priority = row[5]
-        sre = SRE(id,pref, first_name, last_name,priority)
+        allocated_shifts = row[4].split(',')
+        is_admin = row[5]
+        priority = row[6]
+        sre = SRE(id,username,pref, first_name, last_name,priority)
         for shift in allocated_shifts:
             shift = datetime.strptime(shift, '%d-%m-%Y')
             sre.assign_shift(shift)
@@ -197,6 +200,7 @@ def main():
 
     sql_create_user_table = """ CREATE TABLE IF NOT EXISTS user (
                                     id text PRIMARY KEY ,
+                                    username text NOT NULL,
                                     first_name text NOT NULL,
                                     last_name text NOT NULL,
                                     allocated_shifts text,
@@ -228,24 +232,17 @@ def main():
 
         #basic testing below
 
-        #insert users and preferences
-        #user_id = insert_user(conn, "Robert", "Bannayan")
-        #user_id_2 = insert_user(conn, "John", "Smith")
-        #insert_user_preferences(conn, user_id, "01-03-2023",2)
-        #insert_user_preferences(conn, user_id, "02-01-2023",1)
-        #insert_user_preferences(conn, user_id_2, "04-01-2023",1)
-
 
         #dbmanager = dbManager()
         #prefs1 = [datetime(2023, 1, 1),datetime(2023, 2, 1),
                 #datetime(2023, 3, 1), datetime(2023, 4, 1),
                 #datetime(2023, 5, 1),]
-        #sre1 = SRE("1hd3",prefs1, "michael", "jackson", 0)
+        #sre1 = SRE("1hd3","username",prefs1, "michael", "jackson", 0)
 
         #prefs2 = [datetime(2024, 1, 1),datetime(2024, 2, 1),
                 #datetime(2024, 3, 1), datetime(2024, 4, 1),
                 #datetime(2024, 5, 1),]
-        #sre2 = SRE("2lp4",prefs2, "elvis", "presley", 1)
+        #sre2 = SRE("2lp4","anotherusername",prefs2, "elvis", "presley", 1)
 
         #dbmanager.add_user(sre1)
         #dbmanager.add_user(sre2)

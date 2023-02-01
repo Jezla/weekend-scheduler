@@ -16,7 +16,7 @@ class dbManager():
         
      """
     def add_user(self, SRE):
-        UserDB.insert_user(self.conn, SRE.get_id(),SRE.get_first_name(), SRE.get_last_name())
+        UserDB.insert_user(self.conn, SRE.get_id(),SRE.get_username(), SRE.get_first_name(), SRE.get_last_name())
     
     """
     Removes a user from the database
