@@ -168,13 +168,11 @@ function Home() {
             showNeighboringMonth={false}
           />
           :
-        <div class='list'>
           <ListView
             selectedDates={selectedDates}
             setSelectedDates={setSelectedDates}
             listDates={listDates}
           />
-        </div>
         }
         <Container className="p-3" style={{ "width": "50%", border: "1px solid #ccc", marginTop: '30px', marginBottom: '20px' }} align="center">
           <h3>Sort your preferences</h3>
