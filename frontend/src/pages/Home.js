@@ -7,7 +7,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './Calendar.css';
 import {
-  Button, InputLabel, MenuItem, FormControl, Select, Stack, Typography, Switch, Alert, Snackbar, Grid, Box
+  Button, InputLabel, MenuItem, FormControl, Select, Stack, Typography, Switch, Alert, Snackbar, Grid, Box, Autocomplete, TextField
 } from '@mui/material';
 
 import SortableItem from '../components/SortableItem';
@@ -114,7 +114,7 @@ function Home() {
     const nameSplit = name.split(' ')
     const firstname = nameSplit.shift()
     const lastname = nameSplit.join(" ");
-    const dates = selectedDates.map(date => date.toLocaleDateString())
+    console.log(firstname, lastname, selectedDates)
     const resp = await fetch('https://localhost:5000/updateshift', {
       method: 'PUT',
       headers: {
@@ -123,7 +123,7 @@ function Home() {
       body: {
         firstname,
         lastname,
-        dates
+        'dates': selectedDates
       }
     });
     const data = await resp.json()
@@ -136,7 +136,7 @@ function Home() {
         direction="row"
         justifyContent="center"
         alignItems="center">
-        <FormControl sx={{ m: 1, minWidth: 360 }}>
+        {/*<FormControl sx={{ m: 1, minWidth: 360 }}>
           <InputLabel>Select Name</InputLabel>
           <Select
             value={name}
@@ -145,7 +145,14 @@ function Home() {
           >
             {nameList.map((name, index) => <MenuItem key={index} value={name}>{name}</MenuItem>)}
           </Select>
-        </FormControl>
+        </FormControl>*/}
+        <Autocomplete
+          disablePortal
+          options={nameList}
+          sx={{ m: 1, minWidth: 360 }}
+          onChange={e => setName(e.target.textContent)}
+          renderInput={params => <TextField {...params} label="Select Name"/>}
+        />
         <FormControl>
           <Stack direction="row" spacing={1} alignItems="center">
             <Typography>List</Typography>
@@ -168,13 +175,11 @@ function Home() {
             showNeighboringMonth={false}
           />
           :
-        <div class='list'>
           <ListView
             selectedDates={selectedDates}
             setSelectedDates={setSelectedDates}
             listDates={listDates}
           />
-        </div>
         }
         <Container className="p-3" style={{ "width": "50%", border: "1px solid #ccc", marginTop: '30px', marginBottom: '20px' }} align="center">
           <h3>Sort your preferences</h3>
