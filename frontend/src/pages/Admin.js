@@ -31,7 +31,7 @@ function App() {
 
   const uploadSREs = async (file) => {
     // TODO: Change api link
-    const resp = await fetch('http://localhost:5000/sre', {
+    const resp = await fetch('http://localhost:5000/srelist', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
