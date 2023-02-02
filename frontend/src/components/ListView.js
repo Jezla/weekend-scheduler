@@ -240,7 +240,8 @@ const ListView = (props) => {
           </Grid>
         </Grid>
         <PubHolsList {...props}/>
-      </Container><Snackbar open={openAlert} autoHideDuration={6000} onClose={() => setOpenAlert(false)}>
+      </Container>
+      <Snackbar open={openAlert} autoHideDuration={6000} onClose={() => setOpenAlert(false)}>
         <Alert onClose={() => setOpenAlert(false)} severity="error" sx={{ width: '100%' }}>
           Maximum shifts selected!
         </Alert>

@@ -95,7 +95,7 @@ function Home() {
 
   const setDates = (date) => {
     setCalendarDate(date)
-    if (selectedDates.length !== 6) {
+    if (selectedDates.length !== 12) {
       setSelectedDates([...selectedDates, date.toLocaleDateString()])
       return
     }
