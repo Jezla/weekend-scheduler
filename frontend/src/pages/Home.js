@@ -7,12 +7,11 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './Calendar.css';
 import {
-  Button, InputLabel, MenuItem, FormControl, Select, Stack, Typography, Switch, Alert, Snackbar, Grid, Box, Autocomplete, TextField
+  Button, FormControl, Stack, Typography, Switch, Alert, Snackbar, Grid, Box, Autocomplete, TextField
 } from '@mui/material';
 
 import SortableItem from '../components/SortableItem';
 import ListView from '../components/ListView';
-import PubHolsList from '../components/PubHolsList';
 
 function Home() {
   const [name, setName] = useState("");

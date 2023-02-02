@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
-import { CloseButton, Card } from "react-bootstrap";
+import { CloseButton } from "react-bootstrap";
 import Grid from '@mui/material/Unstable_Grid2';
 
 const SortableItem = (props) => {

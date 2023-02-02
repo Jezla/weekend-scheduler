@@ -4,7 +4,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Logo from '../resources/logo.png';
 
-const Navbar = (props) => {
+const Navbar = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
