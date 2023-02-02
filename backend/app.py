@@ -23,7 +23,7 @@ def get_list():
         print("empty list")
     else:
         for sre in sres:
-            tmp = {'name': sre.get_name(), 'last_name': sre.get_last_name(), 'preferences': sre.get_prefs()}
+            tmp = {'first_name': sre.get_first_name(), 'last_name': sre.get_last_name(), 'preferences': [pref.strftime("%Y-%m-%d") for pref in sre.get_prefs()]}
             user_list.append(jsonify(tmp))
     
     resp = {'users': user_list, 'shifts': dates}
