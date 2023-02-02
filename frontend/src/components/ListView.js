@@ -14,7 +14,7 @@ const ListView = (props) => {
 
     const formatMonthList = (q, i) => {
       const quarters = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 0]];
-      const filteredMonth = [...props.listDates].filter(date => date.getMonth() === quarters[q][i]);
+      const filteredMonth = [...props.listDates].filter(date => date.getMonth() === quarters[q][i]); // BUG: FILTER OUT PUBLIC HOLIDAYS!!!!!!!!!!!!!!!
       if (filteredMonth[0].getDay() === 'Sunday') {
         filteredMonth.unshift(null)
       }

@@ -195,9 +195,7 @@ def delete_user_preferences(conn, identifier, identifier_value):
     conn.commit()
     return None
 
-def main():
-    database = "pythonsqlite.db"
-
+def init_db(conn):
     sql_create_user_table = """ CREATE TABLE IF NOT EXISTS user (
                                     id text PRIMARY KEY ,
                                     username text NOT NULL,
@@ -216,12 +214,6 @@ def main():
                                     rank integer,
                                     FOREIGN KEY (user_id) REFERENCES user (id)
                                 );"""
-    
-
-    # create a database connection
-    conn = create_connection(database)
-
-    # create tables
     if conn is not None:
 
         #create user table
@@ -229,6 +221,27 @@ def main():
         
         #create preferences table
         create_table(conn, sql_create_preference_table)
+    else:
+        print("Error! cannot create the database connection.")
+
+
+
+
+#def main():
+    #database = "pythonsqlite.db"
+
+
+    # create a database connection
+    #conn = create_connection(database)
+
+    # create tables
+    #if conn is not None:
+
+        #create user table
+        #create_table(conn, sql_create_user_table)
+        
+        #create preferences table
+        #create_table(conn, sql_create_preference_table)
 
         #basic testing below
 
@@ -270,9 +283,9 @@ def main():
         #print("after removing")
         #print(dbmanager.get_all_users())
 
-    else:
-        print("Error! cannot create the database connection.")
+    #else:
+        #print("Error! cannot create the database connection.")
 
-if __name__ == '__main__':
-    main()
+#if __name__ == '__main__':
+    #main()
     
