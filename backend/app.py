@@ -26,9 +26,9 @@ def get_list():
         print("empty list")
     else:
         for sre in sres:
-            tmp = {'first_name': sre.get_first_name(), 'last_name': sre.get_last_name(), 'preferences': [pref.strftime("%Y-%m-%d") for pref in sre.get_prefs()]}
+            tmp = {'name': sre.get_first_name() + ' ' + sre.get_last_name(), 'preferences': [pref.strftime("%Y-%m-%d") for pref in sre.get_prefs()]}
             user_list.append(jsonify(tmp))
-    
+
     resp = {'users': user_list, 'shifts': dates}
     return jsonify(resp)
 
@@ -59,7 +59,7 @@ def add_sre():
 @app.route("/addshift", methods=["POST"])
 def add_shift():
     data = request.get_json()
-    # shift creation from a csv file 
+    # shift creation from a csv file
     if request.method == 'POST':
         if 'file' not in request.files:
             flash('No file part')
@@ -95,13 +95,13 @@ def get_final():
     data = request.get_json()
     sres = db.get_all_users()
     csv = rank(shifts, sres)
-    
+
     #This should make the user receive a download for the final csv file
     response = make_response(csv)
     cd = 'attachment; filename=mycsv.csv'
-    response.headers['Content-Disposition'] = cd 
+    response.headers['Content-Disposition'] = cd
     response.mimetype='text/csv'
-    
+
     return response
 
 # @app.route("/users/<int:id>", methods=["PUT"])
