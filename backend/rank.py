@@ -2,7 +2,7 @@ from Shift import *
 from SRE import *
 import datetime
 import heapq
-import csv
+import pandas as pd
 
 list_shifts = []
 
@@ -57,18 +57,24 @@ def iterate_pref(sorted_list):
     
     return "sorted"
 
-def csv_convert(sorted_content):
-    print("done")
-    f = open('random.csv', 'w')
-    writer = csv.writer(f)
+def csv_convert():
+    file = pd.read_csv("SRE_Registtartion__c_-_APAC.csv")
 
-    #iterate to write rows
-    writer.writerow(sorted_content)
-    f.close()
+    base = 0
+    for shift in list_shifts:
+        for sre in shift.get_workers():
+            date = file.loc[base, 'Date__c']
+            if date == shift.get_date().strftime("%d/%m/%Y"):
+                file.loc[base, 'Registered_SRE__c'] = sre.get_first_name() + " " + sre.get_last_name()
+                base += 1
+            else:
+                break
+    
+    file.to_csv("final.csv", index=False)
 
-    return f
 
 def rank(shifts, sres):
+    list_shifts = shifts
     #Iterate through list of shifts and through each sres preferences and assign shifts based on criteria
     iterate_pref(sres)
     #After this function is done we can iterate through the list of shifts and see which sre was assignd to it

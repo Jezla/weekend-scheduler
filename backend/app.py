@@ -9,7 +9,7 @@ from db import *
 
 shifts = []
 dates =[]
-UPLOAD_FOLDER = getcwd() + "/Data"
+UPLOAD_FOLDER = path.join(getcwd(), "uploads")
 
 db = dbManager()
 
@@ -88,17 +88,17 @@ def update_shift():
 
     return jsonify({"message": "shift updated successfully."}), 201
 
-
 @app.route("/final", methods=["GET"])
 # Endpoint for getting final SRE shift csv
 def get_final():
     data = request.get_json()
     sres = db.get_all_users()
-    csv = rank(shifts, sres)
+    rank(shifts, sres)
+    csv = open(path.join(getcwd, "final.csv"))
 
     #This should make the user receive a download for the final csv file
     response = make_response(csv)
-    cd = 'attachment; filename=mycsv.csv'
+    cd = 'attachment; filename=final.csv'
     response.headers['Content-Disposition'] = cd
     response.mimetype='text/csv'
 
