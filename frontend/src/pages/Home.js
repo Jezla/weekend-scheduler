@@ -7,9 +7,8 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './Calendar.css';
 import {
-  Button, InputLabel, MenuItem, FormControl, Select, Stack, Typography, Switch, Alert, Snackbar, Grid, Box, Autocomplete, TextField
+  Button, FormControl, Stack, Typography, Switch, Alert, Snackbar, Grid, Box, Autocomplete, TextField
 } from '@mui/material';
-
 import SortableItem from '../components/SortableItem';
 import ListView from '../components/ListView';
 
@@ -74,16 +73,18 @@ function Home() {
     // Fill listDates array
     // Get all employee names and fill nameList
     const getList = async () => {
-      const resp = await fetch('https://localhost:5000/list', {
+      const resp = await fetch('http://localhost:5000/list', {
         method: 'GET',
         headers: {
-          'Content-type': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
         },
       });
       const data = await resp.json()
       console.log(data)
-      setListDates() // TODO: EXTRACT DATA FROM RESPONSE AND FILL LIST AND NAMES
-      setNameList()
+      setListDates(data.shifts) // TODO: EXTRACT DATA FROM RESPONSE AND FILL LIST AND NAMES
+      setNameList(data.users)
     }
 
     getList()
@@ -115,7 +116,7 @@ function Home() {
     const firstname = nameSplit.shift()
     const lastname = nameSplit.join(" ");
     console.log(firstname, lastname, selectedDates)
-    const resp = await fetch('https://localhost:5000/updateshift', {
+    const resp = await fetch('http://localhost:5000/updateshift', {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json'
@@ -148,9 +149,15 @@ function Home() {
         </FormControl>*/}
         <Autocomplete
           disablePortal
-          options={nameList}
+          options={nameList.map(({name}) => name)}
           sx={{ m: 1, minWidth: 360 }}
-          onChange={e => setName(e.target.textContent)}
+          onChange={e => {
+            const user = nameList.find(user =>  user.name === e.target.textContent)
+            if (user !== undefined && user.shifts.length !== 0 && selectedDates.length !== 0) {
+              setSelectedDates(user.shifts)
+            }
+            setName(e.target.textContent)
+          }}
           renderInput={params => <TextField {...params} label="Select Name"/>}
         />
         <FormControl>

@@ -18,11 +18,11 @@ function App() {
 
   const uploadShifts = async (file) => {
     // TODO: Change api link
-    const resp = await fetch('https://localhost:5000/addshift', {
+    const resp = await fetch('http://localhost:5000/addshift', {
       method: 'POST',
-      //headers: {
-      //  'Content-type': 'application/json'
-      //},
+      headers: {
+        'Content-type': 'application/json'
+      },
       body: file
     });
     const data = await resp.json()
@@ -31,11 +31,11 @@ function App() {
 
   const uploadSREs = async (file) => {
     // TODO: Change api link
-    const resp = await fetch('https://localhost:5000/sre', {
+    const resp = await fetch('http://localhost:5000/sre', {
       method: 'POST',
-      //headers: {
-      //  'Content-type': 'application/json'
-      //},
+      headers: {
+        'Content-type': 'application/json'
+      },
       body: file
     });
     const data = await resp.json()
@@ -44,7 +44,7 @@ function App() {
 
   const handleSubmit = async () => {
     // TODO: Pass all preferences to backend to generate CSV
-    const resp = await fetch('https://localhost:5000/final', {
+    const resp = await fetch('http://localhost:5000/final', {
       method: 'GET',
       headers: {
         'Content-type': 'application/json'
