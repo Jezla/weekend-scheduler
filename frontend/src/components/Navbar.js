@@ -55,7 +55,7 @@ const Navbar = (props) => {
                 <p id="modal-modal-description" sx={{ mt: 2 }}>
                 <br></br>
                   1. Select your name from the dropdown menu <br></br><br></br>
-                  2. Select up to six weekend shifts that you prefer to work<br></br><br></br>
+                  2. Select up to 12 weekend shifts that you prefer to work<br></br><br></br>
                   3. Rank your preferences from highest priority to lowest<br></br><br></br>
                   4. Submit your preferences and wait for allocations to be announced
                 </p>
