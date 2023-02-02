@@ -14,16 +14,14 @@ def assign_pref(shift, sre):
         if (pref == shift.get_date() and shift.get_slots() != 0):
             shift.assign_sre(sre)
             sre.assign_shift(shift.get_date())
-            sre.remove_pref(shift.get_date())
+            #sre.remove_pref(shift.get_date())
             if (sre.get_prio != 0): 
                 sre.set_prio(0)
         elif (pref == shift.get_date() and shift.get_slots() == 0):
             sre.set_prio(6 + pref_count)    
-            sre.remove_pref(shift.get_date())
+            #sre.remove_pref(shift.get_date())
         
         pref_count -= 1
-            
-    print("assigned")
 
 # Sort the SRE list in ascending order based on number of preferences
 def sorting_list(given_input):
@@ -44,19 +42,30 @@ def iterate_pref(sorted_list):
         sre_pq = done
         done = []
     
-    # Second pass is to ensure that all slots are filled
+    # Second pass is to ensure that all sres have at least 6 shifts
     for shift in list_shifts:
         while len(sre_pq) != 0:
             sre = heapq.heappop(sre_pq)
-            if shift.get_slots() != 0:
+            if shift.get_slots() != 0 and sre.get_num_shifts() < 6:
                 shift.assign_sre(sre)
+                sre.assign_shift(shift.get_date())
             heapq.heappush(done, sre)
         
         sre_pq = done
         done = []
     
-    return "sorted"
-
+    #Last pass is to ensure that no shifts have available slots
+    for shift in list_shifts:
+        while len(sre_pq) != 0:
+            sre = heapq.heappop(sre_pq)
+            if shift.get_slots() != 0:
+                shift.assign_sre(sre)
+                sre.assign_shift(shift.get_date())
+            heapq.heappush(done, sre)
+        
+        sre_pq = done
+        done = []
+    
 def csv_convert():
     file = pd.read_csv("SRE_Registtartion__c_-_APAC.csv")
 

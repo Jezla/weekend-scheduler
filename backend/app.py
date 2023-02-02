@@ -6,6 +6,7 @@ from dbManager import *
 from SRE import *
 from rank import *
 from db import *
+import pandas as pd
 
 shifts = []
 dates =[]
@@ -54,6 +55,22 @@ def add_sre():
         db.add_user(person)
 
     return jsonify({"message": "SRE created successfully."}), 201
+
+# Endpoint for parsing the sre list from the managers
+@app.route("/srelist", methods=["POST"])
+def get_sres():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        
+        file = request.files['file']
+        if file.filename == '':
+            flash("No selected file")
+            return redirect(request.url)
+        
+        data = pd.read_excel(file)
+        
 
 # Endpoint to creating shifts (assuming this is only run once)
 @app.route("/addshift", methods=["POST"])
