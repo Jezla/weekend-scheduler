@@ -74,7 +74,7 @@ def csv_convert():
         for sre in shift.get_workers():
             date = file.loc[base, 'Date__c']
             if date == shift.get_date().strftime("%d/%m/%Y"):
-                file.loc[base, 'Registered_SRE__c'] = sre.get_first_name() + " " + sre.get_last_name()
+                file.loc[base, 'Registered_SRE__c'] = sre.get_id()
                 base += 1
             else:
                 break
