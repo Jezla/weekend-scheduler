@@ -4,7 +4,6 @@ import { DndContext, closestCenter, useSensor, useSensors, PointerSensor } from 
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 import './Calendar.css';
 import {
   Button, FormControl, Stack, Typography, Switch, Alert, Snackbar, Grid, Box, Autocomplete, TextField
