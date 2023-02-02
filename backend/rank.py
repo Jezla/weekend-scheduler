@@ -44,8 +44,6 @@ def iterate_pref(sorted_list):
         sre_pq = done
         done = []
     
-
-    
     # Second pass is to ensure that all slots are filled
     for shift in list_shifts:
         while len(sre_pq) != 0:

@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, redirect, make_response, flash
+from os import *
 from flask_cors import CORS
 from csv_parser import *
 from dbManager import *
@@ -8,10 +9,12 @@ from db import *
 
 shifts = []
 dates =[]
+UPLOAD_FOLDER = getcwd() + "/Data"
 
 db = dbManager()
 
 app = Flask(__name__)
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 CORS(app)
 
 # Endpoint to return a list of users and shifts
@@ -65,8 +68,8 @@ def add_shift():
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
+        file.save(path.join(app.config["UPLOAD_FOLDER"], file.filename))
         shifts, dates = csv_parser(file)
-
 
     return jsonify({"message": "shift created successfully."}), 201
 
