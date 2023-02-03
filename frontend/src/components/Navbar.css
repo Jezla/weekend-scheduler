@@ -1,0 +1,4 @@
+.dark, .dark .react-calendar, .dark .react-calendar__month-view__days__day--weekend,.dark .react-calendar__month-view__days__day, .dark Button.close{
+  background-color: black;
+  color: grey;
+}

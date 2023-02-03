@@ -3,6 +3,8 @@ import { Box, Button, Typography, Modal } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Logo from '../resources/logo.png';
+import Sun from '../resources/sun.png';
+import './Navbar.css';
 
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
@@ -21,6 +23,14 @@ const Navbar = () => {
     boxShadow: 24,
     p: 4,
   };
+  const [darkMode, setDarkMode] = React.useState(false);
+  React.useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [darkMode]);
 
   return (
     <Box sx={{ backgroundColor: '#1f2937', }}>
@@ -37,6 +47,13 @@ const Navbar = () => {
           onClick={() => navigate('/')}
         >
           <img src={Logo} alt="Logo" style={{ maxWidth: 180 }} />
+        </Grid>
+        <Grid
+          container
+          sx={{ pl: 1, cursor: 'pointer' }}
+          onClick={() => setDarkMode(!darkMode)}
+        >
+          <img src={Sun} alt="Sun" style={{ maxWidth: 30 }} />
         </Grid>
         <Grid container>
           <Grid sx={{ pl: 1 }}>
