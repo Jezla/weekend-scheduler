@@ -70,7 +70,10 @@ def get_sres():
             return redirect(request.url)
         
         data = pd.read_excel(file)
+        for index, row in data.iterrows():
+            db.add_user(SRE(row['B'], row['C'], [], row['D'], row['E']))
         
+
 
 # Endpoint to creating shifts (assuming this is only run once)
 @app.route("/addshift", methods=["POST"])
@@ -98,10 +101,10 @@ def update_shift():
     if request.method == 'PUT':
 
         # finding user in database
-        person = db.get_user("first", "last")
+        person = db.get_user_byname("first", "last")
 
         # changing their shift preferences
-        db.update_user_preferences(person, "new preference")
+        db.update_user_prefererence(person, "new preference")
 
     return jsonify({"message": "shift updated successfully."}), 201
 
