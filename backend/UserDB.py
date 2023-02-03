@@ -9,7 +9,7 @@ from dbManager import *
 #   - first_name: first name of the user
 #   - last_name: last name of the user
 def insert_user(conn, id, username, first_name, last_name):
-    sql = " INSERT INTO user(id,username, first_name,last_name) VALUES(?,?,?,?)"
+    sql = " INSERT INTO user(id,username, first_name,last_name, priority) VALUES(?,?,?,?,0)"
     cur = conn.cursor()
     cur.execute(sql, (id, username, first_name, last_name))
     conn.commit()
@@ -60,7 +60,10 @@ def get_user_byid(conn,id):
         first_name = row[2]
         last_name = row[3]
         pref = []
-        allocated_shifts = row[4].split(',')
+        if row[4] == None:
+            allocated_shifts = []
+        else:
+            allocated_shifts = row[4].split(',')
         is_admin = row[5]
         priority = row[6]
         sre = SRE(id,username,pref, first_name, last_name,priority)
@@ -90,7 +93,10 @@ def get_user_byname(conn,first_name, last_name):
         first_name = row[2]
         last_name = row[3]
         pref = []
-        allocated_shifts = row[4].split(',')
+        if row[4] == None:
+            allocated_shifts = []
+        else:
+            allocated_shifts = row[4].split(',')
         is_admin = row[5]
         priority = row[6]
         sre = SRE(id,username,pref, first_name, last_name,priority)
@@ -118,7 +124,10 @@ def get_all_users(conn):
         first_name = row[2]
         last_name = row[3]
         pref = []
-        allocated_shifts = row[4].split(',')
+        if row[4] == None:
+            allocated_shifts = []
+        else:
+            allocated_shifts = row[4].split(',')
         is_admin = row[5]
         priority = row[6]
         sre = SRE(id,username,pref, first_name, last_name,priority)

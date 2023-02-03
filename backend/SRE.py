@@ -18,7 +18,7 @@ class SRE():
         self.prefs = prefs
         self.pref_num = len(prefs)
         self.list_shifts = []
-        self.prio = 0
+        self.prio = prio
     
     def __lt__(self, other):
         """

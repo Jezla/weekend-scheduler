@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button, Typography
 } from '@mui/material';
@@ -18,12 +18,12 @@ function App() {
 
   const uploadShifts = async (file) => {
     // TODO: Change api link
+    const formData = new FormData();
+    formData.append('file', file);
+
     const resp = await fetch('http://localhost:5000/addshift', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: file
+      method: 'POST', 
+      body: formData
     });
     const data = await resp.json()
     console.log(data)
@@ -31,12 +31,12 @@ function App() {
 
   const uploadSREs = async (file) => {
     // TODO: Change api link
+    const formData = new FormData();
+    formData.append('file', file);
+    
     const resp = await fetch('http://localhost:5000/srelist', {
       method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: file
+      body: formData
     });
     const data = await resp.json()
     console.log(data)

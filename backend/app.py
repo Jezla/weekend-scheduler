@@ -25,10 +25,12 @@ def get_list():
     user_list = []
     if not shifts or not dates:
         print("empty list")
-    else:
-        for sre in sres:
-            tmp = {'name': sre.get_first_name() + ' ' + sre.get_last_name(), 'preferences': [pref.strftime("%d/%m/%Y") for pref in sre.get_prefs()]}
-            user_list.append(jsonify(tmp))
+    #else:
+    for date in dates:
+        print(date)
+    for sre in sres:
+        tmp = {'name': sre.get_first_name() + ' ' + sre.get_last_name(), 'preferences': [pref.strftime("%d/%m/%Y") for pref in sre.get_prefs()]}
+        user_list.append(jsonify(tmp))
 
     resp = {'users': user_list, 'shifts': dates}
     return jsonify(resp)
@@ -61,33 +63,36 @@ def add_sre():
 def get_sres():
     if request.method == 'POST':
         if 'file' not in request.files:
-            flash('No file part')
+            print('No file part')
             return redirect(request.url)
         
         file = request.files['file']
         if file.filename == '':
-            flash("No selected file")
+            print("No selected file")
             return redirect(request.url)
-        
-        data = pd.read_excel(file)
-        for index, row in data.iterrows():
-            db.add_user(SRE(row['B'], row['C'], [], row['D'], row['E']))
-        
 
+        data = pd.read_excel(file, engine="openpyxl")
+        for index, row in data.iterrows():
+            #print(row)
+            db.add_user(SRE(row['User ID'], row['Username'], [], row['First Name'], row['Last Name'], 0))
+        
+        return  jsonify({"message": "sres created successfully."}), 201
 
 # Endpoint to creating shifts (assuming this is only run once)
 @app.route("/addshift", methods=["POST"])
 def add_shift():
-    data = request.get_json()
+    #data = request.get_json()
     # shift creation from a csv file
     if request.method == 'POST':
         if 'file' not in request.files:
-            flash('No file part')
+            print('No file part')
             return redirect(request.url)
         file = request.files['file']
         if file.filename == '':
-            flash('No selected file')
+            print('No selected file')
             return redirect(request.url)
+        if not path.exists(app.config["UPLOAD_FOLDER"]):
+            mkdir(app.config["UPLOAD_FOLDER"])
         file.save(path.join(app.config["UPLOAD_FOLDER"], file.filename))
         shifts, dates = csv_parser(file)
 
@@ -136,4 +141,5 @@ def get_final():
 
 
 if __name__ == "__main__":
+  app.secret_key = urandom(24)
   app.run(debug=True)
