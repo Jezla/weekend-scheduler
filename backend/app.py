@@ -25,15 +25,12 @@ def get_list():
     user_list = []
     if not shifts or not dates:
         print("empty list")
-    #else:
-    for date in dates:
-        print(date)
     for sre in sres:
         tmp = {'name': sre.get_first_name() + ' ' + sre.get_last_name(), 'preferences': [pref.strftime("%d/%m/%Y") for pref in sre.get_prefs()]}
-        user_list.append(jsonify(tmp))
-
+        user_list.append(tmp)
+    
     resp = {'users': user_list, 'shifts': dates}
-    return jsonify(resp)
+    return resp
 
 
 # Endpoint to add a new user
@@ -81,7 +78,6 @@ def get_sres():
 # Endpoint to creating shifts (assuming this is only run once)
 @app.route("/addshift", methods=["POST"])
 def add_shift():
-    #data = request.get_json()
     # shift creation from a csv file
     if request.method == 'POST':
         if 'file' not in request.files:
@@ -94,7 +90,8 @@ def add_shift():
         if not path.exists(app.config["UPLOAD_FOLDER"]):
             mkdir(app.config["UPLOAD_FOLDER"])
         file.save(path.join(app.config["UPLOAD_FOLDER"], file.filename))
-        shifts, dates = csv_parser(file)
+        global shifts, dates
+        shifts, dates = csv_parser(file.filename)
 
     return jsonify({"message": "shift created successfully."}), 201
 

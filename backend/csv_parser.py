@@ -2,14 +2,17 @@ import csv
 from Shift import *
 from datetime import datetime
 
-def csv_parser(file):
+def csv_parser(filename):
     """
     Reads the csv file containing shift information and creates a list of Shift objects
     """
     list_shifts = []
     list_dates = []
     headers = []
-    with open(file) as csv_file:
+
+    path = "uploads/" + filename
+    
+    with open(path) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         prev_date = ""
@@ -28,7 +31,9 @@ def csv_parser(file):
                 prev_date = date
             
             line_count += 1
-        
+    
+    #list_dates = [x.strftime("%d/%m/%Y") for x in list_dates]
+
     return (list_shifts, list_dates)
     
 if __name__ == "__main__":
