@@ -10,11 +10,14 @@ const ListView = (props) => {
 
 
   React.useEffect(() => {
-    const q = 0 // TODO: Un-hardcode this (get current quarter)
 
-    const formatMonthList = (q, i) => {
+    const formatMonthList = (i) => {
       const quarters = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 0]];
-      const filteredMonth = [...props.listDates].filter(date => date.getMonth() === quarters[q][i]); // BUG: FILTER OUT PUBLIC HOLIDAYS!!!!!!!!!!!!!!!
+
+      const q = quarters.indexOf(quarters.filter(l => l.indexOf(props.listDates[0].getMonth()) !== -1)[0])
+
+      const filteredMonth = [...props.listDates].filter(date => date.getMonth() === quarters[q][i] && (date.getDay() === 0 || date.getDay() === 6));
+
       if (filteredMonth[0] && filteredMonth[0].getDay() === 'Sunday') {
         filteredMonth.unshift(null)
       }
@@ -30,9 +33,9 @@ const ListView = (props) => {
       return splitDays;
     }
 
-    setMonthList1(formatMonthList(q, 0))
-    setMonthList2(formatMonthList(q, 1))
-    setMonthList3(formatMonthList(q, 2))
+    setMonthList1(formatMonthList(0))
+    setMonthList2(formatMonthList(1))
+    setMonthList3(formatMonthList(2))
   }, [props.listDates])
 
   const defaultBorder = {

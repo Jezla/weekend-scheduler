@@ -22,7 +22,7 @@ function App() {
     formData.append('file', file);
 
     const resp = await fetch('http://localhost:5000/addshift', {
-      method: 'POST', 
+      method: 'POST',
       body: formData
     });
     const data = await resp.json()
@@ -33,7 +33,7 @@ function App() {
     // TODO: Change api link
     const formData = new FormData();
     formData.append('file', file);
-    
+
     const resp = await fetch('http://localhost:5000/srelist', {
       method: 'POST',
       body: formData

@@ -83,7 +83,7 @@ function Home() {
       });
       const data = await resp.json()
       console.log(data)
-      setListDates(data.shifts) // TODO: EXTRACT DATA FROM RESPONSE AND FILL LIST AND NAMES
+      setListDates(data.shifts.map(date => new Date(date)))
       setNameList(data.users)
     }
 
