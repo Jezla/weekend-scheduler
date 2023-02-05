@@ -66,8 +66,8 @@ def iterate_pref(sorted_list):
         sre_pq = done
         done = []
     
-def csv_convert():
-    file = pd.read_csv("SRE_Registtartion__c_-_APAC.csv")
+def csv_convert(filename):
+    file = pd.read_csv("uploads/" + filename)
 
     base = 0
     for shift in list_shifts:
@@ -82,12 +82,12 @@ def csv_convert():
     file.to_csv("final.csv", index=False)
 
 
-def rank(shifts, sres):
+def rank(shifts, sres, filename):
     list_shifts = shifts
     #Iterate through list of shifts and through each sres preferences and assign shifts based on criteria
     iterate_pref(sres)
     #After this function is done we can iterate through the list of shifts and see which sre was assignd to it
-    csv_convert(shifts)
+    csv_convert(filename)
 
 if __name__ == "__main__":
   rank()
