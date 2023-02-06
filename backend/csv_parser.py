@@ -46,7 +46,8 @@ def csv_parser(filename):
         
         prev = shift
     
-    return (list_shifts, list(dict.fromkeys(list_dates)))
+    # The operation being performed over list_dates is to ensure that there are no duplicates
+    return (list_shifts, list(set(list_dates)))
     
 if __name__ == "__main__":
     shifts, dates = csv_parser("test.txt")

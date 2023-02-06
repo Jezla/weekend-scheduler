@@ -15,9 +15,6 @@ class Shift():
         self.workers = []
         self.slots = slots
     
-    def __eq__(self, other):
-        return self.date == other.get_date()
-    
     def assign_sre(self, sre):
         self.workers.append(sre)
         self.slots -= 1
