@@ -32,7 +32,7 @@ const Navbar = () => {
       document.body.classList.remove("dark");
     }
   }, [darkMode]);
-  
+
   return (
     <Box sx={{ backgroundColor: '#1f2937', }}>
       <Grid
@@ -53,7 +53,7 @@ const Navbar = () => {
           sx={{ pl: 1, cursor: 'pointer' }}
           onClick={() => setDarkMode(!darkMode)}
         >
-          <img src={Sun} alt="Sun" style={{ maxWidth: 30 }} />
+          <img src={Moon} alt="Moon" style={{ maxWidth: 30 }} />
         </Grid>
         <Grid container>
           <Grid sx={{ pl: 1 }}>
