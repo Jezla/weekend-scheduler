@@ -133,11 +133,11 @@ function Home() {
       headers: {
         'Content-type': 'application/json'
       },
-      body: {
+      body: JSON.stringify({
         'firstname': firstname,
         'lastname': lastname,
         'dates': selectedDates
-      }
+      })
     });
     const data = await resp.json()
     console.log(data)
@@ -165,8 +165,9 @@ function Home() {
           sx={{ m: 1, minWidth: 360 }}
           onChange={e => {
             const user = nameList.find(user =>  user.name === e.target.textContent)
-            if (user !== undefined && user.shifts.length !== 0 && selectedDates.length !== 0) {
-              setSelectedDates(user.shifts)
+            console.log(user)
+            if (user !== undefined && user.preferences.length !== 0 && selectedDates.length !== 0) {
+              setSelectedDates(user.preferences)
             }
             setName(e.target.textContent)
           }}
