@@ -19,7 +19,7 @@ def csv_parser(filename):
         for row in csv_reader:
             if line_count == 0:
                 headers.append(row)
-            if line_count >= 1:
+            if line_count >= 1 and row[12] == "AU-Sydney":
                 date = row[1]
                 if(date != prev_date):
                     #If the current date is different than the previous date then we create a new shift
@@ -34,7 +34,7 @@ def csv_parser(filename):
     
     #list_dates = [x.strftime("%d/%m/%Y") for x in list_dates]
 
-    return (list_shifts, list_dates)
+    return (list_shifts.sort(key=lambda x : x.get_date()), list_dates.sort())
     
 if __name__ == "__main__":
     shifts, dates = csv_parser("test.txt")

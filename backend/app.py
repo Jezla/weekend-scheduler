@@ -10,6 +10,7 @@ import pandas as pd
 
 shifts = []
 dates =[]
+filename = ""
 UPLOAD_FOLDER = path.join(getcwd(), "uploads")
 
 db = dbManager()
@@ -28,7 +29,7 @@ def get_list():
     for sre in sres:
         tmp = {'name': sre.get_first_name() + ' ' + sre.get_last_name(), 'preferences': [pref.strftime("%d/%m/%Y") for pref in sre.get_prefs()]}
         user_list.append(tmp)
-    
+
     resp = {'users': user_list, 'shifts': dates}
     return resp
 
@@ -91,6 +92,7 @@ def add_shift():
             mkdir(app.config["UPLOAD_FOLDER"])
         file.save(path.join(app.config["UPLOAD_FOLDER"], file.filename))
         global shifts, dates
+        global filename = file.filename
         shifts, dates = csv_parser(file.filename)
 
     return jsonify({"message": "shift created successfully."}), 201
@@ -115,7 +117,7 @@ def update_shift():
 def get_final():
     data = request.get_json()
     sres = db.get_all_users()
-    rank(shifts, sres)
+    rank(shifts, sres, filename)
     csv = open(path.join(getcwd, "final.csv"))
 
     #This should make the user receive a download for the final csv file

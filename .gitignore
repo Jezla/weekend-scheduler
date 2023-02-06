@@ -1,2 +1,3 @@
 .vs/
 backend/__pycache__/*
+backend/pythonsqlite.db
