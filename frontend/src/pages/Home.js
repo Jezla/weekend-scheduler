@@ -47,6 +47,7 @@ function Home() {
   const [nameList, setNameList] = useState(['Austin Lai', 'Alex jim Law', 'Adrian Lin']);
   const [openAlert, setOpenAlert] = useState(false);
   const [openSubmitAlert, setOpenSubmitAlert] = useState(false);
+  const [quarter, setQuarter] = useState([])
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -85,6 +86,10 @@ function Home() {
       console.log(data)
       setListDates(data.shifts.map(date => new Date(date)))
       setNameList(data.users)
+
+      const quarters = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 0]];
+      setQuarter(quarters[quarters.indexOf(quarters.filter(l => l.indexOf(listDates[0].getMonth()) !== -1)[0])])
+      setCalendarDate(listDates[0])
     }
 
     getList()
@@ -100,7 +105,9 @@ function Home() {
   }
 
   const setDisabled = (date) => {
-    if (listDates.find(item => { return item.toLocaleDateString() === date.toLocaleDateString()})
+    if (listDates.find(item => {
+      console.log(item.toLocaleDateString(), date.toLocaleDateString(), item.toLocaleDateString() === date.toLocaleDateString())
+      return item.toLocaleDateString() === date.toLocaleDateString()})
         && !selectedDates.includes(date.toLocaleDateString())) {
       return false
     }
@@ -173,8 +180,8 @@ function Home() {
           <Calendar
             onChange={date => setDates(date)}
             value={calendarDate}
-            minDate={new Date(2023, 1)}
-            maxDate={new Date(2023, 4, 0)}
+            minDate={new Date(listDates[0].getFullYear(), quarter[0])}
+            maxDate={new Date(listDates[0].getFullYear(), quarter[2] + 1, 0)}
             minDetail="month"
             next2Label={null}
             prev2Label={null}
