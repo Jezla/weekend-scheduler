@@ -29,60 +29,75 @@ def sorting_list(given_input):
     return sorted(SRE_list, key=SRE.get_num_prefs())
 
 # Iterate through the list of SRE preferences, assigning if a match is found
-def iterate_pref(sorted_list):
-    sre_pq = heapq.heapify(sorted_list)
+def iterate_pref(sres):
+    heapq.heapify(sres)
+    print("SRE PQ is: ", sres)
     done = []
     # First pass tries to match every SRE to their preferences
     for shift in list_shifts:
-        while len(sre_pq) != 0:
-            sre = heapq.heappop(sre_pq)
+        while len(sres) != 0:
+            sre = heapq.heappop(sres)
             assign_pref(shift, sre)
             heapq.heappush(done, sre)
         
-        sre_pq = done
+        sres = done
         done = []
     
     # Second pass is to ensure that all sres have at least 6 shifts
     for shift in list_shifts:
-        while len(sre_pq) != 0:
-            sre = heapq.heappop(sre_pq)
+        while len(sres) != 0:
+            sre = heapq.heappop(sres)
             if shift.get_slots() != 0 and sre.get_num_shifts() < 6:
                 shift.assign_sre(sre)
                 sre.assign_shift(shift.get_date())
             heapq.heappush(done, sre)
         
-        sre_pq = done
+        sres = done
         done = []
     
     #Last pass is to ensure that no shifts have available slots
     for shift in list_shifts:
-        while len(sre_pq) != 0:
-            sre = heapq.heappop(sre_pq)
+        while len(sres) != 0:
+            sre = heapq.heappop(sres)
             if shift.get_slots() != 0:
                 shift.assign_sre(sre)
                 sre.assign_shift(shift.get_date())
             heapq.heappush(done, sre)
         
-        sre_pq = done
+        sres = done
         done = []
     
 def csv_convert(filename):
+    print("uploads/" + filename)
     file = pd.read_csv("uploads/" + filename)
-
+    
+    global list_shifts
+    
     base = 0
+    
+    #Need to change!!
+    # CSV file does not have contiguos dates(i.e. same date may be separate from the other dates)
+    # Need to iterate through entire file for every shift
+    # Also change 
     for shift in list_shifts:
         for sre in shift.get_workers():
             date = file.loc[base, 'Date__c']
-            if date == shift.get_date().strftime("%d/%m/%Y"):
+            region = file.loc[base, 'UserSubRegion__c']
+            print("Date: ", date)
+            print("Shift: ", shift.get_date().strftime("%d/%m/%y"))
+            if date == shift.get_date().strftime("%d/%m/%y"):
+                print("SRE name: ", sre.get_first_name())
                 file.loc[base, 'Registered_SRE__c'] = sre.get_id()
                 base += 1
             else:
+                base += 1
                 break
     
     file.to_csv("final.csv", index=False)
 
 
 def rank(shifts, sres, filename):
+    global list_shifts
     list_shifts = shifts
     #Iterate through list of shifts and through each sres preferences and assign shifts based on criteria
     iterate_pref(sres)
