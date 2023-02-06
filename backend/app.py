@@ -63,7 +63,7 @@ def get_sres():
         if 'file' not in request.files:
             print('No file part')
             return redirect(request.url)
-        
+
         file = request.files['file']
         if file.filename == '':
             print("No selected file")
@@ -73,7 +73,7 @@ def get_sres():
         for index, row in data.iterrows():
             #print(row)
             db.add_user(SRE(row['User ID'], row['Username'], [], row['First Name'], row['Last Name'], 0))
-        
+
         return  jsonify({"message": "sres created successfully."}), 201
 
 # Endpoint to creating shifts (assuming this is only run once)
@@ -92,7 +92,8 @@ def add_shift():
             mkdir(app.config["UPLOAD_FOLDER"])
         file.save(path.join(app.config["UPLOAD_FOLDER"], file.filename))
         global shifts, dates
-        global filename = file.filename
+        global filename
+        filename = file.filename
         shifts, dates = csv_parser(file.filename)
 
     return jsonify({"message": "shift created successfully."}), 201
