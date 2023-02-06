@@ -134,8 +134,8 @@ function Home() {
         'Content-type': 'application/json'
       },
       body: {
-        firstname,
-        lastname,
+        'firstname': firstname,
+        'lastname': lastname,
         'dates': selectedDates
       }
     });
