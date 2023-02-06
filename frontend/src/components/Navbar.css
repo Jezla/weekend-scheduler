@@ -1,4 +1,22 @@
-.dark, .dark .react-calendar, .dark .react-calendar__month-view__days__day--weekend,.dark .react-calendar__month-view__days__day, .dark Button.close{
+.dark, .dark .react-calendar, .dark .react-calendar__month-view__days__day--weekend,.dark .react-calendar__month-view__days__day {
   background-color: black;
   color: grey;
+}
+.dark .react-calendar__month-view__days__day:disabled,.dark .react-calendar__navigation__label:disabled, .dark .react-calendar__navigation__prev-button:disabled {
+  background-color: grey;
+  color: black;
+}
+
+.dark .react-calendar__navigation__next-button, .dark .react-calendar__navigation__prev-button{
+  background-color: #12383B;
+  color: black;
+}
+
+.dark .react-calendar__navigation__next-button:enabled:hover, .dark .react-calendar__navigation__prev-button:enabled:hover{
+  background-color: grey;
+}
+
+.dark input {
+  background-color: grey;
+  color: white;
 }

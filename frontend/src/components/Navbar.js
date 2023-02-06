@@ -4,6 +4,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Logo from '../resources/logo.png';
 import Sun from '../resources/sun.png';
+import Moon from '../resources/moon.png';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -31,7 +32,7 @@ const Navbar = () => {
       document.body.classList.remove("dark");
     }
   }, [darkMode]);
-
+  
   return (
     <Box sx={{ backgroundColor: '#1f2937', }}>
       <Grid
@@ -47,8 +48,7 @@ const Navbar = () => {
           onClick={() => navigate('/')}
         >
           <img src={Logo} alt="Logo" style={{ maxWidth: 180 }} />
-        </Grid>
-        <Grid
+        </Grid> <Grid
           container
           sx={{ pl: 1, cursor: 'pointer' }}
           onClick={() => setDarkMode(!darkMode)}
