@@ -47,7 +47,9 @@ function Home() {
   const [nameList, setNameList] = useState(['Austin Lai', 'Alex jim Law', 'Adrian Lin']);
   const [openAlert, setOpenAlert] = useState(false);
   const [openSubmitAlert, setOpenSubmitAlert] = useState(false);
-  const [quarter, setQuarter] = useState([])
+  const [quarter, setQuarter] = useState([1, 2, 3])
+  const [maxDate, setMaxDate] = useState(new Date(2023, 1, 0))
+  const [minDate, setMinDate] = useState(new Date(2023, 4, 0))
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -88,8 +90,11 @@ function Home() {
       setNameList(data.users)
 
       const quarters = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 0]];
-      setQuarter(quarters[quarters.indexOf(quarters.filter(l => l.indexOf(listDates[0].getMonth()) !== -1)[0])])
-      setCalendarDate(listDates[0])
+      if (listDates[0]) {
+        setQuarter(quarters[quarters.indexOf(quarters.filter(l => l.indexOf(listDates[0].getMonth()) !== -1)[0])])
+      }      setCalendarDate(listDates[0])
+      setMinDate(new Date(listDates[0].getFullYear(), quarter[0]))
+      setMaxDate(new Date(listDates[0].getFullYear(), quarter[2] + 1, 0))
     }
 
     getList()
@@ -180,8 +185,8 @@ function Home() {
           <Calendar
             onChange={date => setDates(date)}
             value={calendarDate}
-            minDate={new Date(listDates[0].getFullYear(), quarter[0])}
-            maxDate={new Date(listDates[0].getFullYear(), quarter[2] + 1, 0)}
+            minDate={minDate}
+            maxDate={maxDate}
             minDetail="month"
             next2Label={null}
             prev2Label={null}
