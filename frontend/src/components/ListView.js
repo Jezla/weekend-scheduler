@@ -14,9 +14,9 @@ const ListView = (props) => {
     const formatMonthList = (i) => {
       const quarters = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 0]];
 
-      const q = 0
+      let q = 0
       if (props.listDates[0]) {
-        const q = quarters.indexOf(quarters.filter(l => l.indexOf(props.listDates[0].getMonth()) !== -1)[0])
+        q = quarters.indexOf(quarters.filter(l => l.indexOf(props.listDates[0].getMonth()) !== -1)[0])
       }
 
       const filteredMonth = [...props.listDates].filter(date => date.getMonth() === quarters[q][i] && (date.getDay() === 0 || date.getDay() === 6));
@@ -126,123 +126,129 @@ const ListView = (props) => {
           columns={{ xs: 12, sm: 6, md: 4, lg: 4 }}
           justifyContent='center'
         >
-          <Grid
-            container
-            direction='column'
-          >
+          {monthList1[0] &&
             <Grid
               container
-              justifyContent="center"
-              alignItems="center"
+              direction='column'
             >
-              <Typography sx={{ fontWeight: 'bold' }}>
-                {monthList1[0] && monthList1[0][1].toLocaleString('default', { month: 'long' })}
-              </Typography>
+              <Grid
+                container
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  {monthList1[0] && monthList1[0][1].toLocaleString('default', { month: 'long' })}
+                </Typography>
+              </Grid>
+              <Grid
+                container
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Grid
+                  minHeight={25}
+                  minWidth={150}
+                  sx={defaultBorder}
+                  xs={6}
+                >
+                  <Typography sx={{ fontWeight: 'bold' }}>Sat</Typography>
+                </Grid>
+                <Grid
+                  minHeight={25}
+                  minWidth={150}
+                  sx={defaultBorder}
+                  xs={6}
+                >
+                  <Typography sx={{ fontWeight: 'bold' }}>Sun</Typography>
+                </Grid>
+              </Grid>
+              {monthList1 && monthList1.map((pair, index) => {
+                return displayDate(pair, index);
+              })}
             </Grid>
+          }
+          {monthList2[0] &&
             <Grid
               container
-              justifyContent="center"
-              alignItems="center"
+              direction='column'
             >
               <Grid
-                minHeight={25}
-                minWidth={150}
-                sx={defaultBorder}
-                xs={6}
+                container
+                justifyContent="center"
+                alignItems="center"
               >
-                <Typography sx={{ fontWeight: 'bold' }}>Sat</Typography>
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  {monthList2[0] && monthList2[0][1].toLocaleString('default', { month: 'long' })}
+                </Typography>
               </Grid>
               <Grid
-                minHeight={25}
-                minWidth={150}
-                sx={defaultBorder}
-                xs={6}
+                container
+                justifyContent="center"
+                alignItems="center"
               >
-                <Typography sx={{ fontWeight: 'bold' }}>Sun</Typography>
+                <Grid
+                  minHeight={25}
+                  minWidth={150}
+                  sx={defaultBorder}
+                  xs={6}
+                >
+                  <Typography sx={{ fontWeight: 'bold' }}>Sat</Typography>
+                </Grid>
+                <Grid
+                  minHeight={25}
+                  minWidth={150}
+                  sx={defaultBorder}
+                  xs={6}
+                >
+                  <Typography sx={{ fontWeight: 'bold' }}>Sun</Typography>
+                </Grid>
               </Grid>
+              {monthList2 && monthList2.map((date, index) => {
+                return displayDate(date, index);
+              })}
             </Grid>
-            {monthList1 && monthList1.map((pair, index) => {
-              return displayDate(pair, index);
-            })}
-          </Grid>
-          <Grid
-            container
-            direction='column'
-          >
+          }
+          {monthList3[0] &&
             <Grid
               container
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Typography sx={{ fontWeight: 'bold' }}>
-                {monthList2[0] && monthList2[0][1].toLocaleString('default', { month: 'long' })}
-              </Typography>
-            </Grid>
-            <Grid
-              container
-              justifyContent="center"
-              alignItems="center"
+              direction='column'
             >
               <Grid
-                minHeight={25}
-                minWidth={150}
-                sx={defaultBorder}
-                xs={6}
+                container
+                justifyContent="center"
+                alignItems="center"
               >
-                <Typography sx={{ fontWeight: 'bold' }}>Sat</Typography>
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  {monthList3[0] && monthList3[0][1].toLocaleString('default', { month: 'long' })}
+                </Typography>
               </Grid>
               <Grid
-                minHeight={25}
-                minWidth={150}
-                sx={defaultBorder}
-                xs={6}
+                container
+                justifyContent="center"
+                alignItems="center"
               >
-                <Typography sx={{ fontWeight: 'bold' }}>Sun</Typography>
+                <Grid
+                  minHeight={25}
+                  minWidth={150}
+                  sx={{ ...defaultBorder, textAlign: 'center' }}
+                  xs={6}
+                >
+                  <Typography sx={{ fontWeight: 'bold' }}>Sat</Typography>
+                </Grid>
+                <Grid
+                  minHeight={25}
+                  minWidth={150}
+                  sx={{ ...defaultBorder, textAlign: 'center' }}
+                  xs={6}
+                >
+                  <Typography sx={{ fontWeight: 'bold' }}>Sun</Typography>
+                </Grid>
               </Grid>
+              {monthList3 && monthList3.map((date, index) => {
+                return displayDate(date, index);
+              })}
             </Grid>
-            {monthList2 && monthList2.map((date, index) => {
-              return displayDate(date, index);
-            })}
-          </Grid>
-          <Grid
-            container
-            direction='column'
-          >
-            <Grid
-              container
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Typography sx={{ fontWeight: 'bold' }}>
-                {monthList3[0] && monthList3[0][1].toLocaleString('default', { month: 'long' })}
-              </Typography>
-            </Grid>
-            <Grid
-              container
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Grid
-                minHeight={25}
-                minWidth={150}
-                sx={{ ...defaultBorder, textAlign: 'center' }}
-                xs={6}
-              >
-                <Typography sx={{ fontWeight: 'bold' }}>Sat</Typography>
-              </Grid>
-              <Grid
-                minHeight={25}
-                minWidth={150}
-                sx={{ ...defaultBorder, textAlign: 'center' }}
-                xs={6}
-              >
-                <Typography sx={{ fontWeight: 'bold' }}>Sun</Typography>
-              </Grid>
-            </Grid>
-            {monthList3 && monthList3.map((date, index) => {
-              return displayDate(date, index);
-            })}
-          </Grid>
+          }
         </Grid>
       </Container>
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={() => setOpenAlert(false)}>
