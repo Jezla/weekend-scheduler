@@ -6,8 +6,8 @@
   background-color: #444444;
   color: white;
 }
-
-.dark .react-calendar__navigation__next-button:enabled:hover, .dark .react-calendar__navigation__prev-button:enabled:hover{
+ 
+.dark .react-calendar__navigation__next-button:enabled:hover, .dark .react-calendar__navigation__prev-button:enabled:hover, .dark .react-calendar__tile:enabled:hover {
   background-color: grey;
 }
 

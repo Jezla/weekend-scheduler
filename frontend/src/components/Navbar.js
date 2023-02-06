@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Logo from '../resources/logo.png';
 import Sun from '../resources/sun.png';
 import Moon from '../resources/moon.png';
+import { useRef } from "react";
 import './Navbar.css';
 
 const Navbar = () => {
@@ -24,12 +25,15 @@ const Navbar = () => {
     boxShadow: 24,
     p: 4,
   };
+  const imageRef = useRef();
   const [darkMode, setDarkMode] = React.useState(false);
   React.useEffect(() => {
     if (darkMode) {
       document.body.classList.add("dark");
+      imageRef.current.src = Sun;
     } else {
       document.body.classList.remove("dark");
+      imageRef.current.src = Moon;
     }
   }, [darkMode]);
 
@@ -48,12 +52,13 @@ const Navbar = () => {
           onClick={() => navigate('/')}
         >
           <img src={Logo} alt="Logo" style={{ maxWidth: 180 }} />
-        </Grid> <Grid
+        </Grid> 
+        <Grid
           container
           sx={{ pl: 1, cursor: 'pointer' }}
           onClick={() => setDarkMode(!darkMode)}
         >
-          <img src={Moon} alt="Moon" style={{ maxWidth: 30 }} />
+          <img ref={imageRef} alt="Moon" style={{ maxWidth: 30 }} />
         </Grid>
         <Grid container>
           <Grid sx={{ pl: 1 }}>
