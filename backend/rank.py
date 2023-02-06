@@ -31,7 +31,6 @@ def sorting_list(given_input):
 # Iterate through the list of SRE preferences, assigning if a match is found
 def iterate_pref(sres):
     heapq.heapify(sres)
-    print("SRE PQ is: ", sres)
     done = []
     # First pass tries to match every SRE to their preferences
     for shift in list_shifts:
@@ -68,31 +67,23 @@ def iterate_pref(sres):
         done = []
     
 def csv_convert(filename):
-    print("uploads/" + filename)
     file = pd.read_csv("uploads/" + filename)
     
     global list_shifts
     
-    base = 0
-    
-    #Need to change!!
     # CSV file does not have contiguos dates(i.e. same date may be separate from the other dates)
-    # Need to iterate through entire file for every shift
-    # Also change 
-    for shift in list_shifts:
-        for sre in shift.get_workers():
-            date = file.loc[base, 'Date__c']
-            region = file.loc[base, 'UserSubRegion__c']
-            print("Date: ", date)
-            print("Shift: ", shift.get_date().strftime("%d/%m/%y"))
-            if date == shift.get_date().strftime("%d/%m/%y"):
-                print("SRE name: ", sre.get_first_name())
-                file.loc[base, 'Registered_SRE__c'] = sre.get_id()
-                base += 1
-            else:
-                base += 1
-                break
-    
+    # Assumes that the list of shifts has no duplicates
+    for base in range(file.shape[0]):
+        date = file.loc[base, 'Date__c']
+        region = file.loc[base, 'UserSubRegion__c']
+        if region == "AU-Sydney":
+            for shift in list_shifts:
+                if shift.get_date().strftime("%d/%m/%y") == date and len(shift.get_workers()) != 0:
+                    sre = shift.get_workers()[0]
+                    print("SRE name: ", sre.get_first_name())
+                    file.loc[base, 'Registered_SRE__c'] = sre.get_id()
+                    shift.get_workers().remove(sre)
+
     file.to_csv("final.csv", index=False)
 
 
