@@ -33,8 +33,11 @@ def csv_parser(filename):
             line_count += 1
     
     #list_dates = [x.strftime("%d/%m/%Y") for x in list_dates]
-
-    return (list_shifts.sort(key=lambda x : x.get_date()), list_dates.sort())
+    
+    list_shifts.sort(key=lambda x : x.get_date())
+    list_dates.sort()
+    
+    return (list_shifts, list_dates)
     
 if __name__ == "__main__":
     shifts, dates = csv_parser("test.txt")

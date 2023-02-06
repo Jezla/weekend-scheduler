@@ -22,6 +22,7 @@ CORS(app)
 # Endpoint to return a list of users and shifts
 @app.route("/list", methods=["GET"])
 def get_list():
+    global dates, shifts
     sres = db.get_all_users()
     user_list = []
     if not shifts or not dates:
