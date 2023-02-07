@@ -104,7 +104,6 @@ def add_shift():
 # Endpoint for updating shifts
 def update_shift():
     data = request.get_json()
-    print(data)
     #update the SRE shift preference
     if request.method == 'PUT':
         # finding user in database
@@ -122,12 +121,13 @@ def get_final():
     #data = request.get_json()
     sres = db.get_all_users()
     rank(shifts, sres, filename)
-    csv = open(path.join(getcwd, "final.csv"))
-
+    csv = open("final.csv", 555)
+    
     #This should make the user receive a download for the final csv file
     response = make_response(csv)
     cd = 'attachment; filename=final.csv'
     response.headers['Content-Disposition'] = cd
+    response.headers['Access-Control-Allow-Origin'] = '*'
     response.mimetype='text/csv'
 
     return response

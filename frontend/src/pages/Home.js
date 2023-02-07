@@ -131,7 +131,8 @@ function Home() {
     const resp = await fetch('http://localhost:5000/updateshift', {
       method: 'PUT',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({
         'firstname': firstname,
