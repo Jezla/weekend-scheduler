@@ -68,7 +68,7 @@ def get_user_byid(conn,id):
         priority = row[6]
         sre = SRE(id,username,pref, first_name, last_name,priority)
         for shift in allocated_shifts:
-            shift = datetime.strptime(shift, '%d-%m-%Y')
+            shift = datetime.strptime(shift, '%d/%m/%Y')
             sre.assign_shift(shift)
         users.append(sre)
     return users
@@ -101,7 +101,7 @@ def get_user_byname(conn,first_name, last_name):
         priority = row[6]
         sre = SRE(id,username,pref, first_name, last_name,priority)
         for shift in allocated_shifts:
-            shift = datetime.strptime(shift, '%d-%m-%Y')
+            shift = datetime.strptime(shift, '%d/%m/%Y')
             sre.assign_shift(shift)
         users.append(sre)
     return users
@@ -132,7 +132,7 @@ def get_all_users(conn):
         priority = row[6]
         sre = SRE(id,username,pref, first_name, last_name,priority)
         for shift in allocated_shifts:
-            shift = datetime.strptime(shift, '%d-%m-%Y')
+            shift = datetime.strptime(shift, '%d/%m/%Y')
             sre.assign_shift(shift)
         users.append(sre)
     return users

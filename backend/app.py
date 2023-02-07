@@ -29,7 +29,7 @@ def get_list():
     if not shifts or not dates:
         print("empty list")
     for sre in sres:
-        tmp = {'name': sre.get_first_name() + ' ' + sre.get_last_name(), 'preferences': [pref.strftime("%d/%m/%Y") for pref in sre.get_prefs()]}
+        tmp = {'name': sre.get_first_name() + ' ' + sre.get_last_name(), 'preferences': [pref.strftime("%m/%d/%Y") for pref in sre.get_prefs()]}
         user_list.append(tmp)
 
     resp = {'users': user_list, 'shifts': dates}
@@ -124,22 +124,6 @@ def get_final():
     rank(shifts, sres, filename)
     return send_file(path.join(getcwd(), "uploads", "final.csv"), as_attachment=True, download_name="shifts.csv")
     
-    with open(path.join("uploads/", "final.csv"), 555) as csv:
-        return Response(
-            csv,
-            mimetype="text/csv",
-            headers={"Content-disposition": "attachment; filename=final.csv",
-                     "Access-Control-Allow-Origin": "*"}
-        )
-    
-    #This should make the user receive a download for the final csv file
-    response = make_response(csv)
-    cd = 'attachment; filename=final.csv'
-    response.headers['Content-Disposition'] = cd
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.mimetype='text/csv'
-
-    return response
 
 # @app.route("/users/<int:id>", methods=["PUT"])
 # def update_user(id):
