@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
-import { CloseButton, Card } from "react-bootstrap";
+import { CloseButton } from "react-bootstrap";
 import Grid from '@mui/material/Unstable_Grid2';
 
 const SortableItem = (props) => {
@@ -37,7 +37,7 @@ const SortableItem = (props) => {
             {...listeners}
           >
             <Grid>
-              {props.items.indexOf(props.id) + 1}:
+              {props.items.indexOf(props.id) + 1}
             </Grid>
             <Grid>
               {props.id}

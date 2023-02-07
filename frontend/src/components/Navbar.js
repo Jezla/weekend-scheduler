@@ -3,8 +3,12 @@ import { Box, Button, Typography, Modal } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Logo from '../resources/logo.png';
+import Sun from '../resources/sun.png';
+import Moon from '../resources/moon.png';
+import { useRef } from "react";
+import './Navbar.css';
 
-const Navbar = (props) => {
+const Navbar = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -21,6 +25,17 @@ const Navbar = (props) => {
     boxShadow: 24,
     p: 4,
   };
+  const imageRef = useRef();
+  const [darkMode, setDarkMode] = React.useState(false);
+  React.useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark");
+      imageRef.current.src = Sun;
+    } else {
+      document.body.classList.remove("dark");
+      imageRef.current.src = Moon;
+    }
+  }, [darkMode]);
 
   return (
     <Box sx={{ backgroundColor: '#1f2937', }}>
@@ -37,8 +52,9 @@ const Navbar = (props) => {
           onClick={() => navigate('/')}
         >
           <img src={Logo} alt="Logo" style={{ maxWidth: 180 }} />
-        </Grid>
+        </Grid> 
         <Grid container>
+          <img ref={imageRef} alt="Moon" style={{ maxWidth: 40 }} onClick={() => setDarkMode(!darkMode)} />
           <Grid sx={{ pl: 1 }}>
             <Button variant="contained" onClick={handleOpen}>Help</Button>
             <Modal
@@ -56,7 +72,7 @@ const Navbar = (props) => {
                 <br></br>
                   {/* DO NOT CHANGE OR BOT WILL BREAK */}
                   1. Select your name from the dropdown menu <br></br><br></br>
-                  2. Select up to six weekend shifts that you prefer to work<br></br><br></br>
+                  2. Select up to 12 weekend shifts that you prefer to work<br></br><br></br>
                   3. Rank your preferences from highest priority to lowest<br></br><br></br>
                   4. Submit your preferences and wait for allocations to be announced
                 </p>
