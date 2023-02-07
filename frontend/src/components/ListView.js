@@ -1,13 +1,13 @@
 import React from "react";
 import { Container, Typography, Snackbar, Alert} from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
+import PubHolsList from "./PubHolsList";
 
 const ListView = (props) => {
   const [monthList1, setMonthList1] = React.useState([]);
   const [monthList2, setMonthList2] = React.useState([]);
   const [monthList3, setMonthList3] = React.useState([]);
   const [openAlert, setOpenAlert] = React.useState(false);
-
 
   React.useEffect(() => {
 
@@ -98,7 +98,7 @@ const ListView = (props) => {
                   const newDates = [...props.selectedDates]
                   newDates.splice(index, 1);
                   props.setSelectedDates(newDates)
-                } else if (props.selectedDates.length === 6) {
+                } else if (props.selectedDates.length === 12) {
                   setOpenAlert(true)
                 } else {
                   props.setSelectedDates([...props.selectedDates, date.toLocaleDateString()])
@@ -250,6 +250,7 @@ const ListView = (props) => {
             </Grid>
           }
         </Grid>
+        <PubHolsList {...props}/>
       </Container>
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={() => setOpenAlert(false)}>
         <Alert onClose={() => setOpenAlert(false)} severity="error" sx={{ width: '100%' }}>

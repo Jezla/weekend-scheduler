@@ -4,7 +4,6 @@ import { DndContext, closestCenter, useSensor, useSensors, PointerSensor } from 
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 import './Calendar.css';
 import {
   Button, FormControl, Stack, Typography, Switch, Alert, Snackbar, Grid, Box, Autocomplete, TextField
@@ -81,7 +80,7 @@ function Home() {
 
   const setDates = (date) => {
     setCalendarDate(date)
-    if (selectedDates.length !== 6) {
+    if (selectedDates.length !== 12) {
       setSelectedDates([...selectedDates, date.toLocaleDateString()])
       return
     }
@@ -179,6 +178,7 @@ function Home() {
             setSelectedDates={setSelectedDates}
             listDates={listDates}
           />
+          
         }
         <Container className="p-3" style={{ "width": "50%", border: "1px solid #ccc", marginTop: '30px', marginBottom: '20px' }} align="center">
           <h3>Sort your preferences</h3>
