@@ -17,39 +17,13 @@ function Home() {
   const [view, toggleView] = useState(false) // Toggle between list and calendar view
   const [selectedDates, setSelectedDates] = useState([]);
   const [calendarDate, setCalendarDate] = useState(new Date());
-  const [listDates, setListDates] = useState([
-    new Date(2023, 1, 4),
-    new Date(2023, 1, 5),
-    new Date(2023, 1, 11),
-    new Date(2023, 1, 12),
-    new Date(2023, 1, 18),
-    new Date(2023, 1, 19),
-    new Date(2023, 1, 25),
-    new Date(2023, 1, 26),
-    new Date(2023, 2, 4),
-    new Date(2023, 2, 5),
-    new Date(2023, 2, 11),
-    new Date(2023, 2, 12),
-    new Date(2023, 2, 18),
-    new Date(2023, 2, 19),
-    new Date(2023, 2, 25),
-    new Date(2023, 2, 26),
-    new Date(2023, 3, 1),
-    new Date(2023, 3, 2),
-    new Date(2023, 3, 8),
-    new Date(2023, 3, 9),
-    new Date(2023, 3, 15),
-    new Date(2023, 3, 16),
-    new Date(2023, 3, 22),
-
-    new Date(2023, 3, 30),
-  ]);
+  const [listDates, setListDates] = useState([]);
   const [nameList, setNameList] = useState(['Austin Lai', 'Alex jim Law', 'Adrian Lin']);
   const [openAlert, setOpenAlert] = useState(false);
   const [openSubmitAlert, setOpenSubmitAlert] = useState(false);
-  const [quarter, setQuarter] = useState([1, 2, 3])
-  const [maxDate, setMaxDate] = useState(new Date(2023, 1, 0))
-  const [minDate, setMinDate] = useState(new Date(2023, 4, 0))
+  const [openSubmitConfirm, setOpenSubmitConfirm] = useState(false);
+  const [maxDate, setMaxDate] = useState(null)
+  const [minDate, setMinDate] = useState(null)
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -86,15 +60,20 @@ function Home() {
       });
       const data = await resp.json()
       console.log(data)
-      setListDates(data.shifts.map(date => new Date(date)))
+      const dates = data.shifts.map(date => new Date(date))
+      setListDates(dates)
       setNameList(data.users)
 
-      const quarters = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 0]];
-      if (listDates[0]) {
-        setQuarter(quarters[quarters.indexOf(quarters.filter(l => l.indexOf(listDates[0].getMonth()) !== -1)[0])])
-      }      setCalendarDate(listDates[0])
-      setMinDate(new Date(listDates[0].getFullYear(), quarter[0]))
-      setMaxDate(new Date(listDates[0].getFullYear(), quarter[2] + 1, 0))
+      if (dates) {
+        const quarters = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 0]];
+        const quarter = quarters[quarters.indexOf(quarters.filter(l => l.indexOf(dates[0].getMonth()) !== -1)[0])]
+        setCalendarDate(dates[0])
+        setMinDate(new Date(dates[0].getFullYear(), quarter[0], 1))
+        setMaxDate(new Date(dates[0].getFullYear(), quarter[2] + 1, 0))
+        console.log(quarter)
+        console.log(minDate)
+        console.log(maxDate)
+      }
     }
 
     getList()
@@ -110,9 +89,7 @@ function Home() {
   }
 
   const setDisabled = (date) => {
-    if (listDates.find(item => {
-      console.log(item.toLocaleDateString(), date.toLocaleDateString(), item.toLocaleDateString() === date.toLocaleDateString())
-      return item.toLocaleDateString() === date.toLocaleDateString()})
+    if (listDates.find(item => {return item.toLocaleDateString() === date.toLocaleDateString()})
         && !selectedDates.includes(date.toLocaleDateString())) {
       return false
     }
@@ -142,6 +119,7 @@ function Home() {
     });
     const data = await resp.json()
     console.log(data)
+    setOpenSubmitConfirm(true)
   }
 
   return (
@@ -167,7 +145,7 @@ function Home() {
           onChange={e => {
             const user = nameList.find(user =>  user.name === e.target.textContent)
             console.log(user)
-            if (user !== undefined && user.preferences.length !== 0 && selectedDates.length !== 0) {
+            if (user !== undefined) {
               setSelectedDates(user.preferences)
             }
             setName(e.target.textContent)
@@ -229,6 +207,11 @@ function Home() {
       <Snackbar open={openSubmitAlert} autoHideDuration={6000} onClose={() => setOpenSubmitAlert(false)}>
         <Alert onClose={() => setOpenSubmitAlert(false)} severity="error" sx={{ width: '100%' }}>
           Check if name and at least one shift has been selected
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openSubmitConfirm} autoHideDuration={6000} onClose={() => setOpenSubmitConfirm(false)}>
+        <Alert onClose={() => setOpenSubmitConfirm(false)} severity="success" sx={{ width: '100%' }}>
+          Preferences have been submitted successfully!
         </Alert>
       </Snackbar>
     </>
