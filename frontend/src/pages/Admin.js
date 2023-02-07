@@ -36,6 +36,9 @@ function App() {
 
     const resp = await fetch('http://localhost:5000/srelist', {
       method: 'POST',
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
       body: formData
     });
     const data = await resp.json()
