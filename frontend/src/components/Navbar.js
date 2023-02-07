@@ -53,14 +53,8 @@ const Navbar = () => {
         >
           <img src={Logo} alt="Logo" style={{ maxWidth: 180 }} />
         </Grid> 
-        <Grid
-          container
-          sx={{ pl: 1, cursor: 'pointer' }}
-          onClick={() => setDarkMode(!darkMode)}
-        >
-          <img ref={imageRef} alt="Moon" style={{ maxWidth: 30 }} />
-        </Grid>
         <Grid container>
+          <img ref={imageRef} alt="Moon" style={{ maxWidth: 40 }} onClick={() => setDarkMode(!darkMode)} />
           <Grid sx={{ pl: 1 }}>
             <Button variant="contained" onClick={handleOpen}>Help</Button>
             <Modal
