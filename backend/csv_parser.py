@@ -53,11 +53,5 @@ def csv_parser(filename):
     # The operation being performed over list_dates is to ensure that there are no duplicates
     return (list_shifts, list(set(list_dates)))
     
-if __name__ == "__main__":
-    shifts, dates = csv_parser("test.txt")
-    
-    print(dates)
-    for shift in shifts:
-        print(shift.get_slots())
-        print(shift.get_date())
+
     

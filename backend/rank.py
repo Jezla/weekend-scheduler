@@ -1,6 +1,6 @@
 from Shift import *
 from SRE import *
-import datetime
+from datetime import datetime
 import heapq
 import pandas as pd
 
@@ -78,10 +78,11 @@ def csv_convert(filename):
         region = file.loc[base, 'UserSubRegion__c']
         if region == "AU-Sydney":
             for shift in list_shifts:
-                if shift.get_date().strftime("%d/%m/%y") == date and len(shift.get_workers()) != 0:
+                if shift.get_date() == datetime.strptime(date,"%d/%m/%y") and len(shift.get_workers()) != 0:
                     sre = shift.get_workers()[0]
                     file.loc[base, 'Registered_SRE__c'] = sre.get_first_name()
                     shift.get_workers().remove(sre)
+                    
 
     file.to_csv("uploads/final.csv", index=False, mode="w")
 
