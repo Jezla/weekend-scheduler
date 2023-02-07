@@ -10,7 +10,7 @@ import pandas as pd
 from datetime import datetime
 
 shifts = []
-dates =[]
+dates = []
 filename = ""
 UPLOAD_FOLDER = path.join(getcwd(), "uploads")
 
@@ -111,7 +111,7 @@ def update_shift():
         person = db.get_user_byname(data['firstname'], data['lastname'])
 
         # changing their shift preferences
-        db.update_user_prefererence(person, [datetime.strptime(x, "%m/%d/%Y") for x in data["dates"]])
+        db.update_user_prefererence(person, [datetime.strptime(x, "%d/%m/%Y") for x in data["dates"]])
 
     return jsonify({"message": "shift updated successfully."}), 201
 
