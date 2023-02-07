@@ -40,7 +40,7 @@ class dbManager():
         SRE.set_prefs(prefs)
         rank = 1
         for pref in prefs:
-            pref = pref.strftime('%d-%m-%Y')
+            pref = pref.strftime('%d/%m/%Y')
             UserDB.insert_user_preferences(self.conn, SRE.get_id(), pref,rank)
             rank = rank + 1
     """
@@ -99,7 +99,7 @@ class dbManager():
     """
     def get_user_preferences(self, SRE):
         pref = UserDB.get_user_preferences(self.conn, SRE.get_id())
-        formatted_dates = [datetime.strptime(item[2], '%d-%m-%Y') for item in pref]
+        formatted_dates = [datetime.strptime(item[2], '%d/%m/%Y') for item in pref]
         sorted_dates = [x for _, x in sorted(zip(pref, formatted_dates), key=lambda pair: pair[0][3])]
         return sorted_dates
 
@@ -149,7 +149,7 @@ class dbManager():
         assigned_shifts = []
         for shift in shifts:
             SRE.assign_shift(shift)
-            shift = shift.strftime('%d-%m-%Y')
+            shift = shift.strftime('%d/%m/%Y')
             assigned_shifts.append(shift)
         assigned_shifts = ','.join(assigned_shifts)
         UserDB.update_user(self.conn, "allocated_shifts", assigned_shifts, "id", SRE.get_id())
