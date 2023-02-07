@@ -36,30 +36,19 @@ def csv_parser(filename):
     
     list_shifts.sort(key=lambda x : x.get_date())
     list_dates.sort()
-
-    print('Before')
-    for shift in list_shifts:
-        print("========================")
-        print("Date: ", shift.get_date())
-        print("Slots: ", shift.get_slots())
-        print("========================")
-
+    
     # We need to remove duplicate shifts and convert then into extra slots for the corresponding day
     prev = Shift(datetime(1000,1,1), 0)
+    duplicates = []
     for shift in list_shifts:
         if shift.get_date() == prev.get_date():
-            list_shifts.remove(prev)
-            shift.increase_slots(prev.get_slots())
+           duplicates.append(prev)
+           shift.increase_slots(prev.get_slots())
         
         prev = shift
     
-    print('After')
-    for shift in list_shifts:
-        print("========================")
-        print("Date: ", shift.get_date())
-        print("Slots: ", shift.get_slots())
-        print("========================")
-
+    for duplicate in duplicates:
+        list_shifts.remove(duplicate)
 
     # The operation being performed over list_dates is to ensure that there are no duplicates
     return (list_shifts, list(set(list_dates)))
