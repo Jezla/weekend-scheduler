@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, redirect, make_response, flash
+from flask import Flask, jsonify, request, redirect, make_response, Response, send_file
 from os import *
 from flask_cors import CORS
 from csv_parser import *
@@ -110,7 +110,8 @@ def update_shift():
         person = db.get_user_byname(data['firstname'], data['lastname'])
 
         # changing their shift preferences
-        db.update_user_prefererence(person, [datetime.strptime(x, "%d/%m/%Y") for x in data["dates"]])
+        print(data["dates"])
+        db.update_user_prefererence(person, [datetime.strptime(x, "%m/%d/%Y") for x in data["dates"]])
 
     return jsonify({"message": "shift updated successfully."}), 201
 
@@ -121,7 +122,15 @@ def get_final():
     #data = request.get_json()
     sres = db.get_all_users()
     rank(shifts, sres, filename)
-    csv = open("final.csv", 555)
+    return send_file(path.join(getcwd(), "uploads", "final.csv"), as_attachment=True, download_name="shifts.csv")
+    
+    with open(path.join("uploads/", "final.csv"), 555) as csv:
+        return Response(
+            csv,
+            mimetype="text/csv",
+            headers={"Content-disposition": "attachment; filename=final.csv",
+                     "Access-Control-Allow-Origin": "*"}
+        )
     
     #This should make the user receive a download for the final csv file
     response = make_response(csv)

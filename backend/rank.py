@@ -80,10 +80,10 @@ def csv_convert(filename):
             for shift in list_shifts:
                 if shift.get_date().strftime("%d/%m/%y") == date and len(shift.get_workers()) != 0:
                     sre = shift.get_workers()[0]
-                    file.loc[base, 'Registered_SRE__c'] = sre.get_id()
+                    file.loc[base, 'Registered_SRE__c'] = sre.get_first_name()
                     shift.get_workers().remove(sre)
 
-    file.to_csv("final.csv", index=False, mode="w")
+    file.to_csv("uploads/final.csv", index=False, mode="w")
 
 
 def rank(shifts, sres, filename):
