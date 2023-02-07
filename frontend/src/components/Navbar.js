@@ -54,6 +54,7 @@ const Navbar = (props) => {
                 {/* I know this is scuffed, ill figure it out later - FROM ALEX */}
                 <p id="modal-modal-description" sx={{ mt: 2 }}>
                 <br></br>
+                  {/* DO NOT CHANGE OR BOT WILL BREAK */}
                   1. Select your name from the dropdown menu <br></br><br></br>
                   2. Select up to six weekend shifts that you prefer to work<br></br><br></br>
                   3. Rank your preferences from highest priority to lowest<br></br><br></br>

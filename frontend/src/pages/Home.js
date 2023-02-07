@@ -70,14 +70,11 @@ function Home() {
         setCalendarDate(dates[0])
         setMinDate(new Date(dates[0].getFullYear(), quarter[0], 1))
         setMaxDate(new Date(dates[0].getFullYear(), quarter[2] + 1, 0))
-        console.log(quarter)
-        console.log(minDate)
-        console.log(maxDate)
       }
     }
 
     getList()
-  }, [])
+  }, [setMaxDate, setMinDate])
 
   const setDates = (date) => {
     setCalendarDate(date)

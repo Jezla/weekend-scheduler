@@ -123,7 +123,6 @@ def get_final():
     sres = db.get_all_users()
     rank(shifts, sres, filename)
     return send_file(path.join(getcwd(), "uploads", "final.csv"), as_attachment=True, download_name="shifts.csv")
-    
 
 # @app.route("/users/<int:id>", methods=["PUT"])
 # def update_user(id):
