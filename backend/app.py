@@ -29,7 +29,7 @@ def get_list():
     if not shifts or not dates:
         print("empty list")
     for sre in sres:
-        tmp = {'name': sre.get_first_name() + ' ' + sre.get_last_name(), 'preferences': [pref.strftime("%m/%d/%Y") for pref in sre.get_prefs()]}
+        tmp = {'name': sre.get_first_name() + ' ' + sre.get_last_name(), 'preferences': [pref.strftime("%d/%m/%Y") for pref in sre.get_prefs()]}
         user_list.append(tmp)
 
     resp = {'users': user_list, 'shifts': dates}

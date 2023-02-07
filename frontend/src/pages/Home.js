@@ -63,7 +63,7 @@ function Home() {
       setListDates(dates)
       setNameList(data.users)
 
-      if (dates) {
+      if (dates[0]) {
         const quarters = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 0]];
         const quarter = quarters[quarters.indexOf(quarters.filter(l => l.indexOf(dates[0].getMonth()) !== -1)[0])]
         setCalendarDate(dates[0])
@@ -73,7 +73,7 @@ function Home() {
     }
 
     getList()
-  }, [setMaxDate, setMinDate])
+  }, [setMaxDate, setMinDate, name])
 
   const setDates = (date) => {
     setCalendarDate(date)
@@ -175,7 +175,7 @@ function Home() {
             setSelectedDates={setSelectedDates}
             listDates={listDates}
           />
-          
+
         }
         <Container className="p-3" style={{ "width": "50%", border: "1px solid #ccc", marginTop: '30px', marginBottom: '20px' }} align="center">
           <h3>Sort your preferences</h3>

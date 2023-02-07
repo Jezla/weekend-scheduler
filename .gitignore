@@ -1,3 +1,4 @@
 .vs/
 backend/__pycache__/*
 backend/pythonsqlite.db
+backend/uploads
