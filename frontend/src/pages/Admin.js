@@ -47,11 +47,26 @@ function App() {
     const resp = await fetch('http://localhost:5000/final', {
       method: 'GET',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'text/csv',
       },
-    });
-    const data = await resp.json() // NOTE: data should be our file
-    console.log(data)
+    }).then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(
+          blob
+        );
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute(
+          'download',
+          'shifts.csv'
+        );
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.parentNode.removeChild(link);
+      });
   }
 
   return (
