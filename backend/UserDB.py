@@ -9,7 +9,7 @@ from dbManager import *
 #   - first_name: first name of the user
 #   - last_name: last name of the user
 def insert_user(conn, id, username, first_name, last_name):
-    sql = " INSERT INTO user(id,username, first_name,last_name) VALUES(?,?,?,?)"
+    sql = " INSERT INTO user(id,username, first_name,last_name, priority) VALUES(?,?,?,?,0)"
     cur = conn.cursor()
     cur.execute(sql, (id, username, first_name, last_name))
     conn.commit()
@@ -60,12 +60,15 @@ def get_user_byid(conn,id):
         first_name = row[2]
         last_name = row[3]
         pref = []
-        allocated_shifts = row[4].split(',')
+        if row[4] == None:
+            allocated_shifts = []
+        else:
+            allocated_shifts = row[4].split(',')
         is_admin = row[5]
         priority = row[6]
         sre = SRE(id,username,pref, first_name, last_name,priority)
         for shift in allocated_shifts:
-            shift = datetime.strptime(shift, '%d-%m-%Y')
+            shift = datetime.strptime(shift, '%d/%m/%Y')
             sre.assign_shift(shift)
         users.append(sre)
     return users
@@ -90,12 +93,15 @@ def get_user_byname(conn,first_name, last_name):
         first_name = row[2]
         last_name = row[3]
         pref = []
-        allocated_shifts = row[4].split(',')
+        if row[4] == None:
+            allocated_shifts = []
+        else:
+            allocated_shifts = row[4].split(',')
         is_admin = row[5]
         priority = row[6]
         sre = SRE(id,username,pref, first_name, last_name,priority)
         for shift in allocated_shifts:
-            shift = datetime.strptime(shift, '%d-%m-%Y')
+            shift = datetime.strptime(shift, '%d/%m/%Y')
             sre.assign_shift(shift)
         users.append(sre)
     return users
@@ -118,12 +124,15 @@ def get_all_users(conn):
         first_name = row[2]
         last_name = row[3]
         pref = []
-        allocated_shifts = row[4].split(',')
+        if row[4] == None:
+            allocated_shifts = []
+        else:
+            allocated_shifts = row[4].split(',')
         is_admin = row[5]
         priority = row[6]
         sre = SRE(id,username,pref, first_name, last_name,priority)
         for shift in allocated_shifts:
-            shift = datetime.strptime(shift, '%d-%m-%Y')
+            shift = datetime.strptime(shift, '%d/%m/%Y')
             sre.assign_shift(shift)
         users.append(sre)
     return users
@@ -195,9 +204,7 @@ def delete_user_preferences(conn, identifier, identifier_value):
     conn.commit()
     return None
 
-def main():
-    database = "pythonsqlite.db"
-
+def init_db(conn):
     sql_create_user_table = """ CREATE TABLE IF NOT EXISTS user (
                                     id text PRIMARY KEY ,
                                     username text NOT NULL,
@@ -212,16 +219,10 @@ def main():
     sql_create_preference_table = """ CREATE TABLE IF NOT EXISTS preference (
                                     id integer PRIMARY KEY AUTOINCREMENT,
                                     user_id text NOT NULL,
-                                    date text CHECK (date like '__-__-____'),
+                                    date text CHECK (date like '__/__/____'),
                                     rank integer,
                                     FOREIGN KEY (user_id) REFERENCES user (id)
                                 );"""
-    
-
-    # create a database connection
-    conn = create_connection(database)
-
-    # create tables
     if conn is not None:
 
         #create user table
@@ -229,50 +230,8 @@ def main():
         
         #create preferences table
         create_table(conn, sql_create_preference_table)
-
-        #basic testing below
-
-
-        #dbmanager = dbManager()
-        #prefs1 = [datetime(2023, 1, 1),datetime(2023, 2, 1),
-                #datetime(2023, 3, 1), datetime(2023, 4, 1),
-                #datetime(2023, 5, 1),]
-        #sre1 = SRE("1hd3","username",prefs1, "michael", "jackson", 0)
-
-        #prefs2 = [datetime(2024, 1, 1),datetime(2024, 2, 1),
-                #datetime(2024, 3, 1), datetime(2024, 4, 1),
-                #datetime(2024, 5, 1),]
-        #sre2 = SRE("2lp4","anotherusername",prefs2, "elvis", "presley", 1)
-
-        #dbmanager.add_user(sre1)
-        #dbmanager.add_user(sre2)
-        #dbmanager.insert_preferences(sre1, prefs1)
-        #dbmanager.insert_preferences(sre2, prefs2)
-        #dbmanager.allocate_shifts(sre1, prefs1)
-
-        #user1 = dbmanager.get_user_byname("michael", "jackson")
-        #print(user1.get_list_shifts())
-        #print(user1.get_id())
-        #print(user1.get_prefs())
-        #dbmanager.delete_user_preferences(user1)
-        #print("after deleting pref")
-        #print(dbmanager.get_user_preferences(user1))
-
-        #new_pref = [datetime(2025, 4, 1),
-                #datetime(2025, 5, 1),]
-        #dbmanager.update_user_prefererence(user1, new_pref)
-        #print("after updating")
-        #print(dbmanager.get_user_preferences(user1))
-        
-        #print(dbmanager.get_all_users())
-        #dbmanager.remove_user(sre2)
-        #dbmanager.remove_user(sre1)
-        #print("after removing")
-        #print(dbmanager.get_all_users())
-
     else:
         print("Error! cannot create the database connection.")
 
-if __name__ == '__main__':
-    main()
-    
+
+

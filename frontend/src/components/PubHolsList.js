@@ -7,15 +7,12 @@ const PubHolsList = (props) => {
     const [openAlert, setOpenAlert] = React.useState(false);
 
     React.useEffect(() => {
-        const q = 0 // TODO
-
         const formatPubHolList = () => {
-            const holDays = [...props.listDates].filter(date => date.getDay() != 0 && date.getDay() != 6);
+            const holDays = [...props.listDates].filter(date => date.getDay() !== 0 && date.getDay() !== 6);
             return holDays;
         }
 
         setPubHolList(formatPubHolList())
-
     }, [props.listDates])
 
     const defaultBorder = {
@@ -27,22 +24,13 @@ const PubHolsList = (props) => {
         textAlign: 'center'
     }
 
-    const noBottomRight = {
-        borderTop: '1px solid',
-        borderLeft: '1px solid',
-        borderBottom: '1px solid',
-        borderRight: '1px solid',
-        borderColor: 'divider',
-        borderRightColor: 'white',
-        borderBottomColor: 'white',
-    }
-
     const displayDate = (date) => {
         return (
             <Grid
                 container
                 justifyContent="center"
                 alignItems="center"
+                key={date}
             >
                 <Grid
                     minHeight={25}

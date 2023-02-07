@@ -17,13 +17,12 @@ function App() {
   const [sreFile, setSreFile] = React.useState("");
 
   const uploadShifts = async (file) => {
-    // TODO: Change api link
-    const resp = await fetch('https://localhost:5000/addshift', {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const resp = await fetch('http://localhost:5000/addshift', {
       method: 'POST',
-      //headers: {
-      //  'Content-type': 'application/json'
-      //},
-      body: file
+      body: formData
     });
     const data = await resp.json()
     console.log(data)
@@ -31,12 +30,15 @@ function App() {
 
   const uploadSREs = async (file) => {
     // TODO: Change api link
-    const resp = await fetch('https://localhost:5000/sre', {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const resp = await fetch('http://localhost:5000/srelist', {
       method: 'POST',
-      //headers: {
-      //  'Content-type': 'application/json'
-      //},
-      body: file
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: formData
     });
     const data = await resp.json()
     console.log(data)
@@ -44,14 +46,29 @@ function App() {
 
   const handleSubmit = async () => {
     // TODO: Pass all preferences to backend to generate CSV
-    const resp = await fetch('https://localhost:5000/final', {
+    await fetch('http://localhost:5000/final', {
       method: 'GET',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'text/csv',
       },
-    });
-    const data = await resp.json() // NOTE: data should be our file
-    console.log(data)
+    }).then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(
+          blob
+        );
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute(
+          'download',
+          'shifts.csv'
+        );
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.parentNode.removeChild(link);
+      });
   }
 
   return (
