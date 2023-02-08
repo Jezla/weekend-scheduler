@@ -3,7 +3,12 @@
 ### Frontend
 - After installing nodeJs with npm, go to frontend folder and type npm start
 ### Backend 
-- Install flask with npm and run the app.py file
+- Install the following dependencies with pip (pip install <dependency_name>:
+  - flask
+  - flask-cors
+  - pandas
+  - openpyxl
+- Afterwards run python3 app.py to start the backend server (Note: If on the Windows VM run python app.py instead)
 
 
 # weekend-scheduler
