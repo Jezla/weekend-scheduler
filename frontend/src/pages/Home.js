@@ -12,18 +12,23 @@ import SortableItem from '../components/SortableItem';
 import ListView from '../components/ListView';
 
 function Home() {
-  const [name, setName] = useState("");
   const [view, toggleView] = useState(false) // Toggle between list and calendar view
-  const [selectedDates, setSelectedDates] = useState([]);
-  const [calendarDate, setCalendarDate] = useState(new Date());
-  const [listDates, setListDates] = useState([]);
-  const [nameList, setNameList] = useState(['Austin Lai', 'Alex jim Law', 'Adrian Lin']);
-  const [openAlert, setOpenAlert] = useState(false);
-  const [openSubmitAlert, setOpenSubmitAlert] = useState(false);
-  const [openSubmitConfirm, setOpenSubmitConfirm] = useState(false);
+
+  const [name, setName] = useState("");
+  const [selectedDates, setSelectedDates] = useState([]); // preferences (date strings)
+
+  const [listDates, setListDates] = useState([]); // uploaded shift dates (date objects)
+  const [nameList, setNameList] = useState([]); // uploaded sre names
+
+  const [calendarDate, setCalendarDate] = useState(new Date()); // initial calendar date
   const [maxDate, setMaxDate] = useState(null)
   const [minDate, setMinDate] = useState(null)
 
+  const [openAlert, setOpenAlert] = useState(false);
+  const [openSubmitAlert, setOpenSubmitAlert] = useState(false);
+  const [openSubmitConfirm, setOpenSubmitConfirm] = useState(false);
+
+  // allow for removing items in preferences list
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -38,7 +43,6 @@ function Home() {
       setSelectedDates((items) => {
         const activeIndex = items.indexOf(active.id);
         const overIndex = items.indexOf(over.id);
-        console.log(arrayMove(items, activeIndex, overIndex));
         return arrayMove(items, activeIndex, overIndex);
       });
     }
@@ -58,11 +62,11 @@ function Home() {
         },
       });
       const data = await resp.json()
-      console.log(data)
       const dates = data.shifts.map(date => new Date(date))
       setListDates(dates)
       setNameList(data.users)
 
+      // set calendar dates for the specific quarter
       if (dates[0]) {
         const quarters = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 0]];
         const quarter = quarters[quarters.indexOf(quarters.filter(l => l.indexOf(dates[0].getMonth()) !== -1)[0])]
@@ -84,6 +88,8 @@ function Home() {
     setOpenAlert(true)
   }
 
+  // set which calendar dates are disabled
+  // date must be in the fetched dates and must not be in the selected dates to be enabled
   const setDisabled = (date) => {
     if (listDates.find(item => {return item.toLocaleDateString('en-AU') === date.toLocaleDateString('en-AU')})
         && !selectedDates.includes(date.toLocaleDateString('en-AU'))) {
@@ -100,7 +106,7 @@ function Home() {
     const nameSplit = name.split(' ')
     const firstname = nameSplit.shift()
     const lastname = nameSplit.join(" ");
-    console.log(firstname, lastname, selectedDates)
+    // send name and preferences to backend
     const resp = await fetch('http://localhost:5000/updateshift', {
       method: 'PUT',
       headers: {
@@ -123,17 +129,9 @@ function Home() {
       <Grid container
         direction="row"
         justifyContent="center"
-        alignItems="center">
-        {/*<FormControl sx={{ m: 1, minWidth: 360 }}>
-          <InputLabel>Select Name</InputLabel>
-          <Select
-            value={name}
-            label="Select Name"
-            onChange={(e) => setName(e.target.value)}
-          >
-            {nameList.map((name, index) => <MenuItem key={index} value={name}>{name}</MenuItem>)}
-          </Select>
-        </FormControl>*/}
+        alignItems="center"
+      >
+        {/* Name Dropdown */}
         <Autocomplete
           disablePortal
           options={nameList.map(({name}) => name)}
@@ -148,6 +146,7 @@ function Home() {
           }}
           renderInput={params => <TextField {...params} label="Select Name"/>}
         />
+        {/* Toggle View */}
         <FormControl>
           <Stack direction="row" spacing={1} alignItems="center">
             <Typography>List</Typography>

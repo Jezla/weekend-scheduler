@@ -4,14 +4,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 
-// TODO: Probs add some confirmation for uploading available shifts and sre list
-
-function App() {
-  React.useEffect(() => {
-    // Get backend input for all valid weekends and public holidays
-    // Fill listDates array
-    // Get all employee names and fill nameList
-  }, [])
+function Admin() {
 
   const [shiftFile, setShiftFile] = React.useState("");
   const [sreFile, setSreFile] = React.useState("");
@@ -116,4 +109,4 @@ function App() {
   );
 }
 
-export default App;
+export default Admin;

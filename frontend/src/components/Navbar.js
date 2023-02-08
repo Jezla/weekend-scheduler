@@ -52,9 +52,9 @@ const Navbar = () => {
           onClick={() => navigate('/')}
         >
           <img src={Logo} alt="Logo" style={{ maxWidth: 180 }} />
-        </Grid> 
+        </Grid>
         <Grid container>
-          <img ref={imageRef} alt="Moon" style={{ maxWidth: 40 }} onClick={() => setDarkMode(!darkMode)} />
+          <img ref={imageRef} alt="Moon" style={{ maxWidth: 40, maxHeight: 40 }} onClick={() => setDarkMode(!darkMode)} />
           <Grid sx={{ pl: 1 }}>
             <Button variant="contained" onClick={handleOpen}>Help</Button>
             <Modal

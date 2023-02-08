@@ -11,6 +11,7 @@ const ListView = (props) => {
 
   React.useEffect(() => {
 
+    // Filter dates based on whether they are weekends or not and if they are
     const formatMonthList = (i) => {
       const quarters = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 0]];
 
@@ -29,6 +30,7 @@ const ListView = (props) => {
         filteredMonth.push(null)
       }
 
+      // Split days into saturday and sunday for easy display
       const splitDays = filteredMonth.reduce((days, date, index) => {
         return (index % 2 === 0 ? days.push([date]) : days[days.length - 1].push(date)) && days;
       }, []);
@@ -60,6 +62,7 @@ const ListView = (props) => {
     borderBottomColor: 'white',
   }
 
+  {/* display each shift date */}
   const displayDate = (pair, index) => {
     return (
       <Grid
