@@ -4,6 +4,7 @@ import { CloseButton } from "react-bootstrap";
 import Grid from '@mui/material/Unstable_Grid2';
 
 const SortableItem = (props) => {
+  // Component for preference list sortable item
   const {
     attributes,
     listeners,
@@ -27,32 +28,32 @@ const SortableItem = (props) => {
   }
 
   return (
-      <div>
-          <Grid
-            container
-            justifyContent="space-between"
-            ref={setNodeRef}
-            sx={style}
-            {...attributes}
-            {...listeners}
-          >
-            <Grid>
-              {props.items.indexOf(props.id) + 1}
-            </Grid>
-            <Grid>
-              {props.id}
-            </Grid>
-            <Grid alignItems="center" justifyContent="center">
-              <CloseButton onClick={(e) => {
-                const index = props.items.indexOf(props.id)
-                const newDates = [...props.items]
-                newDates.splice(index, 1);
-                props.setItems(newDates)
-                e.stopPropagation()
-              }}/>
-            </Grid>
-          </Grid>
-      </div>
+    <div>
+      <Grid
+        container
+        justifyContent="space-between"
+        ref={setNodeRef}
+        sx={style}
+        {...attributes}
+        {...listeners}
+      >
+        <Grid>
+          {props.items.indexOf(props.id) + 1}
+        </Grid>
+        <Grid>
+          {props.id}
+        </Grid>
+        <Grid alignItems="center" justifyContent="center">
+          <CloseButton onClick={(e) => {
+            const index = props.items.indexOf(props.id)
+            const newDates = [...props.items]
+            newDates.splice(index, 1);
+            props.setItems(newDates)
+            e.stopPropagation()
+          }}/>
+        </Grid>
+      </Grid>
+    </div>
   )
 }
 

@@ -52,7 +52,7 @@ const Navbar = () => {
           onClick={() => navigate('/')}
         >
           <img src={Logo} alt="Logo" style={{ maxWidth: 180 }} />
-        </Grid> 
+        </Grid>
         <Grid container>
           <img ref={imageRef} alt="Moon" style={{ maxWidth: 40 }} onClick={() => setDarkMode(!darkMode)} />
           <Grid sx={{ pl: 1 }}>
