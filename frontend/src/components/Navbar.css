@@ -1,5 +1,5 @@
 .dark *, .dark label, .dark input{
-  color: white;
+  color: green;
 }
 
 .dark, .dark .react-calendar, .dark .react-calendar__month-view__days__day--weekend,.dark .react-calendar__month-view__days__day {
@@ -8,7 +8,7 @@
 .dark .react-calendar__month-view__days__day:disabled,.dark .react-calendar__navigation__label:disabled, .dark .react-calendar__navigation__prev-button:disabled, .dark .react-calendar__navigation__next-button:disabled, .dark input, .dark .MuiInputBase-root, .dark .css-s1hehu-MuiGrid2-root, .dark .css-1uptu8n-MuiGrid2-root, .dark .css-1wnsrli {
   background-color: #444444;
 }
- 
+
 .dark .react-calendar__navigation__next-button:enabled:hover, .dark .react-calendar__navigation__prev-button:enabled:hover, .dark .react-calendar__tile:enabled:hover {
   background-color: grey;
 }

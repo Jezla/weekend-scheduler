@@ -10,6 +10,8 @@ import {
 } from '@mui/material';
 import SortableItem from '../components/SortableItem';
 import ListView from '../components/ListView';
+import './Michael.css';
+import Michael from './Michael';
 
 function Home() {
   const [name, setName] = useState("");
@@ -23,6 +25,7 @@ function Home() {
   const [openSubmitConfirm, setOpenSubmitConfirm] = useState(false);
   const [maxDate, setMaxDate] = useState(null)
   const [minDate, setMinDate] = useState(null)
+  const [michael, setMichael] = useState(false)
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -92,6 +95,22 @@ function Home() {
     return true
   }
 
+  const handleNameChange = (e) => {
+    const user = nameList.find(user =>  user.name === e.target.textContent)
+    console.log(user)
+    if (user !== undefined) {
+      setSelectedDates(user.preferences)
+    }
+    setName(e.target.textContent)
+    // Ignore this Michael
+    if (e.target.textContent === 'Michael Islamov') {
+      setMichael(true)
+    } else {
+      setMichael(false)
+      document.body.classList.remove("michael")
+    }
+  }
+
   const handleSubmit = async () => {
     if (selectedDates.length === 0 || name === "") {
       setOpenSubmitAlert(true)
@@ -139,12 +158,7 @@ function Home() {
           options={nameList.map(({name}) => name)}
           sx={{ m: 1, minWidth: 360 }}
           onChange={e => {
-            const user = nameList.find(user =>  user.name === e.target.textContent)
-            console.log(user)
-            if (user !== undefined) {
-              setSelectedDates(user.preferences)
-            }
-            setName(e.target.textContent)
+            handleNameChange(e)
           }}
           renderInput={params => <TextField {...params} label="Select Name"/>}
         />
@@ -156,6 +170,9 @@ function Home() {
           </Stack>
         </FormControl>
       </Grid>
+      {michael
+      ? <Michael/>
+      :
       <div>
         {view ?
           <Calendar
@@ -196,6 +213,7 @@ function Home() {
           </Button>
         </Box>
       </div>
+      }
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={() => setOpenAlert(false)}>
         <Alert onClose={() => setOpenAlert(false)} severity="error" sx={{ width: '100%' }}>
           Maximum shifts selected!

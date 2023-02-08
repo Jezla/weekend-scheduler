@@ -1,13 +1,18 @@
-import './App.css';
+import '../App.css';
+import React from 'react';
 import Slider from '@mui/material/Slider';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import FormGroup from '@mui/material/FormGroup';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
+import './Michael.css'
 
 function Michael() {
+  React.useEffect(() => {
+    document.body.classList.add('michael')
+  })
+
   return (
     <div className="App" style={{ width: '350px', marginLeft: 'auto', marginRight: 'auto', marginTop: '100px', backgroundColor: 'yellow' }}>
       {/* <header className="App-header">
