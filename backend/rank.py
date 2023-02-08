@@ -18,7 +18,7 @@ def assign_pref(shift, sre):
             if (sre.get_prio != 0): 
                 sre.set_prio(0)
         elif (pref == shift.get_date() and shift.get_slots() == 0):
-            sre.set_prio(6 + pref_count)    
+            sre.set_prio(12 + pref_count)    
             #sre.remove_pref(shift.get_date())
         
         pref_count -= 1
