@@ -17,6 +17,7 @@
   background-color:  #444444;
 }
 
-.dark .MuiAutocomplete-listbox {
+.dark .MuiAutocomplete-listbox, .dark .css-mvoatl-MuiPaper-root-MuiAlert-root {
   background-color: #222222;
 }
+
