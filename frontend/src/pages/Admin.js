@@ -87,7 +87,7 @@ function App() {
             <h5>Upload Items</h5>
             <Button variant="contained" component="label">
               Upload Available Shifts
-              <input type="file" hidden accept=".csv" onChange={(e) => {
+              <input type="file" hidden accept=".xlsx, .xls, .csv" onChange={(e) => {
                 setShiftFile(e.target.files[0]);
                 uploadShifts(e.target.files[0]);
               }}/>
@@ -97,7 +97,7 @@ function App() {
           <Grid>
             <Button variant="contained" component="label">
               Upload SRE List
-              <input type="file" hidden accept=".csv" onChange={(e) => {
+              <input type="file" hidden accept=".xlsx, .xls, .csv" onChange={(e) => {
                 setSreFile(e.target.files[0])
                 uploadSREs(e.target.files[0])
               }}/>
