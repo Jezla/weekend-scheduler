@@ -1,9 +1,14 @@
 ## HOW TO LAUNCH APPLICATION
 
 ### Frontend
-- After installing nodeJs with npm, go to frontend folder and type npm start
+- After installing nodeJs with npm, go to frontend folder and type npm install to get the needed dependencies. Afterwards run npm start to run the frontend server
 ### Backend 
-- Install flask with npm and run the app.py file
+- Install the following dependencies with pip (pip install <dependency_name>:
+  - flask
+  - flask-cors
+  - pandas
+  - openpyxl
+- Afterwards run python3 app.py to start the backend server (Note: If on the Windows VM run python app.py instead)
 
 
 # weekend-scheduler

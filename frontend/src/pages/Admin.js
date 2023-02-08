@@ -13,7 +13,7 @@ function Admin() {
     const formData = new FormData();
     formData.append('file', file);
 
-    const resp = await fetch('http://localhost:5000/addshift', {
+    const resp = await fetch('http://10.134.82.115:5000/addshift', {
       method: 'POST',
       body: formData
     });
@@ -26,7 +26,7 @@ function Admin() {
     const formData = new FormData();
     formData.append('file', file);
 
-    const resp = await fetch('http://localhost:5000/srelist', {
+    const resp = await fetch('http://10.134.82.115:5000/srelist', {
       method: 'POST',
       headers: {
         'Access-Control-Allow-Origin': '*'
@@ -39,7 +39,7 @@ function Admin() {
 
   const handleSubmit = async () => {
     // TODO: Pass all preferences to backend to generate CSV
-    await fetch('http://localhost:5000/final', {
+    await fetch('http://10.134.82.115:5000/final', {
       method: 'GET',
       headers: {
         'Content-type': 'text/csv',
