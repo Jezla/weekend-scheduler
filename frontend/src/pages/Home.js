@@ -53,7 +53,7 @@ function Home() {
     // Fill listDates array
     // Get all employee names and fill nameList
     const getList = async () => {
-      const resp = await fetch('http://localhost:5000/list', {
+      const resp = await fetch('http://10.134.82.115:5000/list', {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -107,7 +107,7 @@ function Home() {
     const firstname = nameSplit.shift()
     const lastname = nameSplit.join(" ");
     // send name and preferences to backend
-    const resp = await fetch('http://localhost:5000/updateshift', {
+    const resp = await fetch('http://10.134.82.115:5000/updateshift', {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
