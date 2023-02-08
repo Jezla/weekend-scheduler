@@ -1,7 +1,7 @@
 ## HOW TO LAUNCH APPLICATION
 
 ### Frontend
-- After installing nodeJs with npm, go to frontend folder and type npm start
+- After installing nodeJs with npm, go to frontend folder and type npm install to get the needed dependencies. Afterwards run npm start to run the frontend server
 ### Backend 
 - Install the following dependencies with pip (pip install <dependency_name>:
   - flask
