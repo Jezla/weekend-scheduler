@@ -35,25 +35,25 @@ const PubHolsList = (props) => {
                 <Grid
                     minHeight={25}
                     minWidth={100}
-                    sx={props.selectedDates.includes(date.toLocaleDateString())
+                    sx={props.selectedDates.includes(date.toLocaleDateString('en-AU'))
                         ? { ...defaultBorder, cursor: 'pointer', backgroundColor: '#ccc' }
                         : { ...defaultBorder, cursor: 'pointer' }
                     }
                     xs={6}
                     onClick={() => {
-                        if (props.selectedDates.includes(date.toLocaleDateString())) {
-                            const index = props.selectedDates.indexOf(date.toLocaleDateString())
+                        if (props.selectedDates.includes(date.toLocaleDateString('en-AU'))) {
+                            const index = props.selectedDates.indexOf(date.toLocaleDateString('en-AU'))
                             const newDates = [...props.selectedDates]
                             newDates.splice(index, 1);
                             props.setSelectedDates(newDates)
                         } else if (props.selectedDates.length === 12) {
                             setOpenAlert(true)
                         }  else {
-                            props.setSelectedDates([...props.selectedDates, date.toLocaleDateString()])
+                            props.setSelectedDates([...props.selectedDates, date.toLocaleDateString('en-AU')])
                         }
                     }}
                 >
-                    {date.toLocaleDateString()}
+                    {date.toLocaleDateString('en-AU')}
                 </Grid>
             </Grid>
         )

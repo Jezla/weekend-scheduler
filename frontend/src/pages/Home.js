@@ -78,15 +78,15 @@ function Home() {
   const setDates = (date) => {
     setCalendarDate(date)
     if (selectedDates.length !== 12) {
-      setSelectedDates([...selectedDates, date.toLocaleDateString()])
+      setSelectedDates([...selectedDates, date.toLocaleDateString('en-AU')])
       return
     }
     setOpenAlert(true)
   }
 
   const setDisabled = (date) => {
-    if (listDates.find(item => {return item.toLocaleDateString() === date.toLocaleDateString()})
-        && !selectedDates.includes(date.toLocaleDateString())) {
+    if (listDates.find(item => {return item.toLocaleDateString('en-AU') === date.toLocaleDateString('en-AU')})
+        && !selectedDates.includes(date.toLocaleDateString('en-AU'))) {
       return false
     }
     return true
