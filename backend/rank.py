@@ -8,7 +8,7 @@ list_shifts = []
 
 # Assigns SREs to dates
 def assign_pref(shift, sre):
-    pref_count = 6
+    pref_count = 12
     prefs = sre.get_prefs()
     for pref in prefs:
         if (pref == shift.get_date() and shift.get_slots() != 0):
