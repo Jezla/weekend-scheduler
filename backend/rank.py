@@ -2,6 +2,7 @@ from Shift import *
 from SRE import *
 from datetime import datetime
 import heapq
+import random
 import pandas as pd
 
 list_shifts = []
@@ -50,7 +51,7 @@ def iterate_pref(sres):
     for shift in list_shifts:
         while len(sres) != 0:
             sre = heapq.heappop(sres)
-            if shift.get_avail() != 0 and sre.get_num_shifts() < 6:
+            if shift.get_avail() != 0 and sre.get_num_shifts() < 6 and shift not in sre.get_list_shifts():
                 shift.assign_sre(sre)
                 sre.assign_shift(shift.get_date())
             heapq.heappush(done, sre)
@@ -62,7 +63,7 @@ def iterate_pref(sres):
     for shift in list_shifts:
         while len(sres) != 0:
             sre = heapq.heappop(sres)
-            if shift.get_avail() != 0:
+            if shift.get_avail() != 0 and shift not in sre.get_list_shifts():
                 shift.assign_sre(sre)
                 sre.assign_shift(shift.get_date())
             heapq.heappush(done, sre)
@@ -88,7 +89,8 @@ def csv_convert(filename):
             for shift in list_shifts:
                 if shift.get_date() == datetime.strptime(date,"%d/%m/%y") and len(shift.get_workers()) != 0:
                     sre = shift.get_workers()[0]
-                    file.loc[base, 'Registered_SRE__c'] = sre.get_first_name()
+                    file.loc[base, 'Registered_SRE__c'] = sre.get_id()
+                    file.loc[base, 'Name__c'] = sre.get_first_name() + " " + sre.get_last_name()
                     shift.get_workers().remove(sre)
 
     file.to_csv("uploads/final.csv", index=False, mode="w")
@@ -97,6 +99,7 @@ def csv_convert(filename):
 def rank(shifts, sres, filename):
     global list_shifts
     list_shifts = shifts
+    #random.shuffle(list_shifts)
     #Iterate through list of shifts and through each sres preferences and assign shifts based on criteria
     iterate_pref(sres)
     #After this function is done we can iterate through the list of shifts and see which sre was assignd to it
