@@ -1,6 +1,7 @@
 import sqlite3
 from sqlite3 import Error
 
+#This file has two utility functions for creating a connection to the db and creating tables
 
 def create_connection(db_file):
     """ create a database connection to a SQLite database """

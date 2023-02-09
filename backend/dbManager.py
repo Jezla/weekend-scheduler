@@ -3,6 +3,7 @@ import UserDB
 from datetime import datetime
 from db import *
 
+#Helper class which calls functions in userDB to manipulate the database. Simplifies interaction with database
 class dbManager():
 
     def __init__(self):
