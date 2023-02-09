@@ -18,6 +18,10 @@ def assign_pref(shift, sre):
             if (sre.get_prio() != 0): 
                 sre.set_prio(0)
         elif (pref == shift.get_date() and shift.get_avail() == 0):
+            # Prio is awarded if we fail to assign a preference to an SRE
+            # We have a base value of 12 because the maximum number of shifts that a SRE can have is 12
+            # Since prio is subtracted from length to determine position on the list this ensure that the SRE will be placed at the top
+            # We use pref_count to differentiate between people that don't get their first pref from those who failed to get the last
             sre.set_prio(12 + pref_count)    
             #sre.remove_pref(shift.get_date())
         

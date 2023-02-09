@@ -17,9 +17,15 @@ def csv_parser(filename):
         line_count = 0
         prev_date = ""
         for row in csv_reader:
+            #First line is header date
             if line_count == 0:
                 headers.append(row)
             if line_count >= 1 and "AU-" in row[12]:
+                # If we are not on the first line and the shift correspond to an AU shift
+                # Grab the date and compare it to the previous date(initially a dummy date that should never be equal to anything)
+                # If date matches previous then we are looking at an extra slot for our current shift.
+                # If not then we are looking at a new shift.
+                # Due to the file not having contiguos dates we may end up with duplicate shifts
                 date = row[1]
                 if(date != prev_date):
                     #If the current date is different than the previous date then we create a new shift
