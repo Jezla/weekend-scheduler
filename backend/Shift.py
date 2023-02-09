@@ -41,4 +41,4 @@ class Shift():
     
     def increase_slots(self, val):
         self.slots += val
-        self.slots += val
+        self.avail += val
