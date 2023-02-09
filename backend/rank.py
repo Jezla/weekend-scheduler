@@ -11,13 +11,13 @@ def assign_pref(shift, sre):
     pref_count = 12
     prefs = sre.get_prefs()
     for pref in prefs:
-        if (pref == shift.get_date() and shift.get_slots() != 0):
+        if (pref == shift.get_date() and shift.get_avail() != 0):
             shift.assign_sre(sre)
             sre.assign_shift(shift.get_date())
             #sre.remove_pref(shift.get_date())
             if (sre.get_prio() != 0): 
                 sre.set_prio(0)
-        elif (pref == shift.get_date() and shift.get_slots() == 0):
+        elif (pref == shift.get_date() and shift.get_avail() == 0):
             sre.set_prio(12 + pref_count)    
             #sre.remove_pref(shift.get_date())
         
@@ -46,7 +46,7 @@ def iterate_pref(sres):
     for shift in list_shifts:
         while len(sres) != 0:
             sre = heapq.heappop(sres)
-            if shift.get_slots() != 0 and sre.get_num_shifts() < 6:
+            if shift.get_avail() != 0 and sre.get_num_shifts() < 6:
                 shift.assign_sre(sre)
                 sre.assign_shift(shift.get_date())
             heapq.heappush(done, sre)
@@ -58,13 +58,17 @@ def iterate_pref(sres):
     for shift in list_shifts:
         while len(sres) != 0:
             sre = heapq.heappop(sres)
-            if shift.get_slots() != 0:
+            if shift.get_avail() != 0:
                 shift.assign_sre(sre)
                 sre.assign_shift(shift.get_date())
             heapq.heappush(done, sre)
         
         sres = done
         done = []
+    
+    #Reset number of available slots so that fucture runs of the assignment algorithm work
+    for shift in list_shifts:
+        shift.set_avail(shift.get_slots())
     
 def csv_convert(filename):
     file = pd.read_csv("uploads/" + filename)
@@ -82,7 +86,6 @@ def csv_convert(filename):
                     sre = shift.get_workers()[0]
                     file.loc[base, 'Registered_SRE__c'] = sre.get_first_name()
                     shift.get_workers().remove(sre)
-                    
 
     file.to_csv("uploads/final.csv", index=False, mode="w")
 
