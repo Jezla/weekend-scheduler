@@ -3,6 +3,8 @@ from SRE import *
 from datetime import datetime
 from dbManager import *
 
+#This file defines functions that manipulate the db.
+
 # Inserts a new user into the database
 # Parameters: 
 #   - conn: database connection object

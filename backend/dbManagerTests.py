@@ -2,6 +2,7 @@ import unittest
 from dbManager import *
 from SRE import *
 
+#tests for the dbManager class, (basically testing the database as well)
 class TestdbManager(unittest.TestCase):
 
     def test_add_user(self):
