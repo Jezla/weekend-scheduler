@@ -19,7 +19,7 @@ def csv_parser(filename):
         for row in csv_reader:
             if line_count == 0:
                 headers.append(row)
-            if line_count >= 1 and row[12] == "AU-Sydney":
+            if line_count >= 1 and "AU-" in row[12]:
                 date = row[1]
                 if(date != prev_date):
                     #If the current date is different than the previous date then we create a new shift

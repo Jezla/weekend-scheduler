@@ -80,7 +80,7 @@ def csv_convert(filename):
     for base in range(file.shape[0]):
         date = file.loc[base, 'Date__c']
         region = file.loc[base, 'UserSubRegion__c']
-        if region == "AU-Sydney":
+        if "AU-" in region:
             for shift in list_shifts:
                 if shift.get_date() == datetime.strptime(date,"%d/%m/%y") and len(shift.get_workers()) != 0:
                     sre = shift.get_workers()[0]
