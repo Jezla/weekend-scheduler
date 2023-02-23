@@ -10,6 +10,12 @@
   - openpyxl
 - Afterwards run python3 app.py to start the backend server (Note: If on the Windows VM run python app.py instead)
 
+### MongoDB backend 
+- Create database and insert connection string in '.env' file. 
+- Run 'npm run dev'. 
+
+### Login and Register 
+- Run 'npm start'. 
 
 # weekend-scheduler
 
